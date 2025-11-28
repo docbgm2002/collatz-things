@@ -1,7 +1,8 @@
 # The Triple Lock: Why the 3n+1 Problem Probably Has No Non-Trivial Cycles
 
-**Author:** Some bloke down the pub  
+**Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)  
 **Date:** 28 November 2025  
+**Context:** Part of the "Collatz" Framework 
 
 ---
 
