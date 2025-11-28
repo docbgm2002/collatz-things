@@ -204,8 +204,7 @@ This project aims to:
 * unify algebraic, probabilistic, and computational insights.
 
 It does **not** claim a proof of the Collatz conjecture.
-It attempts to presents a *structural explanation* of why the conjecture appears true.
-The guy who wrote these can drink and supports Liverpool FC. 
+It attempts to present a *structural explanation* of why the conjecture appears true.
 
 ---
 
@@ -215,4 +214,6 @@ Issues, corrections, and improvements are welcome.
 Feel free to open a GitHub Issue or pull request.
 
 ---
+The guy who wrote these can drink and supports Liverpool FC. 
 
+---
