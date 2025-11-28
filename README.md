@@ -30,4 +30,3 @@ This proves instability of cycles and near-cycles, not their non-existence. Ruli
 Some Bloke Down the Pub, “Collatz Parity-Fragility and Near-Loop Instability”, GitHub repository, 28 November 2025.  
 https://github.com/docbgm2002/collatz-parity-fragility
 
-Feel free to copy-paste the above as your GitHub README.md – it’s short, honest, and gives you permanent credit for a genuinely nice piece of mathematics.
