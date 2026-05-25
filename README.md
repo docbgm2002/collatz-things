@@ -73,6 +73,23 @@ Sharpens the failed potential of `potential_attack_notes.md` into two exact resu
 - **Tight ledger:** the Mersenne burn $M_n=2^n-1$ has closed form $x_j=3^j2^{\,n-j}-1$, and the critical potential $\Phi=\log_2 x+\log_2\tfrac32\cdot\tau$ rises by $<\log_2\tfrac{10}{9}$ over the *entire* burn — so the fuel price is exactly $\log_2\tfrac32$.
 - Stated limit: the post-escape descent below $x_0$ is the open residual and is **not** claimed.
 
+### B3. Mersenne–Repunit Reduction  *(NEW)*
+📄 `mersenne_repunit_reduction.md` · 🧪 `verify_repunit_reduction.py`
+
+Solves the first $n$ steps of the worst case and reduces the rest to one question:
+- **Exact:** for odd $n$, $f^{(n)}(2^n-1)=\frac{3^n-1}{2}=a_n$, the **base-3 repunit**, reached in exactly $n$ steps (even $n$ divides further to $a_n/2^{1+v_2(n)}$); the repunits ladder via $3a_m+1=a_{m+1}$.
+- **Exact reduction:** $\operatorname{epoch}(2^n-1)=n+\sigma(a_n)$ — all remaining difficulty is the first passage of $a_n$ below $2^n-1$.
+- **Empirical (not proved):** that residual descent is statistically *generic* ($v_2$ law $\approx2^{-k}$, mean $\approx2$, orbits routinely exceed the burn peak), so the spine offers no shortcut — Conjecture G is the general difficulty in disguise.
+
+### B4. Explicit Stopping-Time Density  *(NEW)*
+📄 `stopping_time_density.md` · 🧪 `verify_stopping_density.py`
+
+An elementary, machine-checked re-derivation of Terras (1976) / Everett (1977), **with an explicit rate**:
+- **Exact:** the density of odd $x$ with stopping time $\le K$ satisfies $D(K)\ge 1-\rho^K$, $\rho=e^{-I(\log_2 3)}=0.9465\ldots$ — so almost every integer descends below itself in boundedly many steps.
+- Built from three exact pieces: affine accumulation $x_K=(3^Kx+c_K)/2^{E_K}$ with $c_K/2^{E_K}<(3/2)^K$; a descent criterion (*enough division $\Rightarrow$ descent*); and the exact equidistribution of $2$-adic valuations (each weight-$E$ pattern has density $2^{-E}$).
+- Supersedes the density goal of `verify_descent_tree.py` (whose proven fraction was non-monotone) with a monotone bound.
+- Stated limit: density $1$ is not *all*; the residual hard core (density $\le\rho^K$, dominated by the near-Mersenne spine) is exactly the conjecture and is **not** closed.
+
 ### C. Parity Fragility & Instability
 📄 `Collatz_Parity_Fragility_Corrected.md`
 
@@ -104,6 +121,9 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 
 - **Micro-scale (exact):** Block-Fracture Identity → high-density runs contract deterministically.
 - **Residue-scale (exact):** Mod-8 Rail Descent → 3 of 4 rails descend or bridge exactly; the 4th escapes in finite time.
+- **Potential boundary (exact negative):** Recharge No-Go → scalar trailing-one fuel potentials cannot prove global descent.
+- **Worst case (exact):** Mersenne–Repunit Reduction → $2^n-1$ solves to a base-3 repunit in $n$ steps; the rest is generic.
+- **Average behaviour (exact):** Stopping-Time Density → almost every integer descends in boundedly many steps, $D(K)\ge1-\rho^K$.
 - **Medium/macro-scale (heuristic):** Recharge / Fusion–Fracture / Refractory → why density can't grow indefinitely.
 - **Cycle architecture:** Triple Lock + Parity Fragility → cycles are arithmetically rare, parity-forbidden, and dynamically unstable.
 
@@ -113,9 +133,12 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 
 1. **Block-Fracture Identity** (exact, micro-scale)
 2. **Mod-8 Rail Descent** (exact, residue-scale)
-3. **Parity Fragility (Corrected)** (exact, dynamical)
-4. **Triple Lock (Revised)** (structural summary)
-5. Recharge / Fusion–Fracture / Refractory (heuristic macro picture)
+3. **Recharge No-Go & Tight Mersenne Burn Ledger** (exact negative / potential boundary)
+4. **Mersenne–Repunit Reduction** (exact, worst-case structure)
+5. **Explicit Stopping-Time Density** (exact, almost-all descent with rate)
+6. **Parity Fragility (Corrected)** (exact, dynamical)
+7. **Triple Lock (Revised)** (structural summary)
+8. Recharge / Fusion–Fracture / Refractory (heuristic macro picture)
 
 ---
 
@@ -125,6 +148,8 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 python3 verify_block_fracture.py   # Block-Fracture Identity + Mersenne erosion
 python3 verify_mod8_rails.py       # Mod-8 rail lemmas + finite-window check to 1e6
 python3 verify_recharge_nogo.py    # Recharge No-Go + tight Mersenne burn ledger
+python3 verify_repunit_reduction.py # Mersenne -> base-3 repunit reduction (R0-R3 exact)
+python3 verify_stopping_density.py  # Explicit stopping-time density D(K) >= 1 - rho^K
 ```
 
 Both use exact integer arithmetic, need no dependencies, and print PASS for every claim (the mod-8 script's $10^6$ sweep takes a little longer).
@@ -137,6 +162,8 @@ python3 verify_descent_tree.py
 python3 explore_potential.py
 python3 explore_fuse_burn.py
 python3 explore_mersenne_spine.py
+python3 explore_mersenne_formulas.py
+python3 explore_mersenne_epoch.py
 ```
 
 These scripts search for residue-class descent certificates. They are research tools, not proof artifacts: unresolved branches mean the current certificate strategy ran out of fixed low-bit information, not that a counterexample was found.
