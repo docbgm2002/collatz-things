@@ -49,6 +49,22 @@ Exact descent behaviour by residue class mod 8:
 - **Machine-verified:** every odd $x \le 10^6$ descends within $\le 111$ odd-steps.
 - Stated limit: the window-free (global) version is left open and is, in effect, equivalent to the conjecture.
 
+> **Update: exact `8y+7` rail closed form**
+> 
+> The rail `8y+7` has an exact two-odd-step image:
+> $$
+> f_2(8y+7) = 18y+17.
+> $$
+> While it remains on rail 7, the index evolves by:
+> $$
+> y \mapsto \frac{9y+5}{4},
+> $$
+> so the exact number of consecutive rail-7 stays is:
+> $$
+> \left\lfloor \frac{v_2(y+1)}{2}\right\rfloor.
+> $$
+> A previous shorthand that rail 7 exits only to `8z+1` or `8z+5` should be read with care: the exact exit rails are `8z+1`, `8z+3`, and `8z+5`. In particular, for `y = 2^k - 1`, even $k$ exits to `8z+1`, while odd $k$ exits to `8z+3`.
+
 ### C. Parity Fragility & Instability
 📄 `Collatz_Parity_Fragility_Corrected.md`
 

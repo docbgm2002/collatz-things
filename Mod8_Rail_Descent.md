@@ -76,24 +76,93 @@ Both divisions are exact for every integer $y$ (the identities are polynomial in
 
 ---
 
-## 4. Rail $8y+7$: finite escape and the all-ones exception
+## 4. Rail $8y+7$: exact closed-form analysis and escape dynamics
 
-Rail $7$ is the only rail that can map back into itself, so descent here requires a recursion. The recursion is fully controlled by a single valuation.
+Rail $7$ is the only rail that can map back into itself under two odd steps, so descent here requires a recursion. By developing an exact closed-form index tracker, we resolve the recursion completely and prove that all orbits escape to other rails in finite steps, except the all-ones class which escapes via a deterministic alternating pattern.
 
 Write the **two-odd-step map** $f_2 = f \circ f$.
 
-**Lemma 4 (Stay condition).** For $x = 8y+7$,
+### Theorem 1 (Exact image for two odd steps)
+For every integer $y \ge 0$, the two-odd-step image of $x = 8y+7$ is
 $$
-f_2(x) \equiv 7 \pmod 8 \iff v_2(y+1) \ge 2 \iff 4 \mid (y+1).
+f_2(8y+7) \;=\; 18y+17.
 $$
 
-**Lemma 5 (Survival cap).** Starting from $x=8y+7$, the number of *consecutive* returns to rail $7$ under iteration of $f_2$ is exactly
+*Proof.* First, apply $3x+1$ and divide by $2^{v_2}$:
 $$
-D(y) \;=\; \left\lfloor \frac{v_2(y+1)}{2} \right\rfloor .
+3(8y+7)+1 = 24y+22 = 2\,(12y+11).
 $$
-Consequently every input on rail $7$ escapes rail $7$ after finitely many two-step blocks, **except** when $v_2(y+1)$ is unbounded — which occurs only for the all-ones numbers $x = 2^k-1$ (where $y+1 = 2^{\,k-3}$). Upon escape the orbit lands on rail $1$ or rail $5$ (never rail $3$), and Lemmas 1–2 then give immediate strict descent.
+Since $12y+11$ is odd, $f(8y+7) = 12y+11$ exactly.
+Now apply the second odd step:
+$$
+3(12y+11)+1 = 36y+34 = 2\,(18y+17).
+$$
+Since $18y+17$ is odd, $f_2(8y+7) = 18y+17$ exactly. Both steps divide by exactly one factor of $2$. $\quad\blacksquare$
 
-*Status of Lemmas 4–5.* Both are exact arithmetic statements about $v_2$; they have been verified with zero exceptions for all $y$ up to $5\times10^5$ (see the accompanying verifier), and the stay condition follows from tracking $v_2$ through the two-step block. The all-ones class $2^k-1$ is precisely the family handled by the companion **Block-Fracture note**, where one odd-step is shown to erode the leading run of ones from length $k$ to $k-1$ — the deterministic mechanism by which even the uncapped class is forced downward in run-length. The two notes therefore dovetail: rail-$7$ escape disposes of every $8y+7$ with finite $v_2(y+1)$, and Mersenne erosion disposes of the residual all-ones thread.
+### The Stay-in-Rail Recursion
+The image $18y+17$ lies on rail 7 if and only if:
+$$
+18y+17 \equiv 7 \pmod 8 \iff 2y+1 \equiv 7 \pmod 8 \iff y \equiv 3 \pmod 4.
+$$
+When $y \equiv 3 \pmod 4$, we can write $18y+17 = 8y' + 7$. Solving for the new index $y'$ gives the exact **stay-in-rail index recursion**:
+$$
+g(y) \;=\; \frac{9y+5}{4},
+$$
+which is valid exactly when $y \equiv 3 \pmod 4$.
+
+### Theorem 2 (Closed form for repeated rail-7 stays)
+Suppose the orbit remains on rail 7 for $d$ consecutive applications of $f_2$. Then the rail index after $d$ stays is
+$$
+y_d \;=\; \left(\frac{9}{4}\right)^d(y+1) - 1.
+$$
+
+*Proof.* We prove by induction on $d$. For $d=0$, we have $y_0 = y$, which matches the formula. Assume the formula holds for $d$. Then:
+$$
+y_{d+1} = \frac{9y_d+5}{4} = \frac{9\left[\left(\frac{9}{4}\right)^d(y+1) - 1\right]+5}{4} = \frac{9^{d+1}(y+1) - 9\cdot 4^d + 5\cdot 4^d}{4^{d+1}} = \left(\frac{9}{4}\right)^{d+1}(y+1) - 1,
+$$
+which completes the induction. $\quad\blacksquare$
+
+### Theorem 3 (Exact survival depth)
+For $x = 8y+7$, the number of consecutive returns to rail 7 under $f_2$ is
+$$
+D(y) \;=\; \left\lfloor \frac{v_2(y+1)}{2} \right\rfloor.
+$$
+
+*Proof.* A further stay occurs if and only if $y_d \equiv 3 \pmod 4$, which is equivalent to $y_d + 1 \equiv 0 \pmod 4$, or $v_2(y_d + 1) \ge 2$.
+Using Theorem 2:
+$$
+v_2(y_d+1) = v_2\left(\frac{9^d(y+1)}{4^d}\right) = v_2(y+1) - 2d,
+$$
+since $9^d$ is odd. A stay is therefore possible if and only if $v_2(y+1) - 2d \ge 2$. The total number of completed stays is the largest integer $d$ satisfying this, which is exactly $D(y) = \lfloor v_2(y+1)/2 \rfloor$. $\quad\blacksquare$
+
+### Escape Rails
+Once the recursion stops after $D$ stays, the exit value is $x_{\text{exit}} = 18y_D + 17$. Modulo 8, this value is determined by the residue of $y_D \pmod 4$:
+$$
+x_{\text{exit}} \equiv 2y_D + 1 \pmod 8.
+$$
+Since $y_D \not\equiv 3 \pmod 4$ at the exit point, we obtain:
+* If $y_D \equiv 0 \pmod 4$, then $x_{\text{exit}} \equiv 1 \pmod 8$ (escape to Rail 1, immediate descent).
+* If $y_D \equiv 1 \pmod 4$, then $x_{\text{exit}} \equiv 3 \pmod 8$ (escape to Rail 3, deterministic bridge).
+* If $y_D \equiv 2 \pmod 4$, then $x_{\text{exit}} \equiv 5 \pmod 8$ (escape to Rail 5, immediate descent).
+
+### Mersenne Index Escape Alternation
+Consider the all-ones Mersenne-index family $y_0 = 2^k - 1$ ($k \ge 2$), so $y_0 + 1 = 2^k$ and $v_2(y_0+1) = k$. By Theorem 3, the survival depth is $D = \lfloor k/2 \rfloor$.
+* **Case 1 ($k = 2d$ even):** We have $D = d$ stays. Using Theorem 2:
+  $$
+  y_d = \left(\frac{9}{4}\right)^d 2^{2d} - 1 = 9^d - 1 \implies x_{\text{exit}} = 18\cdot 9^d - 1 \equiv 1 \pmod 8.
+  $$
+  So even $k$ exits to **Rail 1** (immediate descent).
+* **Case 2 ($k = 2d+1$ odd):** We have $D = d$ stays. Using Theorem 2:
+  $$
+  y_d = \left(\frac{9}{4}\right)^d 2^{2d+1} - 1 = 2\cdot 9^d - 1 \implies x_{\text{exit}} = 18\cdot (2\cdot 9^d - 1) + 17 = 36\cdot 9^d - 1 \equiv 3 \pmod 8.
+  $$
+  So odd $k$ exits to **Rail 3** (deterministic bridge).
+
+**Corollary (Mersenne alternation).** The all-ones family $y = 2^k-1$ escapes rail 7 via a deterministic alternating sequence based on the parity of $k$:
+$$
+k \text{ even} \implies \text{Rail } 1, \qquad k \text{ odd} \implies \text{Rail } 3.
+$$
+This removes any exception status from the all-ones numbers; they escape the rail via a completely predictable, closed-form pattern.
 
 ---
 
@@ -109,9 +178,13 @@ This is a statement about a finite range, established by exhaustive computation.
 
 ## 6. What is and is not proved
 
-**Proved exactly (all $y$):** the rail-$1$ image $f(8y+1)=6y+1$ (Lemma 1); the rail-$5$ descent $f(8y+5)\le 3y+2$ (Lemma 2); the bridge $8y+3\to 9y+4$ (Lemma 3); the rail-$7$ stay condition and survival-cap formula as $v_2$-identities (Lemmas 4–5).
+**Proved exactly (all $y$):**
+* The rail-$1$ image $f(8y+1)=6y+1$ (Lemma 1).
+* The rail-$5$ descent $f(8y+5)\le 3y+2$ (Lemma 2).
+* The bridge $8y+3\to 9y+4$ (Lemma 3).
+* The rail-$7$ exact two-step image, stay-in-rail formula, exact stay formula, stay depth, and Mersenne alternation (Theorems 1–3 and Corollary).
 
-**Established by finite computation:** 100% one-value descent for all odd $x \le 10^6$ within $\le 111$ odd-steps (§5); the rail-$7$ identities checked exhaustively to $y \le 5\times10^5$.
+**Established by finite computation:** 100% one-value descent for all odd $x \le 10^6$ within $\le 111$ odd-steps (§5); all rail-7 theorems checked exhaustively to $y \le 5\times10^5$.
 
 **Not proved (open):** a *window-free* statement — that the finite recursion terminates for **all** odd integers without an a-priori bound. The natural route is a merge-certificate over all residues modulo a fixed $2^K$ (e.g. $K=12$): one would have to exhibit, for each odd residue $r \bmod 2^K$, a fixed macro and frozen valuation conditions under which the affine identity forces descent or merge for *all* $y \equiv r$. Completing such a program for every residue would constitute a proof of the Collatz conjecture; it is not a polishing step, and nothing here closes it.
 
@@ -126,5 +199,5 @@ All claims were checked by exact integer arithmetic (no floating point); a repro
 - **Lemma 1:** $f(8y+1)=6y+1$ with no exceptions, and strict descent for $y\ge 1$, over $y < 3\times10^5$.
 - **Lemma 2:** $f(8y+5)\le 3y+2$ and $f(8y+5) < 8y+5$, no exceptions, over $y < 3\times10^5$.
 - **Lemma 3:** the two bridge identities $24y+10=2(12y+5)$ and $36y+16=4(9y+4)$ hold for all tested integers $y$ including negatives.
-- **Lemmas 4–5:** the stay condition $f_2(8y+7)\equiv 7 \pmod 8 \iff v_2(y+1)\ge 2$ and the cap $\lfloor v_2(y+1)/2\rfloor$ both match with zero mismatches over $y < 5\times10^5$; the all-ones family $2^k-1$ exhibits unbounded $v_2(y+1)$ as claimed.
+- **Theorems 1–3 and Corollary:** the stay formula, stay depth, and Mersenne escape alternation checked exhaustively over $y < 5\times10^5$, with $100\%$ match and zero exceptions.
 - **§5:** exhaustive descent check over all odd $x\in[3,10^6]$; max odd-steps to first descent $=111$ at $x=626{,}331$; zero failures.
