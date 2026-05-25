@@ -10,7 +10,7 @@
 
 ## Abstract
 
-We organise the odd residues modulo $8$ into four *rails* and establish exact, elementary descent behaviour for three of them. For $x \equiv 1 \pmod 8$ the odd-step map sends $x = 8y+1$ to exactly $6y+1$; for $x \equiv 5 \pmod 8$ it sends $8y+5$ to at most $3y+2$; both are strict one-step descents (with the sole fixed point $x=1$). For $x \equiv 3 \pmod 8$ we give an exact two-step affine *bridge* $8y+3 \mapsto 9y+4$ that holds as a polynomial identity for every integer $y$. The remaining rail $x \equiv 7 \pmod 8$ is analysed via a "stay-in-rail" recursion: we prove the number of consecutive stays equals $\lfloor v_2(y+1)/2 \rfloor$, so every input escapes in finitely many steps except the all-ones numbers $2^k-1$, which form the unique uncapped class and are governed by the companion Block-Fracture note. Finally, we report an independent machine verification that **every** odd $x \le 10^6$ reaches a strictly smaller value within at most $111$ odd-steps. We are explicit throughout about the boundary between exact theorem and finite computation: the global ("window-free") statement remains open and is, in effect, equivalent to the Collatz conjecture itself.
+We organise the odd residues modulo $8$ into four *rails* and establish exact, elementary descent behaviour for three of them. For $x \equiv 1 \pmod 8$ the odd-step map sends $x = 8y+1$ to exactly $6y+1$; for $x \equiv 5 \pmod 8$ it sends $8y+5$ to at most $3y+2$; both are strict one-step descents (with the sole fixed point $x=1$). For $x \equiv 3 \pmod 8$ we give an exact two-step affine *bridge* $8y+3 \mapsto 9y+4$ that holds as a polynomial identity for every integer $y$. The remaining rail $x \equiv 7 \pmod 8$ is analysed via a closed-form "stay-in-rail" recursion: we prove the number of consecutive stays equals $\lfloor v_2(y+1)/2 \rfloor$, so every input escapes rail 7 in finitely many two-step blocks; the all-ones index family escapes by a deterministic rail-1/rail-3 alternation. Finally, we report an independent machine verification that **every** odd $x \le 10^6$ reaches a strictly smaller value within at most $111$ odd-steps. We are explicit throughout about the boundary between exact theorem and finite computation: the global ("window-free") statement remains open and is, in effect, equivalent to the Collatz conjecture itself.
 
 ---
 
@@ -22,7 +22,7 @@ f(x) \;=\; \frac{3x+1}{2^{\,v_2(3x+1)}},
 $$
 where $v_2(\cdot)$ is the $2$-adic valuation (the exponent of the largest power of $2$ dividing its argument). Because $3x+1$ is even for odd $x$, $f(x)$ is again odd; $f$ is the standard "shortcut" Collatz map restricted to odd integers. A single application of $f$ is one **odd-step**; we measure descent in odd-steps.
 
-Every odd number lies in exactly one of four **rails** according to its residue modulo $8$: $8y+1,\ 8y+3,\ 8y+5,\ 8y+7$ (with $y \ge 0$). We treat each rail in turn. Rails $1$ and $5$ descend immediately; rail $3$ bridges deterministically; rail $7$ is the only one requiring a recursion, and it has a clean finite cap.
+Every odd number lies in exactly one of four **rails** according to its residue modulo $8$: $8y+1,\ 8y+3,\ 8y+5,\ 8y+7$ (with $y \ge 0$). We treat each rail in turn. Rails $1$ and $5$ descend immediately; rail $3$ bridges deterministically; rail $7$ is the only one requiring a recursion, and that recursion has an exact closed form.
 
 ---
 

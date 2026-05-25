@@ -65,6 +65,14 @@ Exact descent behaviour by residue class mod 8:
 > $$
 > A previous shorthand that rail 7 exits only to `8z+1` or `8z+5` should be read with care: the exact exit rails are `8z+1`, `8z+3`, and `8z+5`. In particular, for `y = 2^k - 1`, even $k$ exits to `8z+1`, while odd $k$ exits to `8z+3`.
 
+### B2. Recharge No-Go & Tight Mersenne Burn Ledger  *(NEW)*
+📄 `recharge_nogo.md` · 🧪 `verify_recharge_nogo.py`
+
+Sharpens the failed potential of `potential_attack_notes.md` into two exact results:
+- **No-Go (negative):** *no* potential $\log_2 x + g(v_2(x+1))$, for **any** $g$, can be a Collatz supermartingale — the burn forces $g$-slope $\ge\log_2\tfrac32$ while recharge onto $2^m-1$ allows slope $\to 0$; they collide already on $\tau\in[3,7]$.
+- **Tight ledger:** the Mersenne burn $M_n=2^n-1$ has closed form $x_j=3^j2^{\,n-j}-1$, and the critical potential $\Phi=\log_2 x+\log_2\tfrac32\cdot\tau$ rises by $<\log_2\tfrac{10}{9}$ over the *entire* burn — so the fuel price is exactly $\log_2\tfrac32$.
+- Stated limit: the post-escape descent below $x_0$ is the open residual and is **not** claimed.
+
 ### C. Parity Fragility & Instability
 📄 `Collatz_Parity_Fragility_Corrected.md`
 
@@ -116,9 +124,22 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 ```bash
 python3 verify_block_fracture.py   # Block-Fracture Identity + Mersenne erosion
 python3 verify_mod8_rails.py       # Mod-8 rail lemmas + finite-window check to 1e6
+python3 verify_recharge_nogo.py    # Recharge No-Go + tight Mersenne burn ledger
 ```
 
 Both use exact integer arithmetic, need no dependencies, and print PASS for every claim (the mod-8 script's $10^6$ sweep takes a little longer).
+
+For exploratory certificate work:
+
+```bash
+python3 explore_residue_certificates.py
+python3 verify_descent_tree.py
+python3 explore_potential.py
+python3 explore_fuse_burn.py
+python3 explore_mersenne_spine.py
+```
+
+These scripts search for residue-class descent certificates. They are research tools, not proof artifacts: unresolved branches mean the current certificate strategy ran out of fixed low-bit information, not that a counterexample was found.
 
 ---
 
