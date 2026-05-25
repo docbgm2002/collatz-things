@@ -73,12 +73,13 @@ Sharpens the failed potential of `potential_attack_notes.md` into two exact resu
 - **Tight ledger:** the Mersenne burn $M_n=2^n-1$ has closed form $x_j=3^j2^{\,n-j}-1$, and the critical potential $\Phi=\log_2 x+\log_2\tfrac32\cdot\tau$ rises by $<\log_2\tfrac{10}{9}$ over the *entire* burn — so the fuel price is exactly $\log_2\tfrac32$.
 - Stated limit: the post-escape descent below $x_0$ is the open residual and is **not** claimed.
 
-### B2.5. Exponentially Decayed Bit Potential *(NEW)*
+### B2.5. Exponentially Decayed Bit Potential *(NEW / candidate)*
 📄 `Exponential_Decay_Potential.md` · 🧪 `verify_exponential_potential.py`
 
-Bypasses the Recharge No-Go contradiction using a state-sensitive, uniformly bounded potential:
-- **Exact:** the exponentially decayed bit weight $g_r(x) = \sum r^i b_i(x)$ is strictly bounded by $1/(1-r)$ for all $x$, guaranteeing potential descent during any recharge step.
-- **Machine-verified:** 100% strict epoch descent verified on the first $1{,}000{,}000$ odd integers with 0 failures under $c=0.2, r=0.2$.
+A state-sensitive, uniformly bounded potential that makes the *recharge step* safe (which the $\tau$-only potential could not):
+- **Exact:** the exponentially decayed bit weight $g_r(x) = \sum r^i b_i(x)$ is bounded by $1/(1-r)$ for all $x$, so on the recharge family $x_m\to2^m-1$ the potential strictly decreases (Theorem 1).
+- **Empirical:** 0 epoch-descent failures over odd $x\le10^7$ (extended), worst margin $\approx-0.0085$.
+- **Caveat (not a Lyapunov solution):** epoch descent here is driven by the bare $\log_2 x$ term — $x_{\text{end}}<x_0$ holds *by definition* of an epoch, and smaller $c$ only makes the margin more negative, so $g_r$ erodes rather than powers it. This does **not** bypass the global/per-step obstruction (a burn step raises $\log_2x$ by $0.585$, far above the $\le0.25$ the bounded fuel term can move). Global descent remains open.
 
 
 ### B3. Mersenne–Repunit Reduction  *(NEW)*
@@ -97,6 +98,7 @@ An elementary, machine-checked re-derivation of Terras (1976) / Everett (1977), 
 - Built from three exact pieces: affine accumulation $x_K=(3^Kx+c_K)/2^{E_K}$ with $c_K/2^{E_K}<(3/2)^K$; a descent criterion (*enough division $\Rightarrow$ descent*); and the exact equidistribution of $2$-adic valuations (each weight-$E$ pattern has density $2^{-E}$).
 - Supersedes the density goal of `verify_descent_tree.py` (whose proven fraction was non-monotone) with a monotone bound.
 - Stated limit: density $1$ is not *all*; the residual hard core (density $\le\rho^K$, dominated by the near-Mersenne spine) is exactly the conjecture and is **not** closed.
+- **Unifying rate:** B4 proves almost everyone descends at rate $1-\rho^K$; B6 identifies the surviving $\rho^K$ hard core, anchored by the all-ones spine $2^K-1$.
 
 ### B5. Repunit Tail Attack  *(NEW / proof target)*
 📄 `repunit_tail_attack.md` · 🧪 `explore_repunit_tail.py`
@@ -104,7 +106,8 @@ An elementary, machine-checked re-derivation of Terras (1976) / Everett (1977), 
 Turns the Mersenne reduction and stopping-density theorem into a narrow attack:
 - **Exact:** the first post-repunit valuation is $v_2(3a_n+1)=1+v_2(n+1)$ for odd $n$.
 - **Exact ledger:** the remaining question is whether the cumulative valuation sum along $a_n$ crosses the line $K\log_2 3+\log_2(a_n/(2^n-1))$ soon enough.
-- **Empirical target:** for odd $n=7..2001$, the script finds $f^K(a_n)<2^n-1$ for some $K\le3n$.
+- **Normal-form lever:** $x_i=(3^{n+i}+A_i)/2^{E_i+1}$ with $A_{i+1}=3A_i+2^{E_i+1}$, so future payouts become explicit 2-adic congruences.
+- **Target lemma:** prove $\sigma_n\le Cn$ for odd $n$, where $\sigma_n=\min\{K:f^K(a_n)<2^n-1\}$; empirically $C=3$ works for odd $n=7..2001$.
 - Stated limit: this is a proposed lemma, not a proof; the missing ingredient is a non-concentration result for $a_n=(3^n-1)/2$ against the low-valuation residue classes.
 
 Follow-up exploratory notes:
@@ -118,6 +121,7 @@ Identifies *what survives* the residue-class descent tree, unifying three thread
 - **Exact:** the depth-$K$ survivors $S_K$ have density $\le\rho^K\to0$ (same Cramér rate as B4), and are the *valuation-deficient* (high-fuel / near-Mersenne) classes.
 - **Anchor:** the all-ones $2^K-1$ survives at **every** depth — it is the unique minimal-valuation orbit ($E_j=j$), the extreme point of the lower tail.
 - Explains why the nested bridge tree (mod $16/32/\dots$) can never close: at each depth a $\rho^K$-fraction survives, always including the spine.
+- **Unifying rate:** B4 gives the complement, $D(K)\ge1-\rho^K$; B6 describes the same $\rho^K$ exceptional mass as the descent-tree survivor set.
 
 ### B7. Cycle Reduction  *(NEW)*
 📄 `cycle_reduction.md` · 🧪 `verify_cycle_reduction.py`
@@ -145,6 +149,9 @@ Three independent barriers to non-trivial cycles:
 
 The revision marks each lock as *evidential* or *proven*, plugs in the corrected Block-Fracture Identity as supporting structure, and notes that Lock 3 bounds a cycle's stability, not its existence. The $n=28$ ghost-loop worked example ($C=364$, $G=13$) is verified exactly.
 
+Cycle Reduction (B7) makes the Arithmetic Lock precise: a cycle must solve
+$x(2^{E_K}-3^K)=c_K$; excluding all such integer solutions is the remaining gap problem.
+
 ## 🌫️ Heuristic / structural arguments (compelling, not proven)
 
 These describe the *macro picture* via density and probabilistic reasoning. They are evidential, not rigorous, and are labeled as such.
@@ -160,7 +167,7 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 - **Micro-scale (exact):** Block-Fracture Identity → high-density runs contract deterministically.
 - **Residue-scale (exact):** Mod-8 Rail Descent → 3 of 4 rails descend or bridge exactly; the 4th escapes in finite time.
 - **Potential boundary (exact negative):** Recharge No-Go → scalar trailing-one fuel potentials cannot prove global descent.
-- **Potential solution (exact/verified):** Exponential Decay Potential → exponentially decayed bit weight uniformly bounds fuel, yielding 100% strict Lyapunov epoch descent on the first $10^6$ odd integers.
+- **Potential candidate (recharge-safe, global open):** Exponential Decay Potential → bounded bit-weight fuel makes recharge steps safe (Theorem 1) and is empirically epoch-monotone to $10^7$; but epoch descent is carried by the bare $\log_2 x$ term, so it does not yet bypass the global obstruction.
 - **Worst case (exact):** Mersenne–Repunit Reduction → $2^n-1$ solves to a base-3 repunit in $n$ steps; the rest is generic.
 - **Average behaviour (exact):** Stopping-Time Density → almost every integer descends in boundedly many steps, $D(K)\ge1-\rho^K$.
 - **Proof target:** Repunit Tail Attack → try to show the explicit repunit family cannot shadow the exceptional low-valuation tail for `3n` steps.
@@ -176,15 +183,15 @@ These describe the *macro picture* via density and probabilistic reasoning. They
 1. **Block-Fracture Identity** (exact, micro-scale)
 2. **Mod-8 Rail Descent** (exact, residue-scale)
 3. **Recharge No-Go & Tight Mersenne Burn Ledger** (exact negative / potential boundary)
-3.5. **Exponential Decay Potential** (exact/verified potential solution)
+3.5. **Exponential Decay Potential** (recharge-safe candidate; global descent open)
 4. **Mersenne–Repunit Reduction** (exact, worst-case structure)
 5. **Explicit Stopping-Time Density** (exact, almost-all descent with rate)
 6. **Repunit Tail Attack** (proof target after the exact reductions)
-6.5. **Descent-Tree Survivors Are the Spine** (exact, ties the tree to the density rate)
-6.7. **Cycle Reduction** (exact, the cycle equation and density-0 corollary)
-7. **Parity Fragility (Corrected)** (exact, dynamical)
-8. **Triple Lock (Revised)** (structural summary)
-9. Recharge / Fusion–Fracture / Refractory (heuristic macro picture)
+7. **Descent-Tree Survivors Are the Spine** (exact, ties the tree to the density rate)
+8. **Cycle Reduction** (exact, the cycle equation and density-0 corollary)
+9. **Parity Fragility (Corrected)** (exact, dynamical)
+10. **Triple Lock (Revised)** (structural summary)
+11. Recharge / Fusion–Fracture / Refractory (heuristic macro picture)
 
 ---
 
