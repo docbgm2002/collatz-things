@@ -1,5 +1,10 @@
 # The Triple Lock: Three Structural Barriers to Non-Trivial Cycles in the $3x+1$ Problem
 
+> **Status: exploratory structural summary.**
+> Arithmetic and parity observations here are evidential. The former
+> “stability lock” has been withdrawn as a cycle-stability theorem; the
+> parity-itinerary result does not imply metric repulsion.
+
 **Author:** Dr. Bry
 **Date:** Revised 2026 (originally 28 November 2025)
 **License:** CC-BY 4.0 (free to cite, share, and reuse with attribution)
@@ -14,7 +19,9 @@ The three barriers are:
 
 1. **Arithmetic Lock** — most up/down patterns admit no integer cycle solution at all *(computational/structural; not universal)*.
 2. **Parity Lock** — the rare integer solutions found are "ghost loops" that violate Collatz parity *(verified on all tested cases; not proven universal)*.
-3. **Stability Lock** — a hypothetical genuine cycle would be dynamically repelling *(rests on the Parity-Fragility theorem in the companion note)*.
+3. **Itinerary Fragility** — nearby starting values cannot follow the same
+   parity-rule sequence indefinitely. This is not a theorem about metric
+   attraction or repulsion.
 
 A fourth, fully rigorous structural identity — the **Block-Fracture Identity** — is summarised in §5 and proved in the companion note `Block_Fracture_Lemma.md`. It is exact, but it constrains *growth mechanisms*, not cycles directly, so it is presented as supporting structure rather than as one of the three locks.
 
@@ -90,11 +97,14 @@ Again the qualifier matters: "every solution found so far" is not "every solutio
 
 ## 4. Lock 3 — The Stability Lock (Parity-Fragility / instability)
 
-Even a cycle that somehow passed Locks 1 and 2 would be **repelling**. The companion note proves:
+The companion note proves a narrower symbolic statement:
 
 > **Parity-Fragility Theorem.** For trajectories from $n$ and $n+\delta$ with $\delta\neq 0$: if $\delta$ is odd the trajectories diverge at the first odd value; if $\delta = 2^a d$ with $d$ odd, they diverge after at most $a$ shared halvings, once the difference becomes odd.
 
-Consequently no nearby integer can shadow a cycle indefinitely. This is a genuine theorem about *stability*, and it is worth stating precisely what it does and does not do: it shows a hypothetical cycle would be isolated and practically unobservable, but it **does not** show the cycle fails to exist. Lock 3 constrains the *neighbourhood* of a cycle, not its *existence*.
+Consequently no distinct nearby integer can follow exactly the same parity
+itinerary indefinitely. It may later merge with the original trajectory, so
+this does not establish metric instability, isolation, or absence of a basin.
+It also says nothing about whether the cycle exists.
 
 ---
 
@@ -116,7 +126,7 @@ This corrects the earlier informal claim that blocks are "annihilated": they are
 |---|---|---|---|
 | **Arithmetic Lock** | Is $n=C/G$ an integer? | Evidential | Almost always **no** |
 | **Parity Lock** | Does an integer $n$ legally follow the U/D pattern? | Evidential | Solutions are **ghost loops** |
-| **Stability Lock** | Would a genuine cycle be stable? | **Theorem** (stability only) | Cycles would be **repelling** |
+| **Itinerary Fragility** | Can a distinct start share one parity itinerary forever? | **Theorem** | No; no metric-stability conclusion |
 | **Block-Fracture** (support) | What does $\times 3$ do to a run of ones? | **Exact identity** | Run contracts $L\to L-2$ |
 
 Three barriers, each independently hostile to cycle construction; one exact structural identity underpinning the growth analysis. The $3x+1$ conjecture remains formally open. What this document establishes is organised, partly-rigorous *structural hostility*, with the evidential-versus-proven boundary drawn explicitly at every step.

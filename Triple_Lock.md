@@ -1,6 +1,11 @@
 # The Triple Lock: Why the 3n+1 Problem Probably Has No Non-Trivial Cycles
 
-**Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)  
+> **Status: legacy exploratory summary.**
+> This document is not part of the proved-results track. In particular, the
+> former “stability lock” does not prove that cycles are repelling. Use
+> `cycle_reduction.md` and `CLAIM_LEDGER.md` for maintained cycle claims.
+
+**Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)
 **Date:** 28 November 2025  
 **Context:** Part of the "Collatz" Framework 
 
@@ -20,7 +25,8 @@ The Collatz map turns out to have a **Triple Lock**:
 
 1. **Arithmetic Lock:** Most patterns cannot produce an integer cycle at all.
 2. **Parity Lock:** The rare integer solutions ("ghost loops") violate the Collatz parity rules.
-3. **Stability Lock:** Even a hypothetical valid cycle would be dynamically repelling.
+3. **Itinerary Fragility:** A distinct starting value cannot share exactly the
+   same parity-rule sequence indefinitely.
 
 Individually, any one of these makes cycles unlikely. Together, they make them feel as mythical as square circles.
 
@@ -155,7 +161,9 @@ This is **Lock 2**.
 ## 4. Lock 3 — The Stability Lock
 ### (Parity-Fragility / Instability Theorem)
 
-Even if a non-trivial cycle existed and passed both previous locks, it would be **repelling**.
+Even if a non-trivial cycle existed and passed both previous locks, a distinct
+nearby value could not share its exact parity itinerary indefinitely. This
+does not imply metric repulsion.
 
 The companion note proves:
 
@@ -182,7 +190,7 @@ This is **Lock 3**: the dynamical barrier.
 | ------------------- | ------------------------------------------------ | ------------------------------------- |
 | **Arithmetic Lock** | Is $n = C/G$ an integer?                         | Almost always **no**                  |
 | **Parity Lock**     | Does integer $n$ legally follow the U/D pattern? | Integer solutions are **ghost loops** |
-| **Stability Lock**  | Would a genuine cycle be dynamically stable?     | No — cycles would be **repelling**    |
+| **Itinerary Fragility** | Can a distinct start share its parity itinerary forever? | No; metric stability is unresolved |
 
 Three locks.  
 Each independently hostile.  

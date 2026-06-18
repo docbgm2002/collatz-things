@@ -4,10 +4,9 @@ Verification for "The Descent-Tree Survivors Are the Spine".
 
 Ties together verify_descent_tree.py (the branching certificate), the
 stopping-time density theorem (stopping_time_density.md), and the spine notes:
-the residues that survive the depth-K residue tree are exactly the
-valuation-deficient (high trailing-one fuel / near-Mersenne) classes, their
-density is bounded by rho^K -> 0, and the all-ones residue 2^K-1 survives at
-every depth.
+finite survivor fractions through the tested depth, and the exact initial
+Mersenne burn showing that the all-ones residue 2^K-1 survives each tested
+depth. The script does not prove a universal rho^K bound.
 
 Exact integer arithmetic; rho is the Cramer rate from stopping_time_density.md.
 """
@@ -57,7 +56,7 @@ def survivors(K):
 
 
 def check_density_bound(Klo=6, Khi=20):
-    print("== survivor fraction is bounded by rho^K and decays ==")
+    print("== finite survivor-fraction certificate ==")
     print(f"   {'K':>3} {'survivors':>9} {'frac':>8} {'rho^K':>8} "
           f"{'mean_tau':>8} {'max_tau':>7}")
     prev = 1.0
@@ -70,7 +69,7 @@ def check_density_bound(Klo=6, Khi=20):
         assert frac <= prev + 1e-12                          # non-increasing
         prev = frac
         print(f"   {K:3d} {len(S):9d} {frac:8.4f} {RHO**K:8.4f} {mt:8.2f} {max(taus):7d}")
-    print("   PASS  frac(S_K) <= rho^K, non-increasing -> 0")
+    print(f"   PASS  frac(S_K) <= rho^K and non-increasing for K={Klo}..{Khi}")
 
 
 def check_spine_anchor(Khi=22):

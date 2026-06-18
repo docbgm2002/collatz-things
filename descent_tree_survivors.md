@@ -1,14 +1,14 @@
 # The Descent-Tree Survivors Are the Spine
 
 **Building on:** `verify_descent_tree.py`, `stopping_time_density.md`, `recharge_nogo.md`, `mersenne_repunit_reduction.md`
-**Status:** Exact. A consolidating result: it identifies *what survives* the residue-class descent tree and ties three threads of this repo together. It does **not** prove the conjecture.
+**Status:** Exploratory synthesis with one exact spine result and finite survivor certificates. The proposed universal density bound is not yet proved.
 **License:** CC-BY 4.0
 
 ---
 
 ## Abstract
 
-The branching certificate in `verify_descent_tree.py` discharges most residue classes mod $2^K$ but leaves a stubborn set undischarged at every depth — and refining the modulus never empties it. We pin down that set exactly. The depth-$K$ survivors are precisely the **valuation-deficient** classes (those whose first odd-steps divide too little to force descent), they have density $\le\rho^K\to0$ with the same Cramér rate $\rho=0.9465\ldots$ as `stopping_time_density.md`, and they are anchored by the **Mersenne spine**: the all-ones residue $2^K-1$ survives at *every* depth, because it is the unique orbit whose valuations are all $1$. This is why no finite modulus closes the tree, and it unifies the descent tree, the stopping-time density, and the spine notes into one picture.
+The branching certificate in `verify_descent_tree.py` discharges many residue classes mod $2^K$ but leaves a stubborn set undischarged at every tested depth. The survivors are valuation-deficient classes and are anchored by the **Mersenne spine**: the all-ones residue $2^K-1$ survives through its initial burn, where all valuations are \(1\). Finite computations show a decreasing survivor fraction bounded by \(\rho^K\) through the tested range. A proof of that bound for every \(K\) is still missing because tree depth counts known low bits, whereas the Cramér estimate in `stopping_time_density.md` counts a fixed number of odd-steps.
 
 ---
 
@@ -30,9 +30,9 @@ $$
 
 ## 1. The survivors are a vanishing lower-tail set
 
-**Proposition 1 (density).** $\operatorname{dens}(S_K)=|S_K|/2^{K-1}\le \rho^{K}$, with $\rho=e^{-I(\log_2 3)}=0.9465\ldots$, and is non-increasing; hence $\operatorname{dens}(S_K)\to0$.
+**Conjecture 1 (survivor-density bound).** $\operatorname{dens}(S_K)=|S_K|/2^{K-1}\le \rho^{K}$, with $\rho=e^{-I(\log_2 3)}=0.9465\ldots$, and the density is non-increasing.
 
-*Proof.* $r\in S_K$ means the valuation walk $S_j=E_j-\theta j$ stays below $1$ for every $j$ with $E_j\le K$ — in particular $E_{\lfloor\cdot\rfloor}$ never reaches the descent line within the first $K$ bits. This is contained in the lower-tail event $\{E_j\le\theta j$ for the available steps$\}$, whose density is bounded by the single-time Cramér tail $\Pr[E_K\le\theta K]\le\rho^K$ of `stopping_time_density.md`. Monotonicity is immediate since a class discharged at depth $K$ stays discharged at depth $K+1$. $\;\blacksquare$
+The verifier confirms this for \(6\le K\le20\). The earlier attempted proof used the single-time event \(E_K\le\theta K\), but the symbol \(K\) played two different roles: modulus depth in the tree and odd-step count in the Cramér estimate. No valid containment between those events has yet been established.
 
 (Verified: $\operatorname{dens}(S_K)$ runs from $0.53$ at $K=6$ to $0.14$ at $K=20$, always $\le\rho^K$.)
 
@@ -44,29 +44,42 @@ $$
 
 *Proof.* By the burn closed form (`recharge_nogo.md` Lemma 3 / `mersenne_repunit_reduction.md` Lemma R1), $2^K-1$ has $e_i=1$ for its first $K-1$ steps, so $E_j=j$ and $S_j=E_j-\theta j=(1-\theta)j<0$ throughout the burn — the descent line is never reached while the bits last, so $L(2^K-1)>K$. It is the **unique minimal-valuation orbit** ($E_j$ as small as possible), the extreme point of the lower tail. $\;\blacksquare$
 
-More generally the survivors are the **high trailing-one fuel** classes: at $K=12$ the mean $\tau=v_2(\,\cdot+1)$ over $S_K$ is $3.03$ versus $2.00$ over all odd residues, and the top survivors have $\tau$ up to $K$. These are exactly the near-Mersenne classes — e.g. the mod-$32$ failures $7,15,27,31$ reported by `verify_descent_tree.py`.
+In the finite data, survivors are biased toward **high trailing-one fuel**:
+at $K=12$ the mean $\tau=v_2(\,\cdot+1)$ over $S_K$ is $3.03$ versus
+$2.00$ over all odd residues, and the top survivors have $\tau$ up to $K$.
+This motivates the “near-Mersenne” description but is not an exact
+classification.
 
 ---
 
-## 3. The unified picture
+## 3. A comparison of viewpoints
 
-The same set wears three hats:
+Three related constructions appear:
 
 | viewpoint | the set |
 |---|---|
 | `verify_descent_tree.py` | residue classes undischarged at depth $K$ |
-| `stopping_time_density.md` | the lower-tail "non-$K$-good" classes, density $\le\rho^K$ |
+| `stopping_time_density.md` | fixed-step lower-tail "non-$K$-good" classes, density $\le\rho^K$ |
 | spine notes | high-fuel / near-Mersenne classes, anchored by $2^K-1$ |
 
-So refining the modulus (the "nested bridge tree") *cannot* close: at every depth a $\rho^K$-fraction survives, always including the spine, because the rail-7 stay-depth $\lfloor v_2(y+1)/2\rfloor$ is unbounded (`Mod8_Rail_Descent.md`). The tree shrinks the hard core geometrically but never removes it.
+They overlap conceptually but have not been proved to be the same set. The
+spine shows that no finite tree depth discharges every residue class: the
+all-ones residue survives at each depth. The observed geometric shrinkage of
+the remaining classes is a finite certificate and conjectural pattern.
 
 ---
 
 ## 4. What is and is not proved
 
-**Proved:** the survivor density bound $\le\rho^K\to0$ (Prop 1); the spine anchor $2^K-1\in S_K$ and its minimal-valuation characterisation (Prop 2); the identification of the three views as one set.
+**Proved:** the spine anchor $2^K-1\in S_K$ through its initial burn and its minimal initial valuation sequence.
 
-**Not proved:** that the survivor set is *empty in the limit* — it is not; $\bigcap_K$ (as a $2$-adic set) is the measure-zero hard core, and proving every *integer* eventually leaves it is the conjecture. This note explains why finite-modulus refinement is the wrong tool, not how to finish.
+**Finite certificate:** the measured survivor fractions are non-increasing and at most \(\rho^K\) for \(6\le K\le20\).
+
+**Open:** the universal density bound and any exact identification of the tree survivors with the stopping-time lower-tail set.
+
+**Not proved:** a measure formula for the limiting \(2\)-adic survivor set, or
+that every positive integer eventually leaves the corresponding survivor
+classes. The latter is part of the Collatz problem.
 
 ---
 

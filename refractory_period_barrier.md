@@ -1,5 +1,9 @@
 # ⭐ **THE REFRACTORY PERIOD BARRIER**
 
+> **Status: exploratory computational model.**
+> The thresholds and random-bit assumptions in this note are empirical and
+> do not establish universal collapse.
+
 ### *Why Large Fusion Events Are Always Fatal in the Collatz Map*
 
 **Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)  
@@ -218,7 +222,7 @@ This explains the sharp transition observed in the computational data.
 
 ## 5. Main Result
 
-### **Theorem (Refractory Period Barrier).**
+### **Empirical model (Refractory Period Barrier).**
 
 Let (n_0) be a Fusion Candidate of order (L).
 Let (n_k) be the trajectory defined by the Collatz map.
@@ -248,8 +252,9 @@ The **Refractory Period Barrier** completes the structural picture of high-densi
 
 Therefore:
 
-> **A sufficiently large Fusion event guarantees collapse.
-> The system cannot chain growth pulses.**
+> **In the tested families, sufficiently large Fusion events were followed by collapse before recovery.**
+
+This is computational and probabilistic evidence, not a universal guarantee.
 
 Combined with earlier papers, this supports the principle:
 

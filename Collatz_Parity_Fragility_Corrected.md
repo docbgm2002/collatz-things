@@ -1,5 +1,9 @@
 # **Collatz Parity Fragility and Instability of Near-Cycles**
 
+> **Status: proved parity-itinerary result with corrected interpretation.**
+> Distinct starts cannot share one parity-rule sequence indefinitely. The note
+> does not prove non-merging, metric repulsion, or absence of basins.
+
 *A friendly, clean write-up by a physicist who got interested in the Collatz map.*
 
 **Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)  
@@ -14,11 +18,12 @@ This note collects a simple but important observation about the **instability** 
 
 * Track two starting values that differ by a small offset.
 * Ask whether their trajectories can stay “in sync” for long.
-* Show that unless the offset is **exactly zero**, they eventually diverge.
+* Show that unless the offset is **exactly zero**, they eventually cease to
+  follow the same parity-rule sequence.
 
 This is **not** a proof of the Collatz conjecture.
 It does **not** rule out non-trivial cycles.
-But it *does* show that if such cycles exist, they must be **repelling**: nothing near them can stick to them.
+It shows that two distinct starting values cannot follow the same parity-rule sequence indefinitely. This is a symbolic-instability statement only: trajectories may later merge, and the result does not establish metric repulsion or rule out basins.
 
 The argument is elementary: just parity and powers of two.
 
@@ -161,9 +166,9 @@ Then:
 
 * if $\delta \ne 0$, the trajectory from $n$ and the trajectory from $n+\delta$ cannot stay synchronized indefinitely;
 * the parity-fragility argument guarantees eventual divergence;
-* therefore any true Collatz cycle must be **repelling**, not attracting.
+* this does not by itself determine whether a true cycle is attracting or repelling under any chosen metric.
 
-This rules out “thick” cycles or cycles with basins.
+It does not rule out merging trajectories or basins: losing a shared parity itinerary is weaker than never meeting again.
 
 ---
 
@@ -180,9 +185,9 @@ where $m$ and $k$ count how many halving and odd steps the hypothetical cycle us
 This note does **not** tackle that.
 All we have shown is:
 
-* trajectories with non-zero offsets eventually diverge;
-* hypothetical cycles, if they exist, cannot attract anything;
-* they would be isolated and repelling.
+* trajectories with non-zero offsets eventually cease to share one
+  parity-rule sequence;
+* no conclusion about attraction, repulsion, merging, or basin size follows from this argument alone.
 
 The Collatz conjecture remains open.
 
@@ -193,7 +198,7 @@ The Collatz conjecture remains open.
 * Odd difference → immediate divergence.
 * Even difference → eventually stripped of powers of two → becomes odd → divergence.
 * No non-zero $\Delta$ can remain synchronized forever.
-* Any non-trivial Collatz cycle must be **repelling**.
+* The result concerns shared parity itineraries, not cycle stability.
 * This does *not* rule out non-trivial cycles; it only describes their **local instability**.
 
 ---

@@ -40,8 +40,9 @@ def check_lemma1(max_L=400):
 
 
 def check_lemma2(trials=200_000):
-    """Isolated block in arbitrary surroundings: interior run of 3n inherited
-    from the block has length exactly L-2. Also verifies the two carry claims
+    """Isolated block in arbitrary surroundings: the protected interior
+    window inherited from the block contains L-2 ones. The maximal run may
+    extend through a boundary. Also verifies the two carry claims
     the proof rests on:
       (b) low term 3*ell+1 < 2^(k+1)  =>  no carry into bit k+2 from below;
       (c) high term lives at bits >= k+L+1  =>  cannot affect interior.
@@ -72,7 +73,7 @@ def check_lemma2(trials=200_000):
                     interior = (m >> (k + 2)) & want
                     assert interior == want, (L, k, Halt, bin(m))
     print(f"Lemma 2: PASS over {trials} random isolated-block configs "
-          f"(interior L->L-2; low-carry bound (b) and high-term independence (c) verified)")
+          f"(protected L-2 window; low-carry bound (b) and high-term independence (c) verified)")
 
 
 def check_theorem1(max_L=400):

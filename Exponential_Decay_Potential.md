@@ -1,7 +1,7 @@
 # The Exponentially Decayed Bit Potential for the $3x+1$ Map
 
 **Building on:** `recharge_nogo.md`, `potential_attack_notes.md`
-**Status:** A candidate potential. Exact proof of *recharge-step* descent (Theorem 1) + an empirical epoch-monotonicity sweep (0 failures to $10^7$). It is **not** a Lyapunov solution and **not** a proof of the Collatz conjecture — see the caveat in §4.
+**Status:** Proved recharge-family result + finite epoch certificates. It is **not** a Lyapunov solution and **not** a proof of the Collatz conjecture.
 **License:** CC-BY 4.0
 
 ---
@@ -64,26 +64,36 @@ c \;<\; \log_2\left(\frac{4}{3}\right) (1-r) \;\approx\; 0.415037\,(1-r),
 $$
 the recharge step strictly decreases the potential: $P_{c, r}(f(x_m)) < P_{c, r}(x_m)$ for all $m$.
 
-*Proof.* The value ratio for the recharge step is:
+*Proof.* The value ratio is
 $$
-\frac{f(x_m)}{x_m} \;=\; \frac{3(2^m-1)}{2^{m+2}-5} \;<\; \frac{3}{4}.
+\frac{f(x_m)}{x_m}=\frac{3(2^m-1)}{2^{m+2}-5}.
 $$
-Taking the logarithm:
+It approaches $3/4$ from above, not below. For every $m\ge3$ it is at most
+$7/9$, because
 $$
-\Delta \log_2 \;=\; \log_2(f(x_m)) - \log_2(x_m) \;<\; \log_2\left(\frac{3}{4}\right) \;\approx\; -0.415037.
+9\cdot3(2^m-1)\le7(2^{m+2}-5)
+\iff 2^m\ge8.
 $$
-The change in fuel $\Delta g_r = g_r(f(x_m)) - g_r(x_m)$ is strictly bounded by the maximum possible fuel value:
+Hence $\Delta\log_2\le\log_2(7/9)<0$.
+
+Moreover $x_m$ is odd, so $g_r(x_m)\ge1$, while
+$g_r(2^m-1)=\sum_{i=0}^{m-1}r^i$. Therefore
 $$
-\Delta g_r \;<\; g_r(f(x_m)) \;\le\; \sum_{i=0}^{m-1} r^i \;<\; \frac{1}{1-r}.
+\Delta g_r
+\le\sum_{i=0}^{m-1}r^i-1
+<\frac{r}{1-r}.
 $$
-Therefore, the change in potential is:
+Thus
 $$
-\Delta P \;=\; \Delta \log_2 + c \Delta g_r \;<\; \log_2\left(\frac{3}{4}\right) + \frac{c}{1-r}.
+\Delta P<\log_2\left(\frac79\right)+c\frac{r}{1-r}.
 $$
-To guarantee strict descent ($\Delta P < 0$), we require:
+The sufficient condition
 $$
-\log_2\left(\frac{3}{4}\right) + \frac{c}{1-r} \;<\; 0 \;\implies\; c \;<\; \log_2\left(\frac{4}{3}\right)(1-r). \qquad \blacksquare
+c<\log_2\left(\frac97\right)\frac{1-r}{r}
 $$
+therefore proves descent. For $0<r\le1/2$, the theorem's stated bound
+$c<\log_2(4/3)(1-r)$ implies this condition because
+$r\log_2(4/3)<\log_2(9/7)$. $\qquad\blacksquare$
 
 **Remark (Neutralizing the Obstruction).** Choosing $r=0.2$ gives the threshold $c < 0.332$. Choosing $r=0.25$ gives the threshold $c < 0.311$. Under these parameter regimes, a recharge step can *never* cause the potential to grow, no matter how large the trailing run of ones becomes.
 

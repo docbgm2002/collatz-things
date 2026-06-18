@@ -3,7 +3,7 @@
 **Exact one-step descent on three residue rails, a deterministic bridge, and a machine-verified finite-window certificate**
 
 **Author:** Dr. Bry
-**Status:** Exact elementary results + a finite (machine-verified) certificate — *not* a proof of the Collatz conjecture
+**Status:** Proved results + a finite certificate — *not* a proof of the Collatz conjecture
 **License:** CC-BY 4.0
 
 ---
@@ -72,7 +72,11 @@ $$
 $$
 Both divisions are exact for every integer $y$ (the identities are polynomial in $y$, so they hold over $\mathbb{Z}$, including negative $y$). $\qquad\blacksquare$
 
-**Remark (relation to the true odd-step).** The bridge fixes the divisions rather than dividing by the full $2^{v_2}$. The genuine odd-step from $12y+5$ divides by $2^{v_2(36y+16)}$: if $y$ is odd then $v_2(36y+16)=4$ and $f(12y+5)=9y+4$ exactly; if $y$ is even then $v_2 \ge 5$ and $f(12y+5) = (9y+4)/2^{s}$ lies *below* $9y+4$. So the bridge is the upper edge of the true dynamics — never an underestimate of descent.
+**Remark (relation to the true odd-step).** The bridge fixes the divisions rather than dividing by the full $2^{v_2}$. Since
+$$
+36y+16=4(9y+4),
+$$
+we have $v_2(36y+16)=2+v_2(9y+4)$. If $y$ is odd, then $9y+4$ is odd, so the valuation is exactly $2$ and the true odd-step from $12y+5$ is $9y+4$. If $y$ is even, then $9y+4$ is even, so the valuation is at least $3$ and the true odd-step is the odd part of $9y+4$, which is at most $(9y+4)/2$. Thus the fixed bridge is an upper envelope for the true odd-step.
 
 ---
 

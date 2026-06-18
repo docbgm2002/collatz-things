@@ -8,7 +8,8 @@ cycle equation, then establishes what is provable elementarily:
   C1  cycle equation: a K-odd-step cycle through x satisfies
         x (2^{E_K} - 3^K) = c_K,   c_K = sum_{i<K} 3^{K-1-i} 2^{E_i} > 0,
       hence 2^{E_K} > 3^K (E_K >= ceil(K log2 3)) and x = c_K/(2^{E_K}-3^K).
-  C2  small exhaustive equation search (K<=8): only the fixed point x=1.
+  C2  bounded equation search (K<=8 and a stated finite E_K window):
+      only the fixed point x=1.
   C3  cycle minima have natural density 0 (corollary of the stopping-time
       density theorem: a cycle minimum has sigma = infinity).
   C4  machine-verified finite exclusion: no nontrivial cycle has an element
@@ -87,13 +88,15 @@ def check_small_search(Kmax=8):
                     if cur == x:
                         mins.add(x)
     assert mins == {1}, mins
-    print(f"C2: PASS  equation search K<=8 yields only the fixed point x=1")
+    print("C2: PASS  bounded equation search K<=8 in the documented E_K window "
+          "yields only the fixed point x=1")
 
 
 # ---------------------------------------------------------------- C4 (=> C3 hypothesis)
 def check_finite_exclusion(N=10 ** 6):
     """A nontrivial cycle's minimum m never descends below itself (sigma=inf).
-       Every odd m in [3,N] descends, so no cycle element <= N."""
+       If any cycle element were <=N, its minimum would also be <=N.
+       Every odd m in [3,N] descends, so no cycle element is <=N."""
     worst = fails = 0
     for m in range(3, N, 2):
         cur = m

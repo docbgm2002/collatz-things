@@ -3,7 +3,7 @@
 **A structural note on the binary behaviour of multiplication by 3**
 
 **Author:** Dr. Bry
-**Status:** Self-contained structural result (not a proof of the Collatz conjecture)
+**Status:** Proved here (not a proof of the Collatz conjecture)
 **License:** CC-BY 4.0
 
 ---
@@ -64,7 +64,7 @@ $$
 n = H\cdot 2^{\,k+L+1} \;+\; (2^L-1)\,2^k \;+\; \ell,
 \qquad 0 \le \ell < 2^{\,k-1},\quad H \ge 0,
 $$
-so that bit $k-1$ of $n$ is $0$ (isolation below) and bit $k+L$ of $n$ is $0$ (isolation above). Then the **interior** bit-positions $k+2, k+3, \dots, k+L-1$ of $3n$ (and of $3n+1$) are **all equal to $1$**, regardless of the values of $H$ and $\ell$. Consequently the interior run of ones inherited from the block has length exactly $L-2$, in agreement with Corollary 1.
+so that bit $k-1$ of $n$ is $0$ (isolation below) and bit $k+L$ of $n$ is $0$ (isolation above). Then the **interior** bit-positions $k+2, k+3, \dots, k+L-1$ of $3n$ (and of $3n+1$) are **all equal to $1$**, regardless of the values of $H$ and $\ell$. Consequently these positions form a guaranteed window of $L-2$ consecutive ones. The maximal run containing that window may be longer if a boundary bit becomes $1$ through interaction with the surroundings.
 
 *Proof.* Split $n$ into three pieces and use $3n = 3H\cdot 2^{k+L+1} + 3B + 3\ell$, where $B = (2^L-1)2^k$ is the block. We track each piece by the bit-positions it can occupy.
 
@@ -86,7 +86,7 @@ so it produces **no carry out of position $k+1$**, i.e. no carry into position $
 
 **(c) The high term cannot reach the interior (carry from above).** The term $3H\cdot 2^{k+L+1}$ occupies only positions $\ge k+L+1$. In binary addition carries propagate **upward only** — adding any quantity supported on positions $\ge k+L+1$ can alter bits at positions $\ge k+L+1$ but never any bit below $k+L+1$. The interior positions $k+2,\dots,k+L-1$ all lie strictly below $k+L+1$, so they are unaffected by the high term. (The leading frame bit at $k+L+1$ and the gap bit at $k+L$ may change, which is exactly why the *global* run length is not controlled; the interior is not.)
 
-Combining (a)–(c): the interior positions $k+2,\dots,k+L-1$ receive their value solely from $3B$, where they are ones, and are disturbed by neither the low term (b) nor the high term (c). They are therefore all $1$ in $3n$ and in $3n+1$. The maximal interior run has length $L-2$. $\qquad\blacksquare$
+Combining (a)–(c): the interior positions $k+2,\dots,k+L-1$ receive their value solely from $3B$, where they are ones, and are disturbed by neither the low term (b) nor the high term (c). They are therefore all $1$ in $3n$ and in $3n+1$. This proves a guaranteed consecutive-one window of length $L-2$; it does not assert that the maximal run containing the window has exactly that length. $\qquad\blacksquare$
 
 The decisive structural facts are the two one-line carry arguments: the low part is too small to carry past position $k+1$ ((b), a magnitude bound), and the high part lies entirely above the block so its carries cannot descend ((c), the directionality of binary addition). The fate of the two frame bits and of the $L=2$ case still depends on $H$ and $\ell$ — which is precisely why §5's warning about the *global* longest run stands — but the interior contraction $L \to L-2$ is unconditional.
 

@@ -1,7 +1,7 @@
 # A Cycle Reduction for the $3x+1$ Map
 
 **Building on:** `stopping_time_density.md` (affine accumulation, descent density), `Mod8_Rail_Descent.md`
-**Status:** C1 is an exact identity; C2/C4 are machine-verified finite results; C3 is an exact corollary; C5 states the wall. This note does **not** exclude nontrivial cycles.
+**Status:** C1 is proved; C2/C4 are finite certificates; C3 is a corollary of the stopping-time density theorem; C5 states the wall. This note does **not** exclude nontrivial cycles.
 **License:** CC-BY 4.0
 
 ---
@@ -14,7 +14,7 @@ $$
 x\,(2^{E_K}-3^K)=c_K,\qquad c_K=\sum_{i=0}^{K-1}3^{\,K-1-i}2^{E_i}>0,
 $$
 
-so $2^{E_K}>3^K$ and $x=c_K/(2^{E_K}-3^K)$ (C1). From this we get, elementarily: only the fixed point $x=1$ for $K\le8$ by exhaustive search (C2); **cycle minima have natural density $0$** as a corollary of the stopping-time density theorem (C3); and **no nontrivial cycle has an element $\le10^6$** by machine check (C4). We are explicit that excluding *all* cycles reduces to lower-bounding the gap $|2^{E_K}-3^K|$ — the transcendence-theoretic wall handled by Steiner (1977) and Simons–de Weger (2005), which our elementary machinery does not reach (C5).
+so $2^{E_K}>3^K$ and $x=c_K/(2^{E_K}-3^K)$ (C1). From this we obtain: a bounded valuation-pattern search finds only the fixed point $x=1$ in the window stated in §2 (C2); **cycle minima have natural density $0$** as a corollary of the stopping-time density theorem (C3); and **no nontrivial cycle has an element $\le10^6$** by machine check (C4). We are explicit that excluding *all* cycles remains open.
 
 ---
 
@@ -44,13 +44,20 @@ The fixed point realises it: $K=1$, $e_0=2$, $c_1=1$, $x=1/(2^2-3)=1$.
 
 ## 2. No small cycles (C2)
 
-**Result C2 (machine-verified).** Enumerating the equation over all valuation patterns for $K\le8$ — every increasing $0=E_0<\dots<E_{K-1}<E_K$ with $2^{E_K}>3^K$, testing whether $c_K/(2^{E_K}-3^K)$ is a positive odd integer that genuinely cycles — yields **only $x=1$**.
+**Result C2 (bounded finite certificate).** For each $K\le8$, the verifier searches
+$$
+\lceil K\log_2 3\rceil\le E_K<
+\lceil K\log_2 3\rceil+K+4
+$$
+and every increasing sequence $0=E_0<\dots<E_{K-1}<E_K$ in that window. Testing whether $c_K/(2^{E_K}-3^K)$ is a positive odd integer that genuinely cycles yields only $x=1$.
+
+This is not an exhaustive search over all possible $E_K$: no upper bound placing every cycle in this finite window is proved here.
 
 ---
 
 ## 3. Cycle minima have density zero (C3)
 
-**Corollary C3.** The set of minima of nontrivial cycles (a fortiori, of all cycle elements) has natural density $0$.
+**Corollary C3.** The set of minima of nontrivial cycles has natural density $0$.
 
 *Proof.* A cycle's minimum $m$ never goes below itself, so its stopping time is infinite: $\sigma(m)=\infty$. By `stopping_time_density.md`, $\{\sigma=\infty\}\subseteq\{\text{not }K\text{-good}\}$ for every $K$, a set of density $\le\rho^K$; hence $\operatorname{dens}\{\sigma=\infty\}\le\inf_K\rho^K=0$. Cycle minima form a subset, so density $0$. $\;\blacksquare$
 
@@ -60,7 +67,7 @@ This places nontrivial-cycle starting points inside the same vanishing hard core
 
 ## 4. Finite exclusion (C4)
 
-**Result C4 (machine-verified).** Every odd $m\in[3,10^6]$ descends below itself within $\le111$ odd-steps. Since a cycle element is its own non-descender, **no nontrivial cycle has any element $\le10^6$.** (The same exhaustive descent sweep underlies `Mod8_Rail_Descent.md` §5.)
+**Result C4 (machine-verified).** Every odd $m\in[3,10^6]$ descends below itself within $\le111$ odd-steps. A nontrivial positive cycle with any element at most $10^6$ would have a minimum at most $10^6$, but that minimum could not descend below itself. Therefore **no nontrivial cycle has any element $\le10^6$.** (The same exhaustive descent sweep underlies `Mod8_Rail_Descent.md` §5.)
 
 ---
 
@@ -72,7 +79,7 @@ To exclude cycles outright, C1 shows it suffices to prevent $x=c_K/(2^{E_K}-3^K)
 
 ## 6. What is and is not proved
 
-**Proved / verified:** the cycle equation C1 (exact); only $x=1$ for $K\le8$ (C2); cycle minima have density $0$ (C3, exact corollary of the density theorem); no cycle element $\le10^6$ (C4).
+**Proved / verified:** the cycle equation C1; only $x=1$ in the bounded C2 search window; cycle minima have density $0$ (C3, a corollary of the density theorem); no cycle element $\le10^6$ (C4).
 
 **Not proved:** the nonexistence of nontrivial cycles. That needs a lower bound on $|2^{E_K}-3^K|$ (transcendence theory), which this note isolates but does not establish.
 
