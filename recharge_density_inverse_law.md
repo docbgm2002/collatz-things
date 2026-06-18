@@ -7,7 +7,7 @@
 
 ### *Why Collatz Trajectories Cannot Explode*
 
-**Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)  
+**Author:** Dr. Bry  
 **Date:** 28 November 2025  
 **Context:** Part of the “Collatz” Framework
 

@@ -4,7 +4,7 @@
 > Exact binary identities are separated in `Block_Fracture_Lemma.md`.
 > Statements here about impossibility of sustained growth are not proved.
 
-**Author:** Some Bloke Down the Pub (who happens to know docbgm, but is better than him at maths)
+**Author:** Dr. Bry
 **Date:** 28 November 2025  
 **Context:** Part of the "Collatz" Framework
 
