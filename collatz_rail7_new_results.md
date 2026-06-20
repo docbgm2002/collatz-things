@@ -155,6 +155,6 @@ For **all** $x = 8y + 7$, the epoch is finite. Equivalently, no $y$ sustains rai
 
 ## 6. References
 
-- docbgm2002/collatz-things: `Mod8_Rail_Descent.md`, `Block_Fracture_Lemma.md`, `Triple_Lock_Revised.md`
+- docbgm2002/collatz-things: `Mod8_Rail_Descent.md`, `Block_Fracture_Lemma.md`; legacy summary `archive/Triple_Lock_Revised.md`
 - Terence Tao, "Almost all orbits of the Collatz map attain almost bounded values" (2019)
 - Hamed M. Pour, "Elementary Exponential Density Bounds for Collatz" (2025)

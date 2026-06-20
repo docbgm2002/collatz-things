@@ -43,6 +43,15 @@ Start with:
 - [`mersenne_repunit_reduction.md`](mersenne_repunit_reduction.md)
   reduces the Mersenne trajectory after its closed-form burn to the base-\(3\)
   repunit \((3^n-1)/2\) for odd \(n\).
+- [`repunit_rail5_exact.md`](repunit_rail5_exact.md)
+  classifies the initial mod-\(8\) rails of odd-indexed base-\(3\) repunits,
+  proves that a natural-density \(5/8\) of the family reaches rail \(5\) on
+  step \(0\) or \(1\), and records a separate bounded \(12\)-step observation.
+- [`repunit_rail5_density.md`](repunit_rail5_density.md)
+  extends the \(5/8\) result to every fixed time: the density avoiding rail
+  \(5\) through step \(K\) is exactly
+  \(\frac12(3/4)^K\), so almost every odd-indexed repunit eventually reaches
+  rail \(5\).
 - [`Exponential_Decay_Potential.md`](Exponential_Decay_Potential.md)
   proves descent of a bounded bit-weight potential on one explicit recharge
   family. Its epoch-wide behaviour is only a finite certificate, and it is not
@@ -69,6 +78,8 @@ The following statements are exhaustive only over their stated bounds:
   only \(x=1\).
 - The measured descent-tree survivor fractions satisfy the reported bounds
   for \(6\le K\le20\).
+- Every tested odd-indexed repunit \(a_n\), \(3\le n\le199\), reaches rail
+  \(5\bmod8\) within at most 12 odd-steps.
 
 ## Proof targets and exploratory work
 
@@ -81,17 +92,18 @@ proved-results track:
   automaton/normal-form notes.
 - [`fuse_map_theory.md`](fuse_map_theory.md) and
   [`fuse_burn_attack.md`](fuse_burn_attack.md).
-- [`fusion_fracture_cycle.md`](fusion_fracture_cycle.md),
-  [`refractory_period_barrier.md`](refractory_period_barrier.md), and
-  [`recharge_density_inverse_law.md`](recharge_density_inverse_law.md).
-- [`Triple_Lock.md`](Triple_Lock.md) and
-  [`Triple_Lock_Revised.md`](Triple_Lock_Revised.md).
 
 The parity-itinerary note
 [`Collatz_Parity_Fragility_Corrected.md`](Collatz_Parity_Fragility_Corrected.md)
 proves that distinct starting values cannot share one parity-rule sequence
 indefinitely. It does **not** prove that trajectories cannot later merge, or
 that hypothetical cycles are metrically repelling.
+
+## Archive
+
+Superseded thermodynamic heuristics, legacy cycle summaries, and exploratory
+precursors are retained under [`archive/`](archive/README.md). They are
+historical records, not part of the maintained claim chain.
 
 ## Verification
 
@@ -103,6 +115,8 @@ python verify_mod8_rails.py
 python verify_recharge_nogo.py
 python verify_exponential_potential.py
 python verify_repunit_reduction.py
+python verify_repunit_rail5.py
+python verify_repunit_rail5_density.py
 python verify_stopping_density.py
 python verify_cycle_reduction.py
 python verify_tree_survivors.py
@@ -122,8 +136,10 @@ Interpret the output according to the claim ledger:
 4. `Mod8_Rail_Descent.md`
 5. `recharge_nogo.md`
 6. `mersenne_repunit_reduction.md`
-7. `stopping_time_density.md`
-8. `cycle_reduction.md`
+7. `repunit_rail5_exact.md`
+8. `repunit_rail5_density.md`
+9. `stopping_time_density.md`
+10. `cycle_reduction.md`
 
 ## Contribution standard
 

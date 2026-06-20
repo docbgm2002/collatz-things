@@ -1,6 +1,6 @@
 # Recharge No-Go and the Tight Mersenne Burn Ledger
 
-**Building on:** `Mod8_Rail_Descent.md`, `Block_Fracture_Lemma.md`, `potential_attack_notes.md`
+**Building on:** `Mod8_Rail_Descent.md`, `Block_Fracture_Lemma.md`, archived exploratory note `archive/potential_attack_notes.md`
 **Status:** Part I is an exact *negative* result; Part II is an exact closed-form ledger. Neither is a proof of the Collatz conjecture — Part II ends at the open residual it cannot close.
 **License:** CC-BY 4.0
 
@@ -8,7 +8,7 @@
 
 ## Abstract
 
-`potential_attack_notes.md` observed that the single-term potential $\log_2 x + c\,\tau(x)$, with $\tau(x)=v_2(x+1)$ the trailing-one count, fails because of *recharge*. Here we sharpen that observation in two directions.
+The archived `archive/potential_attack_notes.md` observed that the single-term potential $\log_2 x + c\,\tau(x)$, with $\tau(x)=v_2(x+1)$ the trailing-one count, fails because of *recharge*. Here we sharpen that observation in two directions.
 
 **Part I (No-Go).** *No* potential of the form $P(x)=\log_2 x + g(\tau(x))$, with $g$ **any** function, can be a global Collatz supermartingale. The burn side (rail-7 / Mersenne erosion) forces $g$ to climb with slope $\ge \log_2\frac32$ per unit of fuel; the recharge side (landing on a Mersenne number $2^m-1$) permits $g$ to climb with slope $\to 0$. The two are inconsistent already over $\tau\in[3,7]$.
 
@@ -175,8 +175,8 @@ What the ledger *does* deliver: the spine's burn is exactly priced ($\log_2\frac
 
 ## What this rules out, and what it suggests
 
-* **Ruled out (Theorem 1):** every potential $\log_2 x+g(\tau)$, for *any* $g$ — not merely the linear one tried in `potential_attack_notes.md`.
-* **Suggested:** a potential needs a second coordinate beyond $\tau$ — a "phase" distinguishing cold fuel (just recharged, as in Lemma 2) from hot fuel (about to burn, as in Lemma 3). Equivalently, the paired-macro program of `potential_attack_notes.md §5`: charge each recharge against the burst it later feeds, and ask whether the pair has net drift below $1$.
+* **Ruled out (Theorem 1):** every potential $\log_2 x+g(\tau)$, for *any* $g$ — not merely the linear one tried in `archive/potential_attack_notes.md`.
+* **Suggested:** a potential needs a second coordinate beyond $\tau$ — a "phase" distinguishing cold fuel (just recharged, as in Lemma 2) from hot fuel (about to burn, as in Lemma 3). Equivalently, the paired-macro program of `archive/potential_attack_notes.md §5`: charge each recharge against the burst it later feeds, and ask whether the pair has net drift below $1$.
 * **Where the margin lives:** Theorem 2 says it is *not* in the burn (margin-free at $c=\log_2\frac32$). For the spine it can only come from the post-escape $\frac34$-steps of Lemma 4 — a concrete target for the next note.
 
 ---

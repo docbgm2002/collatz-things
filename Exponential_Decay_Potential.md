@@ -1,6 +1,6 @@
 # The Exponentially Decayed Bit Potential for the $3x+1$ Map
 
-**Building on:** `recharge_nogo.md`, `potential_attack_notes.md`
+**Building on:** `recharge_nogo.md`, archived exploratory note `archive/potential_attack_notes.md`
 **Status:** Proved recharge-family result + finite epoch certificates. It is **not** a Lyapunov solution and **not** a proof of the Collatz conjecture.
 **License:** CC-BY 4.0
 
