@@ -120,9 +120,10 @@ That matches the observed center of the data.
 
 `explore_repunit_tail.py` checks the exact tail, not a random model. It currently finds:
 
-* for odd `n=7..2001`, every repunit tail satisfies `sigma_n <= 3n`;
+* for odd `n=7..10001`, every repunit tail satisfies `sigma_n <= 3n`;
 * the worst ratio in that range is `sigma_23/23 = 63/23 = 2.739...`;
-* the smallest exact descent margin found in that range is about `0.00122` bits, at `n=1345`.
+* the smallest exact descent margin found in that range is about
+  `0.0001522` bits, at `n=6035`.
 
 The margin can be very small. So a proof of `sigma_n <= 3n` cannot rely on generous slack; it needs a structural reason that the valuation walk eventually crosses the target line.
 

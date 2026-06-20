@@ -52,6 +52,28 @@ Start with:
   \(5\) through step \(K\) is exactly
   \(\frac12(3/4)^K\), so almost every odd-indexed repunit eventually reaches
   rail \(5\).
+- [`repunit_affine_tail_bound.md`](repunit_affine_tail_bound.md)
+  proves that the affine correction in the repunit-tail ledger is
+  exponentially small throughout every pre-descent linear window.
+- [`repunit_tail_merge_reduction.md`](repunit_tail_merge_reduction.md)
+- [`repunit_gap_merger_analysis.md`](repunit_gap_merger_analysis.md)
+- [`repunit_gap2_sync_tree.md`](repunit_gap2_sync_tree.md)
+- [`repunit_multigap_sync_union.md`](repunit_multigap_sync_union.md)
+- [`repunit_collision_defect_dynamics.md`](repunit_collision_defect_dynamics.md)
+  gives an exact diagonal-state merge criterion and a merge-inheritance
+  induction principle.
+- [`repunit_256_block_target.md`](repunit_256_block_target.md)
+  isolates a conditional 256-valuation floor which would prove descent of
+  every odd-indexed repunit tail.
+- [`repunit_low_prefix_obstruction.md`](repunit_low_prefix_obstruction.md)
+  constructs explicit low-valuation repunit prefixes, showing that any fixed
+  block-floor proof must use off-diagonal merging or a recovery mechanism.
+- [`repunit_baker_nonshadowing.md`](repunit_baker_nonshadowing.md)
+- [`repunit_baker_applicability_census.md`](repunit_baker_applicability_census.md)
+- [`repunit_enemy_episode_analysis.md`](repunit_enemy_episode_analysis.md)
+  proves that positive integer exponents cannot shadow the
+  \(3^{\alpha+1}=-7\) ghost branch for more than \(O(\log n)\) steps, via
+  Yu's \(p\)-adic Baker theorem.
 - [`Exponential_Decay_Potential.md`](Exponential_Decay_Potential.md)
   proves descent of a bounded bit-weight potential on one explicit recharge
   family. Its epoch-wide behaviour is only a finite certificate, and it is not
@@ -86,6 +108,7 @@ The following statements are exhaustive only over their stated bounds:
 These documents are useful research records but are not dependencies of the
 proved-results track:
 
+- [`entropy_nonshadowing_theory.md`](entropy_nonshadowing_theory.md) — alternative Entropy and Kolmogorov Complexity track.
 - [`descent_tree_survivors.md`](descent_tree_survivors.md) — exact spine
   anchor plus a conjectural universal survivor-density bound.
 - [`repunit_tail_attack.md`](repunit_tail_attack.md) and related repunit
@@ -117,9 +140,21 @@ python verify_exponential_potential.py
 python verify_repunit_reduction.py
 python verify_repunit_rail5.py
 python verify_repunit_rail5_density.py
+python verify_repunit_affine_tail.py
+python verify_repunit_tail_merges.py
+python verify_repunit_gap_mergers.py
+python explore_repunit_sync_tree.py --through-step 7 --max-total 24 --common-depth 24
+python verify_repunit_sync_union.py
+python verify_repunit_collision_defect.py
+python verify_repunit_256_block.py
+python verify_repunit_low_prefix.py
+python verify_repunit_baker_nonshadowing.py
+python explore_baker_applicability.py --limit 5001
+python explore_repunit_enemy_episodes.py --limit 10001 --min-run 1
 python verify_stopping_density.py
 python verify_cycle_reduction.py
 python verify_tree_survivors.py
+python verify_entropy_balance.py
 ```
 
 Interpret the output according to the claim ledger:
