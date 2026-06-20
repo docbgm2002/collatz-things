@@ -67,7 +67,7 @@ $$f(a_n) = b_m = \frac{9^m-1}{8}$$
 Moreover, for odd $m$:
 $$b_m \equiv m \pmod 8$$
 
-**Proof.** From Theorem R5.2, $v_2((n+1)/2) = 0$ when $n \equiv 1 \pmod 4$, so $f(a_n) = a_{n+1}/4 = (3^{n+1}-1)/8 = (9^m-1)/8 = b_m$. For odd $m$, $9^m \equiv 9 \pmod{16}$ when $m \equiv 1 \pmod 2$, so $b_m = (9^m-1)/8 \equiv (9-1)/8 = 1 \pmod 2$ (odd), and $b_m \equiv m \pmod 8$ by direct computation of $9^m \bmod 64$. ∎
+**Proof.** From Theorem R5.2, $v_2((n+1)/2) = 0$ when $n \equiv 1 \pmod 4$, so $f(a_n) = a_{n+1}/4 = (3^{n+1}-1)/8 = (9^m-1)/8 = b_m$. For odd $m$, $9^m \equiv 9 \pmod{16}$ when $m \equiv 1 \pmod 2$, so $b_m = (9^m-1)/8 \equiv 1 \pmod 2$ (odd). The congruence $b_m \equiv m \pmod 8$ follows from $9 \equiv 1 \pmod 8$ and the binomial expansion of $(1+8)^m$. ∎
 
 ---
 
@@ -79,10 +79,18 @@ For odd $m$, the value $v_2(3b_m + 1)$ is determined by $m \bmod 8$:
 |---|---|---|
 | 1 | 2 | Moderate descent |
 | 3 | 1 | Weak descent |
-| 5 | $\ge 4$ | **Strong descent** (rail 5) |
+| 5 | $\ge 3$ | Strong descent (rail 5) |
 | 7 | 1 | Weak descent |
 
-**Proof.** Since $b_m \equiv m \pmod 8$ (Theorem R5.3), we have $3b_m + 1 \equiv 3m + 1 \pmod{24}$. Computing $3m+1$ for $m \in \{1,3,5,7\}$ gives $4, 10, 16, 22$, with $v_2$ values $2, 1, 4, 1$ respectively. The $m \equiv 5$ case gives $3b_m+1 \equiv 0 \pmod{16}$, and higher congruences show $v_2 \ge 4$. ∎
+**Proof.** Since $b_m \equiv m \pmod 8$ (Theorem R5.3), we have $3b_m + 1 \equiv 3m + 1 \pmod{24}$. For $m \in \{1,3,5,7\}$:
+- $m=1$: $3b_m+1 \equiv 4 \pmod{24}$, so $v_2 = 2$
+- $m=3$: $3b_m+1 \equiv 10 \pmod{24}$, so $v_2 = 1$
+- $m=5$: $3b_m+1 \equiv 16 \pmod{24}$, so $v_2 \ge 3$ (since $16 = 2^4$ and higher congruences may increase $v_2$)
+- $m=7$: $3b_m+1 \equiv 22 \pmod{24}$, so $v_2 = 1$
+
+For $m \equiv 5 \pmod 8$, write $m = 8k+5$. Then $b_m = (9^{8k+5}-1)/8$ and $3b_m+1 = (3 \cdot 9^{8k+5} + 5)/8$. Using $9 = 1+8$ and expanding via the binomial theorem, the numerator is $3(1+8)^{8k+5} + 5 = 8 + 24(8k+5) + \cdots$, which is divisible by $8$ but not necessarily by $16$. Detailed computation shows $v_2 \ge 3$ with the exact value depending on higher terms in the binomial expansion. ∎
+
+**Note.** An earlier version of this theorem incorrectly claimed $v_2 \ge 4$ for $m \equiv 5 \pmod 8$. Empirical verification to $m = 200$ shows the minimum is $v_2 = 3$ (achieved at $m = 13, 29, 45, 61, \ldots$). The proof has been corrected. The rail-5 hit frequency results (Theorems R5.5–R5.7) are unaffected because they depend only on which rail is hit, not on the descent strength.
 
 ---
 
@@ -181,10 +189,24 @@ for n in range(1, 200, 4):
     a = repunit(n)
     m = (n + 1) // 2
     b = (9**m - 1) // 8
-    f_a = (3*a + 1) // (2**((3*a + 1) & -(3*a + 1)).bit_length() - 1)
+    # Compute f(a_n) directly
+    val = 3*a + 1
+    v = (val & -val).bit_length() - 1
+    f_a = val // (2**v)
     assert f_a == b
     if m % 2 == 1:
         assert b % 8 == m % 8
+
+# Theorem R5.4: v2 pattern for base-9 repunit
+def v2(n):
+    return (n & -n).bit_length() - 1
+
+for r in [1, 3, 5, 7]:
+    values = []
+    for m in range(r, 200, 8):
+        b = (9**m - 1) // 8
+        values.append(v2(3*b + 1))
+    print(f"m ≡ {r} (mod 8): v2 values = {sorted(set(values))}")
 
 # Theorem R5.6: 5/8 lower bound
 count = 0
@@ -199,9 +221,6 @@ for n in range(1, 200, 2):
 assert count / total >= 5/8
 
 # Theorem R5.7: Universal 12-step bound (empirical)
-def v2(n):
-    return (n & -n).bit_length() - 1
-
 for n in range(3, 200, 2):
     a = repunit(n)
     x = a
@@ -209,7 +228,9 @@ for n in range(3, 200, 2):
     while x % 8 != 5 and steps < 100:
         while x % 2 == 0:
             x //= 2
-        x = (3*x + 1) // (2**v2(3*x + 1))
+        val = 3*x + 1
+        v = v2(val)
+        x = val // (2**v)
         steps += 1
     assert x % 8 == 5
     assert steps <= 12
