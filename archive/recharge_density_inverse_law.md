@@ -3,7 +3,7 @@
 > **Status: exploratory / retired from the proved-results track.**
 > This note incorrectly identifies \(3k+1\) with the next odd iterate when
 > additional factors of \(2\) may remain. Its probability and global-growth
-> conclusions must not be cited as theorems. See `recharge_nogo.md`.
+> conclusions must not be cited as theorems. See `../docs/no-go/recharge_nogo.md`.
 
 ### *Why Collatz Trajectories Cannot Explode*
 

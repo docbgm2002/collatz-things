@@ -51,7 +51,7 @@ $$
 The sign treats a long trailing-one block as stored danger: if a Collatz macro
 burns fuel and lowers value, `P_c` should fall.
 
-Computational scan in `explore_potential.py`:
+Computational scan in `scripts/explore_potential.py`:
 
 - Across sampled Rail-7 escape macros, the potential wants roughly
 

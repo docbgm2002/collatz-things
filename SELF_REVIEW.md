@@ -50,7 +50,7 @@ explicitly in a journal version (one sentence).
 
 ## 4. Independent certificate check (new)
 
-`verify_nogo_certificate.py`: the no-go constraint system on any finite
+`scripts/verify_nogo_certificate.py`: the no-go constraint system on any finite
 coordinate window is a difference-constraint system; infeasibility is
 equivalent to a directed cycle of value-ratio product > 1 in the
 coordinate graph of observed real steps. Bellman–Ford over odd

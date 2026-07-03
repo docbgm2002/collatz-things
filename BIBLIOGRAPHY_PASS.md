@@ -3,7 +3,7 @@
 **Purpose.** Pre-submission literature check for the manuscript
 *Mersenne Obstructions to Local Lyapunov Functions for the 3x+1 Map*
 (Theorems A, B, C = NLP1, Tower, NLP-finite-set) and for the repository
-notes `no_local_potential.md`, `nlp2_alternation.md`, `tower_theorem.md`.
+notes `docs/no-go/no_local_potential.md`, `docs/no-go/nlp2_alternation.md`, `docs/no-go/tower_theorem.md`.
 
 ## Queries run (three sessions, independent framings)
 
@@ -38,7 +38,7 @@ the burn lemma in the manuscript; Andaloro (2000) added to references.
 The manuscript's contribution at that point is explicitly narrowed to
 the coordinate-freezing use of the family, not the identity.
 
-Repo-side: `recharge_nogo.md` and `no_local_potential.md` should carry
+Repo-side: `docs/no-go/recharge_nogo.md` and `docs/no-go/no_local_potential.md` should carry
 the same attribution note on their burn lemmas when next edited.
 
 **Positioning (predecessor structure).** Wirsching (LNM 1681, 1998)

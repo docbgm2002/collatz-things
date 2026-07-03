@@ -23,7 +23,7 @@ The three barriers are:
    parity-rule sequence indefinitely. This is not a theorem about metric
    attraction or repulsion.
 
-A fourth, fully rigorous structural identity — the **Block-Fracture Identity** — is summarised in §5 and proved in the companion note `Block_Fracture_Lemma.md`. It is exact, but it constrains *growth mechanisms*, not cycles directly, so it is presented as supporting structure rather than as one of the three locks.
+A fourth, fully rigorous structural identity — the **Block-Fracture Identity** — is summarised in §5 and proved in the companion note `../docs/core/Block_Fracture_Lemma.md`. It is exact, but it constrains *growth mechanisms*, not cycles directly, so it is presented as supporting structure rather than as one of the three locks.
 
 The honest summary: the conjecture remains open, several of these barriers are evidential rather than proven, and the document's value is in organising *why* cycles are hard to build, not in claiming they cannot exist.
 
@@ -110,7 +110,7 @@ It also says nothing about whether the cycle exists.
 
 ## 5. Supporting structure — The Block-Fracture Identity (exact)
 
-The strongest fully-rigorous component of this project is not one of the three locks but an exact identity about the growth mechanism itself, proved in `Block_Fracture_Lemma.md`:
+The strongest fully-rigorous component of this project is not one of the three locks but an exact identity about the growth mechanism itself, proved in `../docs/core/Block_Fracture_Lemma.md`:
 
 > **Block triple (exact).** For $L\ge 2$, $\;3(2^L-1) = \texttt{10}\,1^{L-2}\,\texttt{01}$ in binary. An isolated block of $L$ consecutive ones is mapped by multiplication-by-3 to an interior run of length $L-2$, framed by `10`…`01`, with the block's bit-count preserved.
 >
@@ -145,8 +145,8 @@ Each of these is, in effect, equivalent to resolving cycle non-existence; none i
 
 ## References & companions
 
-* `Block_Fracture_Lemma.md` — exact proof and verification of the Block-Fracture Identity and Mersenne erosion (§5 here).
-* `Collatz_Parity_Fragility_Corrected.md` — proof of the Stability Lock (§4 here).
+* `../docs/core/Block_Fracture_Lemma.md` — exact proof and verification of the Block-Fracture Identity and Mersenne erosion (§5 here).
+* `../docs/core/Collatz_Parity_Fragility_Corrected.md` — proof of the Stability Lock (§4 here).
 * Computational searches (2025) on the cycle equation; all arithmetic in §2–§3 independently re-verified.
 
 ---

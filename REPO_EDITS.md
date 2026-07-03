@@ -7,7 +7,7 @@ lists the file, the change, and the reason.
 
 ## 1. Reclassify PAR1 as a known theorem (Terras / Everett)
 
-**Finding.** The theorem of `Collatz_Parity_Fragility_Corrected.md`
+**Finding.** The theorem of `docs/core/Collatz_Parity_Fragility_Corrected.md`
 (distinct starts cannot share one parity-rule sequence indefinitely) is the
 classical parity-vector injectivity result: Terras (1976, *Acta
 Arithmetica* 30, "A stopping time problem on the positive integers",
@@ -25,7 +25,7 @@ a valid elementary rederivation, not a new theorem.
   parity-vector injectivity, restated for the C-map (k halvings in place
   of k T-steps)`
 
-**Edit to `Collatz_Parity_Fragility_Corrected.md`, status banner,
+**Edit to `docs/core/Collatz_Parity_Fragility_Corrected.md`, status banner,
 replace with:**
 
 > **Status: known theorem rederived (Terras 1976 / Everett 1977), with
@@ -40,14 +40,14 @@ rederivation of Terras/Everett parity-vector injectivity)" after "proves".
 
 ---
 
-## 2. TREE2 / Conjecture 1 of `descent_tree_survivors.md` is FALSE
+## 2. TREE2 / Conjecture 1 of `docs/density-cycles/descent_tree_survivors.md` is FALSE
 
 **Finding.** The survivor density has an exact expression as a
 first-passage probability for the i.i.d. Geometric(1/2) valuation walk
-(by the equidistribution Lemma 3 of `stopping_time_density.md`): a class
+(by the equidistribution Lemma 3 of `docs/density-cycles/stopping_time_density.md`): a class
 survives at budget K iff the walk stays strictly below the line
 theta*j + 1 while its running sum is <= K. Computing this probability by
-exact dynamic programming (`verify_survivor_density_rate.py`):
+exact dynamic programming (`scripts/verify_survivor_density_rate.py`):
 
 - dens(S_K) <= rho^K holds for K <= 194 and **first fails at K = 195**
   (confirmed in exact rational arithmetic);
@@ -70,7 +70,7 @@ violation margin from K ~ 200 onward. The count formulation therefore also
 fails, by K ~ 200 at the latest; only the exact first-failure index could
 shift by a few units.
 
-**Edits to `descent_tree_survivors.md`:**
+**Edits to `docs/density-cycles/descent_tree_survivors.md`:**
 
 (a) Replace Conjecture 1 with:
 
@@ -81,7 +81,7 @@ shift by a few units.
 >
 > **History note.** The original Conjecture 1 claimed dens(S_K) <= rho^K
 > with rho = e^{-I(theta)} = 0.9465. This is FALSE: the exact
-> first-passage computation (`verify_survivor_density_rate.py`) shows the
+> first-passage computation (`scripts/verify_survivor_density_rate.py`) shows the
 > bound holds only for K <= 194 (natural-density formulation) and the
 > ratio dens/rho^K grows without bound thereafter. The K <= 20 finite
 > certificate was pre-asymptotic and the conjectured constant was wrong;
@@ -119,9 +119,9 @@ the promotable target.
 - Status: `Conjecture / proof gap` → `Original rho^K bound REFUTED
   (exact computation, first failure K=195); corrected rate conjectured;
   geometric decay is a proof target with sketch`
-- Verification: add `verify_survivor_density_rate.py`
+- Verification: add `scripts/verify_survivor_density_rate.py`
 
-**Edit to `verify_tree_survivors.py`:** the assertion
+**Edit to `scripts/verify_tree_survivors.py`:** the assertion
 `frac <= RHO ** K` is now known to hold only in the tested range; add a
 comment stating it certifies K = 6..20 only and referencing the
 refutation, so a future reader does not mistake the passing assert for
@@ -129,7 +129,7 @@ support of the universal bound.
 
 ---
 
-## 3. Literature note for `cycle_reduction.md`
+## 3. Literature note for `docs/density-cycles/cycle_reduction.md`
 
 Append to the introduction or §"What is not proved":
 
@@ -146,7 +146,7 @@ Append to the introduction or §"What is not proved":
 
 ---
 
-## 4. New note: `no_local_potential.md` (+ verifier)
+## 4. New note: `docs/no-go/no_local_potential.md` (+ verifier)
 
 New proved result generalizing RNG1: **no potential
 log2(x) + g(x mod 2^m, tau(x)) is nonincreasing along f, for any m and any
@@ -157,20 +157,20 @@ separate hot from cold fuel; the RNG1 scissors then close on the single
 sequence g(-1, M): forced linear growth (burn) vs a uniform cap
 (recharge). RNG1 is the m = 0 case.
 
-Files: `no_local_potential.md`, `verify_no_local_potential.py`
+Files: `docs/no-go/no_local_potential.md`, `scripts/verify_no_local_potential.py`
 (all checks pass; exact integer arithmetic).
 
 **Edit to `CLAIM_LEDGER.md`, add row:**
 
 | NLP1 | No potential \(\log_2 x + g(x \bmod 2^m, \tau(x))\) is
 nonincreasing along \(f\), for any \(m\ge0\) and any \(g\) | Proved here
-(pending final external literature check) | `no_local_potential.md` |
-`verify_no_local_potential.py`; generalizes RNG1 (the \(m=0\) case);
-depends on `recharge_nogo.md` Lemmas 1–2 |
+(pending final external literature check) | `docs/no-go/no_local_potential.md` |
+`scripts/verify_no_local_potential.py`; generalizes RNG1 (the \(m=0\) case);
+depends on `docs/no-go/recharge_nogo.md` Lemmas 1–2 |
 
-**Edit to `README.md`:** add `no_local_potential.md` to the
+**Edit to `README.md`:** add `docs/no-go/no_local_potential.md` to the
 "Mersenne structure and potential limitations" bullet list, after
-`recharge_nogo.md`.
+`docs/no-go/recharge_nogo.md`.
 
 **Publication assessment.** RNG1 + NLP1 together form a self-contained
 negative result ("Mersenne obstruction to local Lyapunov functions for the

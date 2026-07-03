@@ -22,12 +22,12 @@ The main programme below attacks this residual directly.
 These are already in the maintained claim chain; the roadmap builds on them:
 
 - closed-form Mersenne burn and epoch split
-  `epoch(2^n-1)=n+\sigma(a_n)` — `recharge_nogo.md`, `mersenne_repunit_reduction.md`;
-- almost-everywhere finite stopping time with explicit rate — `stopping_time_density.md`;
-- repunit rail-5 hitting density and geometric avoider law — `repunit_rail5_density.md`;
-- no global potential \(\log_2 x+g(\tau(x))\) — `recharge_nogo.md`;
+  `epoch(2^n-1)=n+\sigma(a_n)` — `docs/no-go/recharge_nogo.md`, `docs/repunit/mersenne_repunit_reduction.md`;
+- almost-everywhere finite stopping time with explicit rate — `docs/density-cycles/stopping_time_density.md`;
+- repunit rail-5 hitting density and geometric avoider law — `docs/repunit/repunit_rail5_density.md`;
+- no global potential \(\log_2 x+g(\tau(x))\) — `docs/no-go/recharge_nogo.md`;
 - bounded exponential bit-weight potential fixes recharge only, not per-step descent —
-  `Exponential_Decay_Potential.md`.
+  `docs/no-go/Exponential_Decay_Potential.md`.
 
 ### Strategic context
 
@@ -38,11 +38,11 @@ Two density results already control **size**, not **membership**:
 
 Priority 1 targets something strictly stronger: a **universal** bound
 \(\sigma(a_n)\le 3n\) for the explicit sparse sequence \(a_n=(3^n-1)/2\).
-This is the non-concentration problem isolated in `repunit_tail_attack.md` §5:
+This is the non-concentration problem isolated in `docs/repunit/repunit_tail_attack.md` §5:
 \(a_n\) could, in principle, lie in nested low-valuation classes forever even
 though those classes have density \(\le\rho^K\).
 
-`mersenne_repunit_reduction.md` Observation R4 warns that post-\(a_n\) statistics
+`docs/repunit/mersenne_repunit_reduction.md` Observation R4 warns that post-\(a_n\) statistics
 look generic after the forced first payout. Treat that as a **pivot trigger**:
 if the diagonal survivor explorer (Priority 1A) shows no reusable exponent
 structure through the \(3n\) window, downgrade the universal-spine target and
@@ -64,10 +64,10 @@ programme.
 ### Ruled-out directions (for orientation)
 
 - Potentials depending only on \(\tau(x)=v_2(x+1)\) — Theorem RNG1,
-  `recharge_nogo.md`.
+  `docs/no-go/recharge_nogo.md`.
 - Independent enumeration of bad valuation patterns without tracking the
-  repunit correction \(A_i\) — `repunit_bad_automaton_notes.md`.
-- Global longest-run contraction from block fracture — `Block_Fracture_Lemma.md` §5.
+  repunit correction \(A_i\) — `docs/repunit/repunit_bad_automaton_notes.md`.
+- Global longest-run contraction from block fracture — `docs/core/Block_Fracture_Lemma.md` §5.
 
 ---
 
@@ -111,7 +111,7 @@ f^{(K)}(a_n)<2^n-1.
 \]
 
 This is the empirical Repunit Tail Lemma already isolated in
-`repunit_tail_attack.md`.
+`docs/repunit/repunit_tail_attack.md`.
 
 The constant \(3\) is provisional. It must not be built into a candidate proof
 until the empirical constant search below has been extended substantially and
@@ -172,7 +172,7 @@ target prematurely.
 
 ### Tight-margin diagnostic update
 
-The auxiliary script `explore_repunit_tight_margins.py` scans first-descent
+The auxiliary script `scripts/explore_repunit_tight_margins.py` scans first-descent
 margins for repunit tails. It is exploratory evidence, not a certificate beyond
 its stated finite range.
 
@@ -247,7 +247,7 @@ The computation should track:
 ### Deliverable
 
 Create an exploratory program, tentatively
-`explore_repunit_diagonal_survivors.py`, that emits:
+`scripts/explore_repunit_diagonal_survivors.py`, that emits:
 
 - survivor counts by \(n\)-range and scaled time \(K/n\);
 - worst surplus and exact margins;
@@ -257,7 +257,7 @@ Create an exploratory program, tentatively
 
 The first stage is diagnostic. Its output is evidence, not a certificate.
 
-**Existing baseline.** `explore_repunit_tail.py` already verifies the forced
+**Existing baseline.** `scripts/explore_repunit_tail.py` already verifies the forced
 first payout, prints valuation ledgers, and checks the empirical \(3n\) window
 for odd \(n\le 2001\) (worst ratio \(\sigma_{23}/23=63/23\), smallest margin
 \(\approx 0.00122\) bits at \(n=1345\)). The diagonal explorer should extend
@@ -305,7 +305,7 @@ indefinitely, or that each concatenation consumes more independent low bits of
 
 ### Warning
 
-`repunit_bad_automaton_notes.md` already shows that independently counting
+`docs/repunit/repunit_bad_automaton_notes.md` already shows that independently counting
 bad valuation patterns is too weak: many individual patterns intersect the
 repunit curve. The recurrence of \(A_i\) and the nesting of the exponent
 classes must be retained.
@@ -368,7 +368,7 @@ second recurring failure mode in earlier approaches.
 
 ### Result
 
-This stage is now closed by `repunit_affine_tail_bound.md`. It proves
+This stage is now closed by `docs/repunit/repunit_affine_tail_bound.md`. It proves
 
 \[
 \log_2(1+q_K)
@@ -429,14 +429,14 @@ of the following hold:
 3. post-\(a_n\) statistics remain indistinguishable from generic orbits (R4).
 
 In that case the honest ceiling is the proved density chain
-(`stopping_time_density.md`, `repunit_rail5_density.md`), not a spine-specific
+(`docs/density-cycles/stopping_time_density.md`, `docs/repunit/repunit_rail5_density.md`), not a spine-specific
 epoch bound.
 
 ---
 
 ## Priority 1E — Diagonal merge-or-descend induction
 
-`repunit_tail_merge_reduction.md` introduces the diagonal state
+`docs/repunit/repunit_tail_merge_reduction.md` introduces the diagonal state
 
 \[
 \mathcal D_i(n)=(n+i,E_i,A_i).
@@ -467,7 +467,7 @@ on primitive tails if all other tails inherit descent by merging.
 
 ### Current focal target
 
-`repunit_256_block_target.md` shows that the following statement would close
+`docs/repunit/repunit_256_block_target.md` shows that the following statement would close
 the repunit-tail problem:
 
 > Every active 256-step valuation block, before descent or merger, has total
@@ -482,7 +482,7 @@ The preferred proof form is: any putative active block of weight at most
 
 ### Adversarial update
 
-`repunit_low_prefix_obstruction.md` proves that the word
+`docs/repunit/repunit_low_prefix_obstruction.md` proves that the word
 \((2,1^{255})\) occurs on an explicit infinite exponent class, cannot descend
 during the block, and cannot collide through equality of full diagonal states.
 Hence the fixed 256-floor can only survive through a different universal merger
@@ -492,7 +492,7 @@ The nested classes extend the low run past any prescribed finite recovery
 horizon, so a recovery theorem based only on the observed block or its deficit
 is also ruled out.
 
-`repunit_baker_nonshadowing.md` closes the positive-integer side of the
+`docs/repunit/repunit_baker_nonshadowing.md` closes the positive-integer side of the
 primary ghost branch: if the tail begins with \((2,1^{K-1})\), then
 \(K=O(\log n)\) by Yu's \(p\)-adic Baker theorem applied to
 \(v_2(3^{n+1}+7)\).
@@ -509,13 +509,13 @@ with a height gate before Baker theory is invoked:
    high-height moving-deficit patterns, together with merge inheritance on
    non-primitive tails.
 
-`explore_baker_enemy_height.py` supplies the first diagnostic for this gate.
+`scripts/explore_baker_enemy_height.py` supplies the first diagnostic for this gate.
 On the current primitive sample, generic reduced enemy constants have
 bit-length comparable to their cumulative valuation. Thus the fixed-\(7\)
 argument is a real theorem for an exceptional structured branch, not yet a
 universal template.
 
-`repunit_baker_applicability_census.md` sharpens the gate on active states.
+`docs/repunit/repunit_baker_applicability_census.md` sharpens the gate on active states.
 It defines the enemy coordinate
 
 \[
@@ -536,7 +536,7 @@ currently established.
 
 ### Enemy-episode test and strategic revision
 
-`repunit_enemy_episode_analysis.md` tests the most local version of that
+`docs/repunit/repunit_enemy_episode_analysis.md` tests the most local version of that
 dichotomy by compressing a valuation-one run and its terminal payout into one
 episode. Through odd \(n\le10001\), terminal repair or a prior-coordinate exit
 covers only \(41.94\%\) of Case B episodes. Recovery can require \(129\)
@@ -556,7 +556,7 @@ programme is revised to:
    with windows bounded independently of \(\sigma_n\).
 
 The small-gap merger algebra proposed here was subsequently completed in
-`repunit_gap_merger_analysis.md`; the later synchronization-tree and
+`docs/repunit/repunit_gap_merger_analysis.md`; the later synchronization-tree and
 collision-defect sections record both its exact consequences and its limits.
 
 The overarching target remains:
@@ -626,23 +626,23 @@ global mechanism. It is also harder. It should be pursued after the diagonal
 repunit computation identifies concrete recurring burn/recharge blocks.
 
 It is the natural episode-level version of the post-burn margin location
-identified in `recharge_nogo.md`: the burn is margin-free at
+identified in `docs/no-go/recharge_nogo.md`: the burn is margin-free at
 \(c=\log_2\frac32\), so cumulative payout must come from recharge/escape
 episodes, not from trailing-one fuel consumption alone.
 
 ### Useful retained files
 
-- `fuse_map_theory.md`
-- `fuse_burn_attack.md`
-- `explore_fuse_burn.py`
-- `explore_mersenne_spine.py`
-- `explore_mersenne_formulas.py`
+- `docs/fuse/fuse_map_theory.md`
+- `docs/fuse/fuse_burn_attack.md`
+- `scripts/explore_fuse_burn.py`
+- `scripts/explore_mersenne_spine.py`
+- `scripts/explore_mersenne_formulas.py`
 
 ---
 
 ## Priority 3 — The 2-adic rail-5 survivor set
 
-`repunit_rail5_density.md` proves
+`docs/repunit/repunit_rail5_density.md` proves
 
 \[
 \operatorname{dens}\{n\text{ odd}:T(n)>K\}
@@ -654,7 +654,7 @@ family of exponent classes.
 
 ### Completed geometric targets
 
-`repunit_rail5_survivor_geometry.md` completes the first three targets.
+`docs/repunit/repunit_rail5_survivor_geometry.md` completes the first three targets.
 For arbitrary odd \(2\)-adic starting states, the survivor set is the
 self-similar attractor
 
@@ -717,7 +717,7 @@ The existing density theorem already gives almost-everywhere descent.
 This route matters only if it provides a uniform structural statement about
 the exceptional spine, rather than another density estimate.
 
-Repairing Conjecture TREE2 (`descent_tree_survivors.md`) — the mismatch between
+Repairing Conjecture TREE2 (`docs/density-cycles/descent_tree_survivors.md`) — the mismatch between
 modulus depth \(K\) in the residue tree and odd-step count in the Cramér
 estimate — would unify this programme with Priority 1A/1C if a valid containment
 between discharge level \(L(r)\) and accumulated valuation \(E_K\) can be proved.
@@ -794,7 +794,7 @@ The revised execution order is:
 
 ### Gap-merger result
 
-This task is completed in `repunit_gap_merger_analysis.md`.
+This task is completed in `docs/repunit/repunit_gap_merger_analysis.md`.
 
 Every first same-diagonal merger lies on an exact collision shell. If the
 predecessor cumulative valuations differ by \(2h\), their correction terms
@@ -839,7 +839,7 @@ also meet the \((n-4)\)-tail at the same diagonal.
 For gap \(6\), the same local shell law dominates, but no comparably shallow
 broad residue family has yet emerged.
 
-`repunit_gap2_sync_tree.md` completes the next symbolic stage. It identifies
+`docs/repunit/repunit_gap2_sync_tree.md` completes the next symbolic stage. It identifies
 17 exact level-\(4\) first-hit cylinders, all on the smallest shell. At
 modulus \(2^{24}\), the resolved first-hit masses at levels \(2\) through
 \(7\) decline from \(3.125\%\) to \(1.090\%\), with cumulative coverage
@@ -851,7 +851,7 @@ therefore combine merger gaps.
 
 ### Multi-gap synchronization result
 
-`repunit_multigap_sync_union.md` completes the bounded comparison at common
+`docs/repunit/repunit_multigap_sync_union.md` completes the bounded comparison at common
 depth \(20\), levels \(2\) through \(7\), and cumulative valuation cutoff
 \(20\).
 
@@ -865,7 +865,7 @@ than a finite collection of shallow residue families.
 
 ### Collision-defect recurrence result
 
-`repunit_collision_defect_dynamics.md` derives the exact normalized relative
+`docs/repunit/repunit_collision_defect_dynamics.md` derives the exact normalized relative
 recurrence. It also gives an explicit repunit-tail counterexample showing
 that even \((d,E,F,\delta,z)\) does not determine the outgoing valuation
 pair. Hence the defect recurrence does not close without restoring an
@@ -924,7 +924,7 @@ exploration rather than the main programme.
 
 ### Resumption: extremal storage coordinate
 
-`repunit_extremal_principle.md` develops the second restart question without
+`docs/repunit/repunit_extremal_principle.md` develops the second restart question without
 launching a broad census. If
 
 \[
@@ -1006,7 +1006,7 @@ This is a possible proof path, not a theorem. A successful result must force
 descent, merge inheritance, or an explicit upper bound on record deficit; it
 cannot compare simultaneous surplus and deficit because \(S_K=-D_K\).
 
-`primitive_ancestry_lemma.md` now isolates the first theory target inside this
+`docs/repunit/primitive_ancestry_lemma.md` now isolates the first theory target inside this
 programme. The proposed single-ancestor reachability lemma handles the
 concentrated case where one payout carries a fixed share of \(B_K\). The first
 sublemma to attack is the \(q=2\) smallest-shell case: if the associated

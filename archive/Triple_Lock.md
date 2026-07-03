@@ -3,7 +3,7 @@
 > **Status: legacy exploratory summary.**
 > This document is not part of the proved-results track. In particular, the
 > former “stability lock” does not prove that cycles are repelling. Use
-> `cycle_reduction.md` and `CLAIM_LEDGER.md` for maintained cycle claims.
+> `../docs/density-cycles/cycle_reduction.md` and `../CLAIM_LEDGER.md` for maintained cycle claims.
 
 **Author:** Dr. Bry
 **Date:** 28 November 2025  
@@ -19,7 +19,7 @@ What it *is*: a clear summary of why non-trivial cycles look structurally imposs
 
 * exact algebra for the "cycle equation,"
 * explicit computational searches over thousands of up/down patterns,
-* and a rigorous instability theorem (proved in the companion note `Collatz_Parity_Fragility_Corrected.md`).
+* and a rigorous instability theorem (proved in the companion note `../docs/core/Collatz_Parity_Fragility_Corrected.md`).
 
 The Collatz map turns out to have a **Triple Lock**:
 
@@ -214,7 +214,7 @@ Current evidence (computational and theoretical) strongly suggests one of these 
 
 ## References
 
-* `Collatz_Parity_Fragility_Corrected.md` — full proof of the Stability Lock
+* `../docs/core/Collatz_Parity_Fragility_Corrected.md` — full proof of the Stability Lock
 * Computational searches (2025) confirming repeatedly that integer solutions of the cycle equation are always parity-forbidden (ghost loops)
 
 ---

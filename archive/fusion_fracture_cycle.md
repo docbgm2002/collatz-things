@@ -1,7 +1,7 @@
 ## ⭐ **The Fusion–Fracture Cycle: The Engine of Collatz Dynamics**
 
 > **Status: exploratory heuristic.**
-> Exact binary identities are separated in `Block_Fracture_Lemma.md`.
+> Exact binary identities are separated in `../docs/core/Block_Fracture_Lemma.md`.
 > Statements here about impossibility of sustained growth are not proved.
 
 **Author:** Dr. Bry
