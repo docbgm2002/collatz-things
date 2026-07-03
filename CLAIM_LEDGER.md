@@ -94,6 +94,10 @@ These notes are not dependencies of the proved-results track:
 - `repunit_diagonal_survivor_notes.md`
 - `repunit_bad_automaton_notes.md`
 - `repunit_normal_form_notes.md`
+- `binary_fuel_bad_block_notes.md`
+- `primitive_ancestry_lemma.md`
+- `near_threshold_episode_notes.md`
+- `diagnostics_attractor_sieve_spike.md`
 - all `explore_*.py` programs
 
 ## Archived documents

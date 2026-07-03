@@ -769,7 +769,7 @@ Each research branch should pass through the following stages.
 
 Completed diagnostics have:
 
-- extended the empirical constant search through \(n=10001\);
+- extended the empirical constant search through \(n=20001\);
 - isolated the affine correction and proved it exponentially negligible;
 - implemented diagonal merger and primitive-tail classification;
 - tested the fixed 256-block target and found its 2-adic low-prefix
@@ -1005,3 +1005,12 @@ At primitive record-deficit times, split into two cases:
 This is a possible proof path, not a theorem. A successful result must force
 descent, merge inheritance, or an explicit upper bound on record deficit; it
 cannot compare simultaneous surplus and deficit because \(S_K=-D_K\).
+
+`primitive_ancestry_lemma.md` now isolates the first theory target inside this
+programme. The proposed single-ancestor reachability lemma handles the
+concentrated case where one payout carries a fixed share of \(B_K\). The first
+sublemma to attack is the \(q=2\) smallest-shell case: if the associated
+virtual partner \(Y=4X+1\) is not reachable from a smaller repunit tail, prove
+that this non-reachability forces a quantitative lower bound on the least
+positive exponent representative of the valuation prefix. This is a symbolic
+lemma, not a broader census.

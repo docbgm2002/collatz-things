@@ -119,12 +119,15 @@ is where the no-go program terminates.
   proves that the affine correction in the repunit-tail ledger is
   exponentially small throughout every pre-descent linear window.
 - [`repunit_tail_merge_reduction.md`](repunit_tail_merge_reduction.md)
-- [`repunit_gap_merger_analysis.md`](repunit_gap_merger_analysis.md)
-- [`repunit_gap2_sync_tree.md`](repunit_gap2_sync_tree.md)
-- [`repunit_multigap_sync_union.md`](repunit_multigap_sync_union.md)
-- [`repunit_collision_defect_dynamics.md`](repunit_collision_defect_dynamics.md)
-  gives an exact diagonal-state merge criterion and a merge-inheritance
+  gives the exact diagonal-state merge criterion and merge-inheritance
   induction principle.
+- [`repunit_gap_merger_analysis.md`](repunit_gap_merger_analysis.md),
+  [`repunit_gap2_sync_tree.md`](repunit_gap2_sync_tree.md),
+  [`repunit_multigap_sync_union.md`](repunit_multigap_sync_union.md), and
+  [`repunit_collision_defect_dynamics.md`](repunit_collision_defect_dynamics.md)
+  develop collision-shell algebra, exact synchronization families, bounded
+  shallow coverage, and a counterexample to an overcompressed relative-state
+  recurrence.
 - [`repunit_256_block_target.md`](repunit_256_block_target.md)
   isolates a conditional 256-valuation floor which would prove descent of
   every odd-indexed repunit tail.
@@ -206,6 +209,22 @@ the proved-results track:
 - [`repunit_tail_attack.md`](repunit_tail_attack.md) and related repunit
   automaton/normal-form notes. The open residual \(\sigma(a_n)\) after
   the repunit landing is unchanged by all of the above.
+- [`primitive_ancestry_lemma.md`](primitive_ancestry_lemma.md) - theory note
+  isolating the dominant-payout ancestry/reachability lemma as the next
+  symbolic target after `repunit_extremal_principle.md`.
+- [`near_threshold_episode_notes.md`](near_threshold_episode_notes.md) - finite
+  diagnostic on the selected tight-margin repunit cases and their short
+  near-threshold repair episodes (`explore_near_threshold_episodes.py`).
+- [`binary_fuel_bad_block_notes.md`](binary_fuel_bad_block_notes.md) -
+  exploratory 2-adic language for long low-surplus episodes via binary-fuel
+  block coordinates and bad-block suffix gates
+  (`explore_binary_fuel_blocks.py`).
+- [`diagnostics_attractor_sieve_spike.md`](diagnostics_attractor_sieve_spike.md) -
+  three diagnostics: the negative {A,B,C} motif attractor with its weak
+  contraction constant, the q=2 smallest-shell reachability sieve and exact
+  reach counts, and the Mersenne-spike recovery scan extended to R=999.
+  Scripts: `explore_fuel_motif_attractor.py`,
+  `explore_ancestry_reachability.py`, `explore_spike_recovery.py`.
 - [`fuse_map_theory.md`](fuse_map_theory.md) and
   [`fuse_burn_attack.md`](fuse_burn_attack.md).
 - [`martingale_logspace_perspective.md`](martingale_logspace_perspective.md) —
