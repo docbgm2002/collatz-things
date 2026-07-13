@@ -1,11 +1,11 @@
 # No-Go for Local-Coordinate Potentials
 
 **Building on:** `recharge_nogo.md` (Lemmas 1–3), `../../NOTATION.md`
-**Status:** Proved here, subject to a final external literature check
-(surveys state the absence of a known monotone invariant as folklore; no
-published theorem excluding this class was found in the search of
-2026-07-01). Strictly generalizes RNG1. Not a proof of the Collatz
-conjecture.
+**Status:** Proved here; novelty review incomplete. Surveys state the absence
+of a known monotone invariant as folklore, and the repository's 2026-07-01
+search found no published theorem excluding this class. That literature status
+is separate from the proof claim. Strictly generalizes RNG1. Not a proof of the
+Collatz conjecture.
 **License:** CC-BY 4.0
 
 ---
@@ -69,6 +69,11 @@ Lemma 1 (applicable since $\tau(x)=t\ge2$), $v_2(3x+1)=1$ and
 $f(x)=(3x+1)/2=3^{\,j+1}2^{\,t-1}-1$ with $\tau(f(x))=t-1$ and the stated
 ratio. Finally $f(x)+1=3^{\,j+1}2^{\,t-1}$ and $t-1\ge m$, so
 $f(x)\equiv-1$. $\;\blacksquare$
+
+**Attribution.** The iterated identity
+\(2^t u-1\mapsto3^t u-1\) is recorded by Andaloro (2000). The use here
+is the residue-freezing consequence for the potential obstruction; see
+`../../BIBLIOGRAPHY_PASS.md` and the manuscript bibliography.
 
 **Consequence.** Applying $(\ast)$ to the step $x\to f(x)$ of Lemma 1:
 

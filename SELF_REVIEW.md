@@ -48,9 +48,14 @@ independent; below-line and within-budget hold on the event.
 b = O(1); this sits inside the dK/2 window slack but should be tracked
 explicitly in a journal version (one sentence).
 
-## 4. Independent certificate check (new)
+## 4. Historical independent certificate check (not reproducible here)
 
-`scripts/verify_nogo_certificate.py`: the no-go constraint system on any finite
+The following results were recorded from `scripts/verify_nogo_certificate.py`,
+which is absent from this checkout. They are retained as provenance but are not
+part of the current reproducible verification suite. The maintained theorems do
+not depend on them.
+
+The no-go constraint system on any finite
 coordinate window is a difference-constraint system; infeasibility is
 equivalent to a directed cycle of value-ratio product > 1 in the
 coordinate graph of observed real steps. Bellman–Ford over odd
@@ -66,7 +71,7 @@ x <= 10^6, with exact Fraction confirmation of any candidate cycle:
   through 41 = x'_5 -> 31 = 2^5 - 1, i.e. the search rediscovered the
   recharge mechanism unprompted.
 
-Logical status: this check uses no lemma from the notes and would have
+Historical logical status: this check used no lemma from the notes and would have
 refuted the theorems had a valid correction existed on the tested
 windows. It cannot, by construction, verify the unbounded-coordinate
 content of the theorems; that is exactly the part carried by the

@@ -38,8 +38,9 @@ the burn lemma in the manuscript; Andaloro (2000) added to references.
 The manuscript's contribution at that point is explicitly narrowed to
 the coordinate-freezing use of the family, not the identity.
 
-Repo-side: `docs/no-go/recharge_nogo.md` and `docs/no-go/no_local_potential.md` should carry
-the same attribution note on their burn lemmas when next edited.
+Repo-side action completed: `docs/no-go/recharge_nogo.md` and
+`docs/no-go/no_local_potential.md` now carry the same attribution note on their
+burn lemmas.
 
 **Positioning (predecessor structure).** Wirsching (LNM 1681, 1998)
 develops the backward/predecessor structure of the Collatz graph at the

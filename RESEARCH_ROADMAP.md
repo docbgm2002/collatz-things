@@ -17,6 +17,174 @@ The current exact reduction is:
 
 The main programme below attacks this residual directly.
 
+## Current checkpoint
+
+This file preserves the programme's development, so some early sections are
+plans later completed, retired, or narrowed. The current working position is:
+
+1. universal descent of every odd-indexed repunit tail remains open;
+2. the fixed-block, shallow synchronization, terminal-payout, and compressed
+   collision-state routes do not close it;
+3. no new broad census should be launched without a precise arithmetic lemma;
+4. the live symbolic candidate is the single-ancestor reachability problem in
+   `docs/repunit/primitive_ancestry_lemma.md`;
+5. `docs/repunit/repunit_equidistribution_reframing.md` gives finite evidence
+   for a related shortcut-map `6n` target. Its parity-neutrality interpretation
+   is strategic and conjectural, not a proof of convergence and not a
+   substitute for the accelerated-map target below.
+
+The first simplifications of item 4 are now proved as REPANC1–REPANC3. In the
+\(q=2\) smallest shell, correction equality in an admissible aligned layer
+automatically realises the proposed smaller repunit word; every match lies in
+an explicit critical-density source-length window; and the result is uniform
+across the high word's exponent cylinder. There is no separate exponent-prefix
+congruence to solve. The remaining problem is a direct correlation theorem:
+show that failure of every correction equality forces the already-fixed
+exponent cylinder to have a large least positive representative.
+
+That target has now been narrowed again. In the primitive census through
+\(n=2001\), imposing \(D_K\ge2\) and a dominant \(q=2\) payout leaves five
+distinct ancestors, but four have no admissible source length at all. The
+sole nonvacuous case is \((n,j,u)=(221,5,9)\), with an exact nonmatch in its
+only candidate layer \(i=8\). This is one data point, not evidence for a
+correlation law. Any theorem must first separate the empty-window branch and
+must use record extremality and dominance quantitatively in the remaining
+branch.
+
+The next research cycle is recorded in
+`docs/repunit/next_generation_attack_program.md`. Its first attack has already
+produced GPA1–GPA2: automatic shell-partner realisation extends to all payouts
+\(q\ge2\), but the canonical partner is impossible modulo \(3\) whenever
+\(q\equiv3,4\pmod6\). Since \(q=3\) dominates many dangerous finite records,
+the main line now moves toward bounded multi-ancestor combinations and payout
+concentration-versus-diffusion rather than a direct single-partner theorem for
+that class.
+
+The first concentration step is now complete as PCD1–PCD2. Exact ledger
+weights give an initial/eligible/blocked trichotomy. Through \(n=5001\), the
+\(110\) dangerous primitive records split \(88/0/16/6\) across the ordered
+eligible, initial, blocked-concentrated, and blocked-diffuse branches. All six
+diffuse records lie on \(n=471\). The next symbolic calculation should pair
+the leading blocked ancestors and test whether their transported combined
+correction escapes the GPA2 residue obstruction or satisfies one of the
+two-shell exponential equations.
+
+The first such pair is now exact: consecutive \(q=3\) shells satisfy
+\(S(E+4,2)-3S(E+1,2)=S(E+1,4)\). This is an identity of displacements, not
+yet a canonical \(q=4\) correction, so GPA2 cannot be applied without first
+deriving the combined base correction. Mixed pairs involving a blocked
+ancestor and an eligible payout provide the next independent case.
+
+That mixed displacement calculation now yields PCD4: six short valuation
+blocks have universal shell-fusion identities, accounting for all \(43\)
+exact fusions among \(671\) distinct mixed pairs in the dangerous primitive
+census through \(n=5001\). This is not yet reachability. The remaining task is
+to attach the correct base correction to a fused displacement and test the
+complete target with GPA1.
+
+PCD5 performs that test for the naive lift \(C_r-3^rC_0\) and rules it out on
+all seven short mixed-fusion blocks: affine injections between the ancestors
+create a non-shell defect or a shell of the wrong height. Mechanical shell
+pairing should therefore stop.
+
+PCD6 resolves the proposed affine-aware backward state universally. If
+\(C=A+S(u,2h)\) and \(F=u+2h\), then
+\(3C+2^{u+1}=3A+2^{F+1}\). The correctly transported canonical partner is
+therefore identical to the high correction after one step; it does not
+survive to be paired with a later payout. Any future two-ancestor route must
+use a genuinely noncanonical inverse branch or additional state. Attack 3
+now moves to amortized payout charges and historical spacing.
+
+PCD7 supplies the first exact amortized charge. If \(N_B\) is the effective
+count of blocked payout ancestors and \(Q_B\) is their total valuation excess,
+then \(2N_B\le Q_B\le Q_K\), hence
+\(D_K+2N_B\le K\log_2(3/2)\). This does not yet give a uniform deficit bound;
+it turns diffusion into valuation already spent. The next amplification must
+use the near-balanced historical blocks forced by comparable payout weights.
+
+PCD8 shows that this proposed spacing amplification is impossible without
+additional arithmetic data. A mechanical sequence of \(q=3\) payouts with
+gaps three and four keeps every post-payout deficit in a band of width
+\(\log_2(3/2)\), has blocked effective count growing linearly, and still
+allows arbitrarily large later record deficits after a terminal run of ones.
+This is an abstract valuation-word construction, not a primitive repunit
+family. The next live question is therefore whether the balanced word's exact
+repunit exponent cylinders force large least representatives or early merger.
+
+PCD9 answers the finite-realization half exactly. Every positive valuation
+word beginning with valuation at least two is realised by one odd repunit
+exponent class modulo \(2^E\). Starting the PCD8 word with \(q=3\) therefore
+places every finite balanced prefix on the repunit curve. Cylinder
+compatibility cannot distinguish the obstruction; only prior descent,
+primitivity/merger, correction geometry, or least-representative growth can.
+
+PCD10 turns least-representative growth into an exact plateau question. A
+change between nested balanced cylinders forces the new least exponent above
+\(2^{E_m}\); if one exponent can persist for at most \(L\) payout prefixes,
+then its bit length is at least \(E_m-6L+1\). The first \(300\) prefixes have
+maximum observed plateau length two and minimum bit-length ratio \(0.942029\)
+after \(m=10\). The live theorem target is now a structured non-shadowing
+bound on these plateaus, not an unconstrained discrete-log estimate.
+
+The deeper exact recursion changes that checkpoint. The candidate universal
+bound \(L=2\) first fails on the plateau \(m=1198,1199,1200\); through
+\(m=1500\), the maximum is three. PCD11 derives the exact local cylinder lift
+as one linear congruence plus a discrete logarithm of order \(2^\delta\), with
+\(\delta=5\) or \(6\) here. The credible target is now sublinear, perhaps
+logarithmic, plateau growth—not a fixed bound inferred from shallow data.
+
+PCD12 tests the local alphabet through the same \(1500\) prefixes. Every one
+of the \(32\) five-bit and \(64\) six-bit lifts occurs; zero occurs \(39\)
+times. Thus a forbidden-residue argument cannot bound plateaus. The balanced
+problem is now a deterministic zero-run question for the PCD11 2-adic cocycle
+over the Sturmian mechanical gap rotation. No equidistribution is claimed.
+
+PCD13 exposes the cocycle explicitly. If \(t_m\) is the affine
+starting-cylinder lift and \(\kappa_m\) is the next block of unused binary
+digits in \(3^{n_m}\), then the exponent lift is a unit multiple of
+\(t_m-\kappa_m\). A plateau is exactly \(t_m=\kappa_m\). The live problem is
+therefore to bound consecutive coincidences between these coupled streams,
+not merely zero runs in an opaque discrete logarithm.
+
+PCD14 couples those coincidences across an entire plateau. With the exponent
+fixed, the full carry obeys \(C'=(C-t)/2^\delta\), so a plateau run is one
+contiguous binary match between a fixed power-of-three carry and the
+concatenated affine-lift word. This suggests a structured word-nonshadowing or
+transducer theorem rather than independent probabilistic estimates.
+
+PCD15 closes the naive finite-state version of that suggestion. For every
+fixed endpoint width, two identical residue states receive the same next lift
+but can have distinct successor residues because block division exposes five
+or six unseen high bits. A future transducer must be carry-augmented or
+variable-width; endpoint residue plus Sturmian phase is not a closed state.
+
+PCD16 closes the naive Archimedean version as well. Every consecutive interval
+of the balanced mechanical block word has homogeneous multiplier strictly
+between \(2/3\) and \(3/2\), independently of interval length. Hence the
+balanced dynamics is a near-isometry at all scales: a plateau theorem must
+come from arithmetic non-shadowing between the endpoint and carry streams,
+not from accumulated real contraction or expansion.
+
+### Map convention for the two targets
+
+This roadmap uses the accelerated odd map \(f\), so \(K\) counts odd steps and
+\(E_K\) counts the total powers of two removed. The capstone uses the shortcut
+map
+
+\[
+U(x)=
+\begin{cases}
+x/2,&x\text{ even},\\
+(3x+1)/2,&x\text{ odd}.
+\end{cases}
+\]
+
+One \(f\)-step with valuation \(e_i\) corresponds to one odd \(U\)-step and
+\(e_i-1\) following even \(U\)-steps; consequently \(K\) accelerated steps
+correspond to \(E_K\) shortcut steps. The empirical bounds
+\(\sigma(a_n)\le3n\) and \(\sigma_U(2^n-1)<6n\) are therefore related but are
+not interchangeable without additional control of \(E_K\).
+
 ### Proved foundations (do not re-prove)
 
 These are already in the maintained claim chain; the roadmap builds on them:

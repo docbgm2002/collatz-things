@@ -109,6 +109,11 @@ $$
 
 *Proof.* Induction with $x_0=2^n-1$. At step $j$, $x_j=2^{\,n-j}(3^{\,j})-1$ has $\tau=n-j$ (as $3^j$ is odd); since $n-j\ge2$ while $j\le n-2$, Lemma 1 applies and $f(x_j)=3\cdot2^{\,n-j-1}3^{\,j}-1=3^{\,j+1}2^{\,n-(j+1)}-1=x_{j+1}$. $\;\blacksquare$
 
+**Attribution.** The general iterated identity
+\(2^t u-1\mapsto3^t u-1\) is recorded by Andaloro (2000). The exact
+Mersenne ledger and its potential-theoretic use are the focus here; see
+`../../BIBLIOGRAPHY_PASS.md` and the manuscript bibliography.
+
 The burn ends at $x_{n-1}=2\cdot3^{\,n-1}-1$ with $\tau=1$. (For $n=2d+3$ this is the rail-7 escape value $18\cdot9^{d}-1$ of `../core/Mod8_Rail_Descent.md`, so the two analyses agree.)
 
 ### Theorem 2 (Critical potential / tight ledger)

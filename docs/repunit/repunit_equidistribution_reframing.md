@@ -1,27 +1,34 @@
-# The Repunit `6n` Target Is an Equidistribution Statement
+# The Repunit `6n` Target as an Empirical Equidistribution Problem
 
-*Capstone note. Status: the identities and lemmas cited here are exact and
-machine-verified; the central reframing is supported by computation over odd
-`7 ≤ n < 3000` and is presented as the precise location of the difficulty, not
-as a proof.*
+**Status:** capstone diagnostic. The cited identities and conditional
+reductions are exact and machine-verified. The parity-neutrality interpretation
+is supported by computation over odd `7 ≤ n < 3000`; it is a conjectural
+strategic diagnosis, not a proof of convergence or equidistribution.
+
+**Map convention:** this note uses the shortcut map \(U\), not the accelerated
+odd map \(f\) used by most of the repository. One \(f\)-step with valuation
+\(e_i\) corresponds to \(e_i\) shortcut steps: one odd \(U\)-step followed by
+\(e_i-1\) even \(U\)-steps. Thus the `6n` target here and the roadmap's `3n`
+odd-step target are related, but neither stated bound currently implies the
+other without additional valuation control.
 
 ## 0. What this note claims
 
 The conjecture `σ_U(2^n − 1) < 6n` for the shortcut Collatz map reduces, by the
 program's own exact bookkeeping, to a bound on the **odd-step density** of one
 specific deterministic sequence: the accelerated tail of `a_n = (3^n − 1)/2`.
-Direct computation shows this density converges to `1/2` with fluctuations
-shrinking like `O(1/√n)`, clearing the descent-failure threshold of `0.55` by a
-margin that *widens* with `n`.
+Direct computation finds density close to `1/2`, with fluctuations consistent
+with `O(1/√n)` scaling over the tested range. Beyond the small-index cases, the
+measurements clear the descent-failure threshold of `0.55` by a substantial
+observed margin.
 
-The consequence is strategic, and it is the main point of this note: the `6n`
-target is not "barely true and in need of a clever finite argument." It is
-**overwhelmingly true**, and true for the same reason it is hard to prove — it is
-an equidistribution / pseudorandomness statement about a specific exponential
-sequence, in the same family as Mahler's `3/2` problem and the normality of the
-binary digits of `3^n`. No algebraic structure forces the descent; statistical
-neutrality does. This explains why every elementary and structural approach in
-the program terminates at the same wall.
+The consequence is strategic: the tested cases do not look close to the
+failure threshold. Their behaviour suggests an equidistribution or
+pseudorandomness problem for a specific exponential sequence, reminiscent of
+Mahler's `3/2` problem and questions about the binary digits of `3^n`. No formal
+reduction to either classical problem is claimed. This viewpoint helps explain
+why the exact structural approaches developed in the programme have not yet
+forced the required uniform bound.
 
 ## 1. The exact reduction (recap, all verified)
 
@@ -54,47 +61,49 @@ Odd-density of the `a_n` tail over its pre-descent window, odd `7 ≤ n < 3000`:
 | [800, 1600) | 0.4994 | 0.5173 | 0.0076 |
 | [1600, 3000) | 0.4986 | 0.5191 | 0.0072 |
 
-Three facts:
+Three finite observations:
 
-1. **Mean → 1/2.** The window-averaged odd-density sits at neutral parity, the
-   value the standard `E[v] = 2` heuristic predicts.
-2. **Fluctuations shrink like `1/√(window)`.** The stdev falls from 0.045 to
-   0.007 as the window length grows `~5n`, exactly the law-of-large-numbers rate.
-3. **The max clears 0.55 with widening margin.** The only excursions above 0.55
-   occur at `n = 17` (0.561) and `n = 23` (0.5575) — the small-`n` regime where
-   the window is too short for any averaging. Past `n ≈ 200` the maximum density
-   falls below 0.52 and continues toward 0.50. The gap to the 0.55 failure line
-   is `≈ 0.05 − O(1/√n)`, positive and increasing.
+1. **Mean near 1/2.** The window-averaged odd-density sits near neutral parity,
+   the value the standard `E[v] = 2` heuristic predicts.
+2. **Fluctuations are consistent with `1/√(window)`.** The stdev falls from
+   0.045 to 0.007 as the window length grows `~5n`, matching the qualitative
+   scale predicted by a law-of-large-numbers heuristic.
+3. **The observed max clears 0.55 after the small-index range.** The only
+   excursions above 0.55 occur at `n = 17` (0.561) and `n = 23` (0.5575) — the
+   small-`n` regime where the window is too short for any averaging. Past
+   `n ≈ 200` the maximum density is below 0.52 in the reported bands. The data
+   is consistent with a gap of size `≈ 0.05 − O(1/√n)` from the failure line;
+   this formula is not proved.
 
 The deficit picture is the same fact in different coordinates. The in-tail
 valuation deficit `D_K = K log₂3 − E_K` is typically `~1.4` bits; its slow record
 growth reaches only `~9.3` bits at `n ≈ 1200`, while the descent-failure
 threshold is `0.585n`. The ratio threshold/observed is already `~75×` at
-`n = 1200` and grows linearly in `n`. The tail does not descend "barely"; it
-descends by a landslide.
+`n = 1200`. Within this finite range, descent is not close to the
+sufficient-condition boundary.
 
 ## 3. Why this is the right description, and why it is hard
 
 The reduction turns a dynamical statement into a statement about the parity
-itinerary of a fixed sequence. The data says that itinerary is **statistically
-neutral**: the orbit descends because its odd/even pattern behaves like a fair
-coin over the window, not because any arithmetic mechanism enforces descent.
+itinerary of a fixed sequence. The data is consistent with a statistically
+neutral itinerary over the tested windows. It does not show that no arithmetic
+mechanism enforces descent.
 
-This is precisely the kind of statement current number theory cannot prove for a
-named sequence:
+This resembles several notoriously difficult distribution questions for named
+sequences:
 
 - **Mahler's `3/2` problem.** Whether `(3/2)^n mod 1` is equidistributed is open.
 - **Normality of `3^n`.** Whether the binary digits of `3^n` are asymptotically
   half ones is open.
 - **The repunit odd-density.** Whether the parity itinerary of `(3^n − 1)/2`
-  under `U` has density `→ 1/2` is the same genre: equidistribution of a specific
-  exponential sequence, believed with overwhelming numerical support, with no
-  known algebraic handle.
+  under `U` has density `→ 1/2` appears to be in the same broad genre. The
+  present computation supplies finite evidence, not a theorem or a formal
+  equivalence to either problem above.
 
-The reason these are hard is the reason they are true. There is no algebraic
-obstruction generating the regularity, so there is nothing for an elementary or
-structural argument to grip. Proving the bound means proving pseudorandomness of
-a particular sequence, and we have no general tools for that.
+The comparison is diagnostic rather than definitive. A proof of the `6n` bound
+might establish only the one-sided density estimate needed here, which is weaker
+than full equidistribution. The current structural lemmas do not supply even
+that one-sided uniform estimate.
 
 ## 4. Why this explains the program's history
 
@@ -110,10 +119,11 @@ Each prior layer of the program sought *structure* that forces descent:
   even at the deepest deficits — controls a deep-deficit adversary the dynamics
   never produce).
 
-All five terminated at the same point because the obstruction is not structural.
-The bounded-ancestry premise passed its stress test precisely because there is
-almost no deficit to concentrate: the system is overwhelmingly contractive, and
-the elaboration was aimed at a worst case that equidistribution rules out.
+All five terminated without a uniform theorem. The finite data suggests that
+deep deficits are atypical, but it does not rule them out. The bounded-ancestry
+premise passed its finite stress test in a regime where little deficit was
+observed to concentrate; turning that observation into a uniform statement is
+the unresolved step.
 
 ## 5. What is actually finished (and worth keeping)
 
@@ -132,21 +142,23 @@ These are exact and do **not** depend on the equidistribution wall:
 3. **The single-run no-go.** During a `v=1` run, `ΔD = Δlog₂Z = log₂(3/2)`: the
    exchange rate between storing and accumulating deficit is exactly one, so no
    argument confined to one valuation-one run can prove unsustainability.
-4. **This reframing.** The `6n` target ⟺ odd-density `< 0.55` for the `a_n` tail,
-   with measured density `→ 1/2`, stdev `→ O(1/√n)`, and a widening margin — placing
-   the target in the Mahler/normality equidistribution class.
+4. **This reframing.** The sufficient condition for the `6n` target is
+   odd-density `< 0.55` for the stated `a_n`-tail window. The measured density
+   is near `1/2`, with variance consistent with `O(1/√n)` scaling. This motivates
+   an equidistribution-style viewpoint without proving convergence or reducing
+   the target to Mahler/normality questions.
 
-Item 4 is itself a contribution: it tells future effort to stop searching for an
-algebraic lever and to recognise the target as a pseudorandomness statement about
-`(3^n − 1)/2`. That redirection is the most useful output of the whole program.
+Item 4 is a research diagnosis: future work should test whether it can prove the
+specific one-sided density bound, while remaining open to an arithmetic
+mechanism not visible in the present experiments.
 
 ## 6. Honest status line
 
-`σ_U(2^n − 1) < 6n` is true on all tested `n` and, by the density picture, true
-with a margin that grows in `n`. It is **not proved**, and the reframing argues
-it will not yield to elementary or structural methods, because it is an
-equidistribution statement about a specific exponential sequence. The exact
-lemmas in §5 stand independently of this and are the durable results.
+`σ_U(2^n − 1) < 6n` holds for all tested `n`. The tested density bands show a
+substantial margin after the small-index range. The universal inequality,
+convergence to density `1/2`, and any `O(1/√n)` fluctuation law are **not
+proved**. The exact lemmas in §5 stand independently of this empirical
+interpretation.
 
 ## Appendix: reproduction
 

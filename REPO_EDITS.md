@@ -1,5 +1,10 @@
 # Repository edits — 2026-07-01 session
 
+> **Historical provenance only.** This is a session edit plan, not an
+> authoritative status document. Many listed edits have since been applied or
+> superseded. Use `CLAIM_LEDGER.md` for current claims and `README.md` for the
+> current reading path.
+
 Four maintenance items plus one new proved note. Apply in order; each item
 lists the file, the change, and the reason.
 

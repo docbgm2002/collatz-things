@@ -110,8 +110,10 @@ $\mathrm{LD}_4$ closure; strict value gain; and the irrationality
 argument's arithmetic ($2^{p+3q}=3^{2q}$ has no solutions, checked as
 $v_3$ of both sides for a range and stated in general).
 
-## Proposed ledger row
+## Ledger entry
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | SH2 | No potential $\log_2x+g(x\bmod2^m,\tau,\mathrm{LD}_j,\lambda_1..\lambda_d)$ is nonincreasing, any $m,j,d$ | Proved here (iterated shadow + Dirichlet) | `leading_digit_nogo.md` | `scripts/verify_leading_digit.py` |
+
+This row is recorded in `../../CLAIM_LEDGER.md`.

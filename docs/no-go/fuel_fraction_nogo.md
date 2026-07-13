@@ -1,12 +1,15 @@
 # No-Go for Fuel-Fraction Potentials (Certificate Proof)
 
-**Building on:** `tower_theorem.md` (NLPD), `scripts/verify_nogo_certificate.py`
-(certificate method), `recharge_nogo.md`
+**Building on:** `tower_theorem.md` (NLPD), `recharge_nogo.md`
 **Status:** Theorem D is proved here by an explicit finite certificate,
 machine-verified in exact rational arithmetic (`scripts/verify_fuel_fraction.py`).
 It resolves, negatively, the first open question of the manuscript's
 boundary section. Not a proof of the Collatz conjecture.
 **License:** CC-BY 4.0
+
+The separate historical certificate-mining script mentioned in
+`../../SELF_REVIEW.md` is absent from this checkout and is not a dependency of
+Theorem D.
 
 ---
 
@@ -104,8 +107,11 @@ fixed-length burn family's residue freeze
 ($2^n+2^t-1\equiv-1\bmod2^m$ for $t\ge m$, image likewise for
 $t-1\ge m$) over wide ranges.
 
-## Proposed ledger row
+## Ledger entry
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | FFN1 | No potential $\log_2x+g(\tau(x),\mathrm{len}(x))$ is nonincreasing (and the triple with $x\bmod16$ likewise) | Proved here (explicit finite certificate) | `fuel_fraction_nogo.md` | `scripts/verify_fuel_fraction.py` |
+
+This row is recorded in `../../CLAIM_LEDGER.md`; SH1 now subsumes its
+impossibility statement.

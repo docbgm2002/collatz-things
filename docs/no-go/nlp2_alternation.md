@@ -178,9 +178,13 @@ sampled constant $C$.
 python3 scripts/verify_nlp2.py   # prints PASS for every claim above
 ```
 
-## Proposed ledger row
+## Ledger status
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
-| NLP2 | No potential $\log_2x+g(x\bmod2^m,\tau(x),\lambda(x))$ is nonincreasing, any $m$, any $g$ | Proved here | `nlp2_alternation.md` | `scripts/verify_nlp2.py`; depends on NLP1 lemmas and L1–L2 |
-| NLPD | The same for any finite tower $\lambda_1..\lambda_d$ | Conditional on the hierarchy conjecture | `nlp2_alternation.md` | open at $i\ge3$ |
+| NLP2 | No potential $\log_2x+g(x\bmod2^m,\tau(x),\lambda(x))$ is nonincreasing, any $m$, any $g$ | Proved here; subsumed by SH1 | `nlp2_alternation.md` | `scripts/verify_nlp2.py`; depends on NLP1 lemmas and L1–L2 |
+
+The conditional NLPD formulation developed in this note was subsequently
+proved unconditionally in `tower_theorem.md` and then subsumed, as an
+impossibility statement, by SH1. The current NLP2 and NLPD rows are recorded in
+`../../CLAIM_LEDGER.md`.

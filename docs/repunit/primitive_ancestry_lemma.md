@@ -3,8 +3,10 @@
 **Building on:** `repunit_extremal_principle.md`,
 `repunit_tail_merge_reduction.md`, `repunit_gap_merger_analysis.md`
 
-**Status:** theory note. The bookkeeping lemmas below are exact; the
-single-ancestor reachability lemma is the first proposed proof target.
+**Status:** REPANC1 (automatic realisation), REPANC2 (the critical
+source-length bound), and REPANC3 (the cylinder dichotomy) are proved here and
+machine-checked. The single-ancestor lower-bound correlation remains the first
+open proof target.
 
 ---
 
@@ -280,16 +282,24 @@ A_i(m)=A+2^{u+1}.
 But this is exactly the smallest collision shell. The proved gap-merger
 families are all instances of this condition.
 
-> **Sublemma A (open).**  
-> Let a primitive record-deficit state have a dominant \(q=2\) payout ancestor.
-> If the associated smallest-shell partner is not reachable from a smaller
-> repunit tail, then the non-reachability forces a quantitative lower bound
-> on the least positive exponent representative of the valuation prefix
-> containing \(n\).
+> **Sublemma A (open, nonvacuous form).**
+> Let a primitive record-deficit state have a dominant \(q=2\) payout ancestor
+> for which the admissible source-length window in Section 8 is nonempty. If
+> the associated smallest-shell partner is not reachable from a smaller
+> repunit tail, then the correction nonmembership, together with record
+> extremality and payout dominance, forces a quantitative lower bound on the
+> least positive exponent representative of the valuation prefix containing
+> \(n\).
 
 This is weaker than immediate merger but still useful: if the least positive
 representative grows faster than the available diagonal length, the branch
 cannot support a linear-length primitive record deficit.
+
+The nonempty-window qualification is essential. When \(u<j+2\), or when the
+only lengths in \([j+2,u]\) have the wrong parity, reachability is impossible
+before the correction is examined. Such elementary non-reachability cannot
+reasonably be expected to encode extra information about the exponent
+cylinder.
 
 ---
 
@@ -321,16 +331,17 @@ E_t=\sum_{s<t}e_s.
 \]
 
 The virtual partner in the \(q=2\) case is reachable from a smaller repunit
-tail only if its correction lies in one of these sets:
+tail exactly when its correction lies in one of these sets at an admissible
+source length:
 
 \[
 C=A+2^{u+1}\in \mathcal A(i,u)
 \]
 
-for some source step count \(i\). This condition is not yet sufficient by
-itself; the corresponding exponent \(m=d-i\) must also realise the required
-prefix congruences. But it is a clean first obstruction: a correction outside
-all admissible \(\mathcal A(i,u)\) cannot be a smaller repunit-tail state.
+for some source step count \(i\). The automatic-realisation lemma in Section
+9A proves that no additional exponent-prefix congruence is needed: correction
+equality, diagonal alignment, and oddness of the virtual partner force the
+entire proposed source word.
 
 The allowed step counts are sharply constrained. Since the smaller source has
 diagonal \(d=m+i\) and \(m<n\), while the high state has \(d=n+j+1\), we must
@@ -340,8 +351,9 @@ have
 i>j+1.
 \]
 
-Also every valuation is at least \(1\), so \(i\le u\). Finally, because
-\(m=d-i\) must be odd and \(n\) is odd,
+Also every valuation is at least \(1\), so \(i\le u\), and positivity of the
+source exponent requires \(i<d\). Finally, because \(m=d-i\) must be odd and
+\(n\) is odd,
 
 \[
 i\equiv j+1\pmod2.
@@ -351,7 +363,7 @@ Thus \(q=2\) reachability can occur only for
 
 \[
 \boxed{
-j+2\le i\le u,\qquad i\equiv j+1\pmod2.
+j+2\le i\le \min(u,d-1),\qquad i\equiv j+1\pmod2.
 }
 \]
 
@@ -405,12 +417,168 @@ initial correction:
 C\in\mathcal A(i,u)
 \]
 
-for an allowed \(i\), together with the exact prefix congruences for
-\(m=d-i\).
+for an admissible \(i\). Section 9A proves that correction equality then
+automatically realises the proposed source valuation word.
 
 This removes one possible distraction. The smallest-shell partner never fails
 because of the final oddness condition; it fails only because the lower
 correction state may not lie on the repunit-tail ancestry tree.
+
+---
+
+## 9A. Correction equality automatically realises the source word
+
+The correction-set test is not merely necessary. It is exact.
+
+For a positive valuation word
+\(\mathbf f=(f_0,\ldots,f_{i-1})\) with total \(u\), define
+
+\[
+c(\mathbf f)
+=\sum_{s=0}^{i-1}3^{i-1-s}2^{Q_s},
+\qquad
+A_i(\mathbf f)=2c(\mathbf f)-3^i.
+\]
+
+We use the standard exact-itinerary fact: an odd integer \(z\) realises
+\(\mathbf f\) if and only if
+
+\[
+v_2\!\left(3^iz+c(\mathbf f)\right)=u.
+\]
+
+For completeness, the reverse implication follows by induction on \(i\).
+Writing \(\mathbf f=(f_0,\mathbf f')\),
+
+\[
+c(\mathbf f)=3^{i-1}+2^{f_0}c(\mathbf f'),
+\]
+
+so divisibility of the accumulated numerator by \(2^u\) first forces
+\(2^{f_0}\mid3z+1\). After writing \(3z+1=2^{f_0}z'\), exact valuation
+\(u\) reduces to the same statement for \(z'\) and \(\mathbf f'\). The
+tail numerator is even, hence \(z'\) is odd, and induction gives every
+valuation in order. The forward implication is the usual accumulated affine
+formula.
+
+Now suppose the high repunit tail has a realised \(q=2\) payout at time
+\(j\). Put \(u=E_j\), \(d=n+j+1\), let \(X=x_{j+1}(n)\), and let
+\(C=A_{j+1}+2^{u+1}\). Section 9 gives
+
+\[
+3^d+C=2^{u+1}Y,
+\qquad Y=4X+1\ \text{odd}.
+\]
+
+Suppose \(A_i(\mathbf f)=C\) for a composition \(\mathbf f\) of \(u\), and
+put \(m=d-i\). Then
+
+\[
+3^ia_m+c(\mathbf f)
+=\frac{3^{m+i}+A_i(\mathbf f)}2
+=\frac{3^d+C}2
+=2^uY.
+\]
+
+The accumulated numerator has valuation exactly \(u\), so \(a_m\) realises
+\(\mathbf f\) and
+
+\[
+f^i(a_m)=Y.
+\]
+
+Therefore, whenever \(m\) is a positive odd integer smaller than \(n\), the
+virtual partner is an actual smaller repunit-tail state and
+
+\[
+f^{i+1}(a_m)=f(Y)=f(X)=f^{j+2}(a_n).
+\]
+
+This proves the exact criterion
+
+\[
+\boxed{
+Y\text{ is reachable from a smaller odd repunit exponent}
+\iff
+C\in\mathcal A(i,u)
+\text{ for some }
+j+2\le i\le\min(u,d-1),\quad i\equiv j+1\pmod2.
+}
+\]
+
+There are no additional exponent-prefix congruences to check. The earlier
+formulation treated them as separate because an arbitrary formal correction
+word need not be realised by an arbitrary exponent; here diagonal equality
+and the already-proved oddness of \(Y\) supply exactly the missing itinerary
+congruence.
+
+---
+
+## 9B. Cylinder dichotomy
+
+The exact criterion is uniform across the exponent cylinder selected by the
+high valuation word.
+
+Let the realised high word through the \(q=2\) payout have total valuation
+\(u+2\). The exact parity-itinerary theorem gives one odd exponent class
+
+\[
+n\equiv n_0\pmod{2^{u+2}}
+\]
+
+realising that word. Its high correction \(A_{j+1}\), the shell correction
+\(C=A_{j+1}+2^{u+1}\), and every candidate equation
+\(A_i(\mathbf f)=C\) depend only on the word, not on the representative \(n\).
+
+Therefore, for each admissible length \(i\), exactly one of the following
+holds:
+
+1. no composition \(\mathbf f\) of \(u\) satisfies \(A_i(\mathbf f)=C\),
+   so this ancestor produces no aligned smallest-shell merge for any exponent
+   in the cylinder; or
+2. at least one composition satisfies the equality, and every sufficiently
+   large positive representative \(n\equiv n_0\pmod{2^{u+2}}\) has the
+   smaller positive odd exponent
+
+   \[
+   m=n+j+1-i<n
+   \]
+
+   realising that composition and merging on the next odd step.
+
+Thus failure of correction-layer membership does **not** refine the exponent
+class or impose a new nested congruence. A lower bound on the least positive
+representative \(n_0\) must be a direct correlation theorem between:
+
+- the correction nonmembership determined by the valuation word; and
+- the discrete logarithm \(n_0\) of that same word's repunit residue class.
+
+This is a sharper and less automatic target than the earlier language
+“non-reachability forces the exponent into a branch” suggested. The branch is
+already fixed before reachability is tested.
+
+The finite cylinder diagnostic in
+`../diagnostics/diagnostics_attractor_sieve_spike.md` shows that no unqualified
+lower bound is possible: realised nonmatching words occur with least positive
+representatives (1) and (9) in the tested layers. Hence any valid version
+of Sublemma A must use primitivity, record extremality, and dominance in an
+essential way; correction nonmembership alone is insufficient.
+
+A second finite diagnostic applies those three filters. In the primitive-tail
+census through exponent \(2001\), the record prefixes with \(D_K\ge2\) and a
+dominant \(q=2\) payout reduce to five distinct payout ancestors. Four have an
+empty admissible window. The only nonvacuous ancestor is
+
+\[
+n=221,\qquad j=5,\qquad u=9,
+\]
+
+with the single candidate length \(i=8\); its correction is not in
+\(\mathcal A(8,9)\). The least positive payout-cylinder representative is
+\(221\), and it remains \(221\) after extension to both dangerous record
+prefixes \(K=12,13\). Thus the full filtered census supplies only one
+nonvacuous data point, not evidence for a quantitative law. Reproduce with
+`scripts/explore_primitive_q2_correlation.py`.
 
 ---
 
@@ -482,7 +650,7 @@ finite equation in two compositions of the same total \(u\), with the source
 composition forced to have length
 
 \[
-j+2\le i\le u,\qquad i\equiv j+1\pmod2.
+j+2\le i\le\min(u,d-1),\qquad i\equiv j+1\pmod2.
 \]
 
 This form is promising because it does not mention the large exponent \(n\)
@@ -825,10 +993,50 @@ ways:
    source prefix must have many valuation-one steps, which pushes the problem
    toward a low-prefix/non-shadowing argument.
 
-The second alternative is more important. A pure interval exclusion is likely
-too weak, but forcing \(i\) close to \(u\) would mean the smaller source has a
-long low-valuation prefix. That is exactly the regime where ordinary size
-bounds can defeat positive integer shadowing.
+The interval exclusion is useful only if it gives a uniform restriction on
+the admissible source lengths. The original hope was that it would force
+\(i\) close to \(u\), producing a long low-valuation source. The combined
+bound below shows that this is not the correct geometry.
+
+For the \(q=2\) target the two layer bounds combine into a sharper universal
+source-length restriction. The high correction satisfies
+
+\[
+C=3A_j+2^{u+2}
+\le
+3\left(2^{u-j+1}(3^j-2^j)-3^j\right)+2^{u+2}.
+\]
+
+If \(A_i=C\), the lower source-layer bound therefore gives
+
+\[
+\boxed{
+3^i-2^{i+1}
+\le
+3\cdot2^{u-j+1}(3^j-2^j)-3^{j+1}+2^{u+2}.
+}
+\]
+
+For \(i\ge3\), \(3^i-2^{i+1}\ge3^{i-1}\), while the right side is less than
+
+\[
+2^u\left(6(3/2)^j+4\right).
+\]
+
+Consequently every reachable source length obeys
+
+\[
+\boxed{
+i
+<
+1+\frac{u+\log_2\!\left(6(3/2)^j+4\right)}{\log_2 3}.
+}
+\]
+
+This corrects the earlier heuristic that the useful branch should force
+\(i\) close to \(u\). Exact matches instead lie in a critical-density window
+\(i\lesssim u/\log_2 3+O(j)\). The finite correction-match census is consistent
+with this moving cutoff and does not support a universal fixed-depth cutoff.
 
 ---
 
@@ -845,11 +1053,10 @@ The previous version of Sublemma A can now be sharpened.
 > \]
 > for every
 > \[
-> j+2\le i\le u,\qquad i\equiv j+1\pmod2,
+> j+2\le i\le\min(u,d-1),\qquad i\equiv j+1\pmod2,
 > \]
-> or if the only such correction matches fail the exact exponent-prefix
-> congruences for \(m=d-i\), then this failure forces a quantitative lower
-> bound on the least positive representative of the \(n\)-prefix class.
+> then this failure forces a quantitative lower bound on the least positive
+> representative of the \(n\)-prefix class.
 
 The point of this formulation is that the obstruction is now discrete and
 structural. We are not asking whether a smaller tail happens to appear in a
@@ -860,7 +1067,9 @@ The desired lower bound should use the failed membership in
 \(\mathcal A(i,u)\), not merely the modulus size of the valuation prefix.
 Otherwise the low-prefix example from `repunit_low_prefix_obstruction.md`
 shows that the argument can be fooled by a compactly described high-modulus
-2-adic branch.
+2-adic branch. Section 9B adds a further warning: nonmembership supplies no
+new congruence class. Sublemma A' must prove a direct correlation between the
+correction tree and the discrete logarithm of the existing exponent cylinder.
 
 ---
 
@@ -1306,7 +1515,9 @@ Avoid these tempting but false or unsupported statements:
 - A single payout always dominates \(B_K\). The finite diagnostic already has
   diffuse examples.
 - A formal shell atom is automatically a reachable smaller repunit state.
-  The word "virtual" in virtual collision partner is doing real work.
+  Section 9A still requires equality with a correction in an admissible
+  reachable layer; without that equality, the word "virtual" is doing real
+  work.
 - A current positive surplus can be compared to a current positive deficit.
   They are negatives of each other in the same ledger.
 
@@ -1317,28 +1528,51 @@ valuation. Otherwise it is only another restatement of the bookkeeping.
 
 ## 19. Next proof move
 
-Work on Sublemma A symbolically:
+Do not infer a correlation law from the present finite census: after the full
+hypotheses and the nonempty-window condition are imposed, it contains only one
+dangerous example. The symbolic task is now:
 
-1. fix a \(q=2\) payout ancestor and write the exact valuation-prefix
-   congruences for the high state \(X\);
-2. write the congruences for the virtual partner \(Y=4X+1\);
-3. compute the possible source-step window
-   \(j+2\le i\le u,\ i\equiv j+1\pmod2\);
-4. express reachability as membership of
-   \(C=A_{j+1}+2^{u+1}\) in the reachable correction layer
-   \(\mathcal A(i,u)\), plus the exact exponent-prefix congruences for
-   \(m=d-i\);
-5. use the ancestry equation, last-valuation parity, the modulo-\(3^r\) tail
+1. use the exact criterion proved in Section 9A: reachability is membership of
+   \(C=A_{j+1}+2^{u+1}\) in \(\mathcal A(i,u)\) for
+   \(j+2\le i\le\min(u,d-1)\) and
+   \(i\equiv j+1\pmod2\);
+2. use the ancestry equation, last-valuation parity, the modulo-\(3^r\) tail
    congruence sieve, and layer bounds above to reduce the possible source
    compositions;
-6. prove that if the remaining source tails force a long low-valuation
-   suffix or prefix, then positive integer size bounds prevent linear
-   shadowing;
-7. prove that if no such \(m\) exists up to the diagonal \(d\), then the
-   surviving exponent class for \(n\) has least positive representative
-   exceeding a function of \(u\) or \(d\);
-8. compare that lower bound with the maximum length available before the
-   proposed \(3n\) descent window closes.
+3. work at the critical-density scale forced by REPANC2; the old route through
+   \(i\) close to \(u\) is not supported;
+4. separate the empty-window branch completely; it is a valuation-budget
+   obstruction, not correction nonmembership;
+5. in the nonempty branch, seek a direct theorem connecting correction
+   nonmembership *plus record extremality and dominance* to the discrete
+   logarithm \(n_0\pmod{2^{u+2}}\) of the already-fixed high-word cylinder;
+6. require a bound strong enough to imply \(n_0\ge F(K)\) with superlinear
+   growth in the available diagonal scale. Since the actual exponent is a
+   representative, \(n_0\le n\); the useful consequence must therefore be an
+   upper bound on \(K\) in terms of \(n\), not a pointwise claim that
+   \(n_0>n+j+1\).
 
 This is a theory task. Computation should only be used afterward to test
 which congruence obstruction appears in the symbolic work.
+
+---
+
+## Verification and ledger entry
+
+`scripts/verify_repunit_ancestry_realization.py` checks the exact-itinerary
+criterion for every composition through total valuation \(11\), then checks
+all compatible \(q=2\) correction matches for even totals \(6\) through \(14\)
+and high-prefix lengths \(2\) through \(4\). For every realised aligned match
+it confirms the complete source valuation word, \(Y=4X+1\), and equality of
+the next odd iterates.
+
+```bash
+python scripts/verify_repunit_ancestry_realization.py
+python scripts/explore_primitive_q2_correlation.py
+```
+
+| ID | Claim | Status | Source | Verification |
+|---|---|---|---|---|
+| REPANC1 | For a realised \(q=2\) payout, \(C=A_i(\mathbf f)\) at an admissible aligned source length automatically realises \(\mathbf f\) on the smaller repunit exponent and forces a next-step merge | Proved here | `primitive_ancestry_lemma.md` Section 9A | `scripts/verify_repunit_ancestry_realization.py` |
+| REPANC2 | Every such correction match satisfies the exact layer inequality of Section 13 and hence \(i<1+(u+\log_2(6(3/2)^j+4))/\log_2 3\) | Proved here | `primitive_ancestry_lemma.md` Section 13 | `scripts/verify_repunit_ancestry_realization.py` |
+| REPANC3 | For a fixed realised high word, each admissible correction match produces the aligned merge for every sufficiently large exponent in its cylinder; nonmembership produces none and does not refine the exponent class | Proved here | `primitive_ancestry_lemma.md` Section 9B | Exact consequence of REPANC1 and parity-itinerary uniqueness; cylinder lifts checked by `scripts/verify_repunit_ancestry_realization.py` |

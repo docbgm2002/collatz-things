@@ -75,6 +75,7 @@ def record_deficit_rows(n, sigma):
                 {
                     "step": K - 1,
                     "q": e,
+                    "pre_E": E - e,
                     "post_deficit": deficit,
                     "log_weight": log_weight,
                 }
@@ -130,6 +131,74 @@ def record_deficit_rows(n, sigma):
             for term in payout_terms
             if term["q"] % 2 == 1
         )
+        weighted_terms = [
+            {
+                **term,
+                "share": math.exp2(term["log_weight"] - log_budget),
+            }
+            for term in payout_terms
+        ]
+        initial_share = math.exp2(-1.0 - log_budget)
+        share_square_sum = initial_share**2 + sum(
+            term["share"] ** 2 for term in weighted_terms
+        )
+        effective_ancestor_count = 1.0 / share_square_sum
+        blocked_terms = [
+            term for term in weighted_terms if term["q"] % 6 in (3, 4)
+        ]
+        blocked_share = sum(term["share"] for term in blocked_terms)
+        eligible_share = sum(
+            term["share"]
+            for term in weighted_terms
+            if term["q"] % 6 not in (3, 4)
+        )
+        blocked_square_sum = sum(term["share"] ** 2 for term in blocked_terms)
+        blocked_effective_count = (
+            blocked_share**2 / blocked_square_sum
+            if blocked_square_sum
+            else 0.0
+        )
+        blocked_max_share = max(
+            (term["share"] for term in blocked_terms),
+            default=0.0,
+        )
+        initial_numerator = 3**K
+        exact_weighted_terms = [
+            {
+                **term,
+                "numerator": (
+                    3 ** (K - 1 - term["step"])
+                    * 2 ** (term["pre_E"] + 1)
+                    * (2 ** term["q"] - 2)
+                ),
+            }
+            for term in payout_terms
+        ]
+        blocked_numerator = sum(
+            term["numerator"]
+            for term in exact_weighted_terms
+            if term["q"] % 6 in (3, 4)
+        )
+        eligible_numerator = sum(
+            term["numerator"]
+            for term in exact_weighted_terms
+            if term["q"] % 6 not in (3, 4)
+        )
+        blocked_max_numerator = max(
+            (
+                term["numerator"]
+                for term in exact_weighted_terms
+                if term["q"] % 6 in (3, 4)
+            ),
+            default=0,
+        )
+        assert initial_numerator + blocked_numerator + eligible_numerator == R
+        assert math.isclose(
+            initial_share + blocked_share + eligible_share,
+            1.0,
+            rel_tol=2e-12,
+            abs_tol=2e-12,
+        )
         yield {
             "n": n,
             "K": K,
@@ -152,6 +221,9 @@ def record_deficit_rows(n, sigma):
             "dominant_age": (
                 K - 1 - dominant["step"] if dominant is not None else None
             ),
+            "dominant_step": (
+                dominant["step"] if dominant is not None else None
+            ),
             "dominant_q": dominant["q"] if dominant is not None else None,
             "dominant_post_deficit": (
                 dominant["post_deficit"] if dominant is not None else None
@@ -161,6 +233,22 @@ def record_deficit_rows(n, sigma):
             "top4_share": top_shares[2],
             "odd_payout_share": odd_payout_share,
             "top_qs": tuple(term["q"] for term in ranked_terms[:4]),
+            "initial_share": initial_share,
+            "effective_ancestor_count": effective_ancestor_count,
+            "blocked_share": blocked_share,
+            "eligible_share": eligible_share,
+            "blocked_count": len(blocked_terms),
+            "blocked_effective_count": blocked_effective_count,
+            "blocked_max_share": blocked_max_share,
+            "blocked_max_conditional_share": (
+                blocked_max_share / blocked_share if blocked_share else 0.0
+            ),
+            "ledger_numerator": R,
+            "initial_numerator": initial_numerator,
+            "eligible_numerator": eligible_numerator,
+            "blocked_numerator": blocked_numerator,
+            "blocked_max_numerator": blocked_max_numerator,
+            "exact_payout_terms": tuple(exact_weighted_terms),
         }
 
 

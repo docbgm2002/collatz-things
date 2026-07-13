@@ -303,10 +303,12 @@ remaining open refinement there is only the prefactor.
 python3 scripts/verify_corridor_rate.py    # prints PASS for every claim above
 ```
 
-## Proposed ledger rows
+## Ledger entries
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | COR1 | $p_K\le31\,\rho^{K/\theta}$ for all $K\ge1$ | Proved here | `corridor_rate.md` | `scripts/verify_corridor_rate.py` |
 | COR2 | $\lim p_K^{1/K}=\rho^{1/\theta}=0.9659\ldots$ | Proved here | `corridor_rate.md` | DP rate convergence (finite evidence for the limit; proof is human) |
 | COR3 | Undischarged-class count grows with branching factor $2\rho^{1/\theta}=1.9318\ldots$ | Proved here (from COR1/2) | `corridor_rate.md` | — |
+
+These rows are recorded in `../../CLAIM_LEDGER.md`.

@@ -116,9 +116,11 @@ uniformly, hence $e^\star=2$ always; the verifier refuted this at
 $(d,s)=(1,1)$, and the statement was corrected to the parity-split
 formula before promotion. Logged per repository practice.
 
-## Proposed ledger rows
+## Ledger entries
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | SPN1 | Complete exact lane of length $d+M+1$: tower $\to$ Mersenne $\to$ burn $\to$ repunit, with exact payout $e^\star$ and rail-$1$ location of all tower members | Proved here (composition + two exact additions) | `spine_synthesis.md` | `scripts/verify_spine_synthesis.py` |
 | BND1 | No potential $\log_2x+G(x)$ with bounded $G$ is nonincreasing | Proved here | `spine_synthesis.md` | one-paragraph proof from MER1; arithmetic in verifier |
+
+These rows are recorded in `../../CLAIM_LEDGER.md`.

@@ -1,5 +1,10 @@
 # Repository edits, part 2 — sessions of 2026-07-01/02
 
+> **Historical provenance only.** This is a session edit plan, not an
+> authoritative status document. Many listed edits have since been applied or
+> superseded. Use `CLAIM_LEDGER.md` for current claims and `README.md` for the
+> current reading path.
+
 Supplements `REPO_EDITS.md` (which covers PAR1 reclassification, TREE2
 refutation, cycle-reduction literature note, and NLP1). This file
 consolidates everything since. New files to add to the repository, all in

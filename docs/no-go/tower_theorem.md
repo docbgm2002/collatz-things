@@ -250,10 +250,12 @@ the chain arithmetic of T2 for sampled $(m,S)$.
 python3 scripts/verify_tower.py   # prints PASS for every claim above
 ```
 
-## Proposed ledger rows
+## Ledger entries
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | TWR1 | Exact ancestry tower $w_d(M)$, $f^{\,d}(w_d(M))=2^M-1$, period-$2\cdot3^{d-1}$ normal form, 2-adic separation | Proved here | `tower_theorem.md` | `scripts/verify_tower.py` |
 | NLPD | No potential $\log_2x+g(x\bmod2^m,\tau,(\lambda_i)_{i\in S})$ is nonincreasing, any finite $S$ | Proved here (supersedes conditional NLPD) | `tower_theorem.md` | `scripts/verify_tower.py` |
 | — | Hierarchy conjecture of `latent_fuel_notes.md` | RESOLVED by TWR1 (e=2-uniform form) | `tower_theorem.md` | — |
+
+The TWR1 and NLPD rows are recorded in `../../CLAIM_LEDGER.md`.

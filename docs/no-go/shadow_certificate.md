@@ -120,12 +120,12 @@ fuel, residues, length closure, detector $\bot$ at levels $1..4$) for
 $N\le19$, $k\le6$, exact arithmetic; the explicit smallest certificate;
 and the $-17$-cycle shadow spot-check for the general principle.
 
-## Proposed ledger rows
+## Ledger entry
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | SH1 | No potential $\log_2x+g(x\bmod2^m,\tau,\mathrm{len},\lambda_1..\lambda_d)$ is nonincreasing, any $m,d$ | Proved here; subsumes NLP1/NLP2/NLPD/FFN1 as impossibility statements | `shadow_certificate.md` | `scripts/verify_shadow.py` |
 
-**Ledger status changes:** NLP1, NLP2, NLPD, FFN1 → "Proved here;
-subsumed by SH1 (retained for structural content / historical proof
-path)".
+This row and the corresponding NLP1/NLP2/NLPD/FFN1 status changes are
+recorded in `../../CLAIM_LEDGER.md`. The earlier results remain useful for
+their structural content and historical proof path.

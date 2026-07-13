@@ -22,6 +22,26 @@ Start with:
   consolidated manuscript *No-Go Theorems for One-Step Lyapunov Potentials
   for the 3x+1 Map* (Theorems A–D below), with compiled PDF.
 
+## Current research status
+
+The mature line is the one-step potential no-go programme, centred on SH1
+and SH2, together with the exact Mersenne ancestry tower and the corridor-rate
+theorem. The universal repunit-tail descent problem remains open. Its current
+state is:
+
+- exact affine, merger, collision-shell, and extremal-storage reductions are
+  available;
+- several tempting local, fixed-block, compressed-state, and shallow-merger
+  routes have been refuted or shown insufficient;
+- the shortcut-map `6n` data is consistent with neutral parity statistics,
+  but this is an empirical diagnosis, not an equidistribution theorem;
+- broad computation is paused pending one precise arithmetic lemma, currently
+  formulated through the ranked attacks in
+  `docs/repunit/next_generation_attack_program.md`.
+
+`RESEARCH_ROADMAP.md` retains the chronological development. Its later
+checkpoints supersede earlier proposed experiments where they conflict.
+
 ## Proved-results track
 
 ### No-go theorems for one-step potentials
@@ -54,11 +74,10 @@ Start with:
 - [`docs/no-go/fuel_fraction_nogo.md`](docs/no-go/fuel_fraction_nogo.md) **(FFN1)** — the
   \((\tau,\mathrm{len})\) class by explicit 11-witness certificate.
   Subsumed by SH1; retained for the certificate method exposition.
-- `scripts/verify_nogo_certificate.py` (not present in this checkout) — the
-  planned logically independent verification: no-go constraint systems on
-  finite coordinate windows are difference-constraint systems, infeasible iff
-  the coordinate graph of raw orbit steps contains a cycle of ratio-product
-  \(>1\); Bellman–Ford mining plus exact rational confirmation.
+- A historical independent finite-window certificate check is described in
+  `SELF_REVIEW.md`, but its script (`scripts/verify_nogo_certificate.py`) is
+  not present in this checkout. Those reported runs are therefore provenance,
+  not part of the reproducible verification suite.
 
 The surviving one-step class reads the quantized full logarithm
 \(\lfloor2^j\log_2x\rfloor\); see the manuscript's boundary section. This
@@ -145,6 +164,65 @@ is where the no-go program terminates.
   gives an exact payout ledger and shell-ancestry expansion for record
   valuation deficits, and isolates a primitive reachability lemma as the next
   proof target.
+- [`docs/repunit/primitive_ancestry_lemma.md`](docs/repunit/primitive_ancestry_lemma.md)
+  **(REPANC1).** In the smallest-shell \(q=2\) case, correction equality at
+  an admissible aligned source length is already sufficient for reachability:
+  it automatically realises the entire smaller repunit valuation word and
+  forces a next-step merge. **(REPANC2)** places every such match in an
+  explicit critical-density source-length window
+  \(i<u/\log_2 3+O(j)\). **(REPANC3)** shows this is a cylinder-wise
+  dichotomy: nonmembership does not create a new exponent congruence. The
+  proposed least-representative correlation bound remains open. A focused
+  primitive-record diagnostic through \(n=2001\) leaves only one nonvacuous
+  dangerous dominant-\(q=2\) case, so it supports narrowing the lemma rather
+  than extrapolating a quantitative law.
+- [`docs/repunit/general_payout_ancestry.md`](docs/repunit/general_payout_ancestry.md)
+  **(GPA1–GPA2).** Automatic shell-partner realisation extends from \(q=2\)
+  to every payout \(q\ge2\). However, the canonical partner is identically
+  unreachable when \(q\equiv3,4\pmod6\), because its correction is divisible
+  by \(3\) while every positive-length source correction is not. In
+  particular, the common dominant \(q=3\) branch must use multi-ancestor or
+  amortized payout structure rather than the single canonical partner.
+- [`docs/repunit/payout_concentration_diffusion.md`](docs/repunit/payout_concentration_diffusion.md)
+  **(PCD1–PCD16).** The payout ledger has an exact
+  initial/eligible/blocked trichotomy and effective-count alternative. In the
+  primitive census through \(n=5001\), the \(110\) records with \(D_K\ge2\)
+  split \(88/0/16/6\) across the eligible, initial, blocked-concentrated, and
+  blocked-diffuse branches; all six diffuse records occur on \(n=471\).
+  Consecutive \(q=3\) shell displacements fuse exactly into a height-\(4\)
+  shell. This does not by itself determine the residue or reachability of the
+  complete combined correction. Six short mixed blocked/eligible valuation
+  blocks give universal shell-fusion identities and account for all \(43\)
+  mixed fusions in the finite \(n\le5001\) dangerous-record census. None of
+  these patterns lifts to a collision under the naive complete-correction
+  transport. With the correct affine injection restored, every canonical
+  shell annihilates into the high correction after one step, so it cannot
+  persist as an independent state for later shell pairing. The remaining
+  live branch is amortized payout charging and historical spacing. Its first
+  exact bound is \(D_K+2N_B\le K\log_2(3/2)\): blocked effective ancestry is
+  paid for by valuation excess, although this alone is not a uniform deficit
+  bound. An explicit balanced \(q=3\) valuation language shows that historical
+  spacing alone cannot strengthen it to one. Every finite word beginning with
+  valuation at least two has exactly one odd repunit exponent cylinder, so
+  finite realization does not eliminate the balanced language either. The
+  least representatives form nested cylinders: every change jumps above the
+  previous \(2^E\) scale, so a bound on constant-cylinder plateau length would
+  force exponential exponent growth. The proposed fixed bound two fails at
+  \(m=1200\), so the live target is sublinear plateau growth. Every extension
+  now has an exact local recursion: one linear congruence and a discrete log
+  of order at most \(64\). All local lift residues occur through \(m=1500\),
+  reducing the problem to correlation and zero-run control for the resulting
+  2-adic cocycle rather than a forbidden-residue argument. The cocycle
+  linearizes exactly: a plateau occurs when the affine starting-cylinder lift
+  equals the corresponding higher power-of-three carry. Across a plateau the
+  carry shifts block by block, turning the run into one contiguous binary
+  word match against a fixed power-of-three carry. Fixed-width endpoint
+  residues are not closed under this dynamics; a transducer must replenish
+  its state from the carry or grow its window. Moreover, every consecutive
+  balanced mechanical block composition has real multiplier strictly between
+  \(2/3\) and \(3/2\), regardless of length. The balanced obstruction is a
+  near-isometry at every scale, so arithmetic carry/endpoint separation—not
+  accumulated real contraction—is the remaining route.
 - [`docs/repunit/repunit_run_length_identity.md`](docs/repunit/repunit_run_length_identity.md)
   proves the fuel-enemy bridge \(\tau(x_K)=v_2(3^{m_K}+d_K)-E_K-1\) and the
   exact valuation-one run-length identity, unifying the burn, enemy-coordinate,
@@ -213,6 +291,15 @@ the proved-results track:
 - [`docs/repunit/primitive_ancestry_lemma.md`](docs/repunit/primitive_ancestry_lemma.md) - theory note
   isolating the dominant-payout ancestry/reachability lemma as the next
   symbolic target after `docs/repunit/repunit_extremal_principle.md`.
+- [`docs/repunit/next_generation_attack_program.md`](docs/repunit/next_generation_attack_program.md) —
+  ranked research programme covering general payouts, correction-set geometry,
+  payout concentration versus diffusion, transversality, ancestry capacity,
+  induced record maps, transfer operators, and computer-assisted lemma
+  discovery, with explicit stopping rules.
+- [`docs/repunit/repunit_equidistribution_reframing.md`](docs/repunit/repunit_equidistribution_reframing.md) —
+  capstone diagnostic for the distinct shortcut-map `6n` target. Exact
+  bookkeeping is combined with finite data consistent with parity density
+  \(1/2\); no convergence or equidistribution theorem is claimed.
 - [`docs/nested-anchor/near_threshold_episode_notes.md`](docs/nested-anchor/near_threshold_episode_notes.md) - finite
   diagnostic on the selected tight-margin repunit cases and their short
   near-threshold repair episodes (`scripts/explore_near_threshold_episodes.py`).
@@ -225,7 +312,9 @@ the proved-results track:
   contraction constant, the q=2 smallest-shell reachability sieve and exact
   reach counts, and the Mersenne-spike recovery scan extended to R=999.
   Scripts: `scripts/explore_fuel_motif_attractor.py`,
-  `scripts/explore_ancestry_reachability.py`, `scripts/explore_spike_recovery.py`.
+  `scripts/explore_ancestry_reachability.py`,
+  `scripts/explore_primitive_q2_correlation.py`,
+  `scripts/explore_spike_recovery.py`.
 - [`docs/fuse/fuse_map_theory.md`](docs/fuse/fuse_map_theory.md) and
   [`docs/fuse/fuse_burn_attack.md`](docs/fuse/fuse_burn_attack.md).
 - [`docs/diagnostics/martingale_logspace_perspective.md`](docs/diagnostics/martingale_logspace_perspective.md) —
@@ -294,7 +383,12 @@ python scripts/verify_repunit_baker_nonshadowing.py
 python scripts/explore_baker_applicability.py --limit 5001
 python scripts/explore_repunit_enemy_episodes.py --limit 10001 --min-run 1
 python scripts/verify_repunit_extremal_principle.py
+python scripts/verify_repunit_ancestry_realization.py
+python scripts/verify_repunit_general_payout_ancestry.py
 python scripts/explore_repunit_extremal_prefixes.py --limit 2001
+python scripts/explore_primitive_q2_correlation.py
+python scripts/explore_payout_concentration.py --limit 5001 --top 0
+python scripts/explore_mixed_shell_pairs.py --limit 5001 --top 100
 python scripts/verify_repunit_run_length.py --limit 201
 python scripts/explore_repunit_enemy_factorization.py --limit 4001 --bound 1000000
 python scripts/verify_entropy_balance.py
@@ -326,6 +420,11 @@ Interpret the output according to the claim ledger:
 13. `docs/repunit/repunit_rail5_density.md`
 14. `docs/density-cycles/stopping_time_density.md`
 15. `docs/density-cycles/cycle_reduction.md`
+
+For the open repunit programme after that proved-results sequence, read
+`docs/repunit/repunit_extremal_principle.md`, then
+`docs/repunit/primitive_ancestry_lemma.md`, and finally the explicitly
+empirical `docs/repunit/repunit_equidistribution_reframing.md`.
 
 ## Correction history (standard, not embarrassment)
 
