@@ -9,6 +9,7 @@ admissible source word w of total u, the theorem in
 automatically realises w and merges with the high tail on the next odd step.
 """
 
+from fractions import Fraction
 from functools import lru_cache
 from itertools import product
 from math import floor, log2
@@ -370,6 +371,31 @@ def verify_balanced_block_distortion(max_start=100, max_length=100):
     )
 
 
+def verify_balanced_storage_growth(blocks=1000):
+    c = log2(3 / 2)
+    storage = Fraction(15, 16)  # after the initial valuation-three payout
+    initial = storage
+    previous_time = 0
+    for block_index in range(1, blocks + 1):
+        current_time = floor(2 * block_index / c)
+        gap = current_time - previous_time
+        assert gap in (3, 4)
+        if gap == 3:
+            storage = Fraction(27, 32) * storage + Fraction(3, 4)
+        else:
+            storage = Fraction(81, 64) * storage + Fraction(3, 4)
+        previous_time = current_time
+
+        lower = Fraction(2, 3) * initial + Fraction(block_index, 2) + Fraction(1, 4)
+        upper = Fraction(3, 2) * initial + Fraction(9 * block_index, 8) - Fraction(3, 8)
+        assert lower < storage < upper
+
+    print(
+        "Balanced correction-storage growth: PASS  "
+        f"({blocks} exact block transitions)"
+    )
+
+
 def verify_general_payouts(max_pre_total=12, max_q=6):
     tested_high_words = 0
     abstract_matches = 0
@@ -443,4 +469,5 @@ if __name__ == "__main__":
     verify_full_carry_shift()
     verify_fixed_width_endpoint_nogo()
     verify_balanced_block_distortion()
+    verify_balanced_storage_growth()
     verify_general_payouts()

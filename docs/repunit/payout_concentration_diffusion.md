@@ -12,7 +12,8 @@ extension recursion. PCD12 records the resulting finite local-lift
 distribution, PCD13 gives the exact plateau cocycle, and PCD14 identifies the
 multi-block carry shift. PCD15 rules out fixed-width endpoint compression,
 and PCD16 proves that balanced block compositions have uniformly bounded
-real distortion. None proves repunit-tail descent.
+real distortion. PCD17 converts that distortion bound into exact linear
+growth of normalized correction storage. None proves repunit-tail descent.
 
 **Building on:** repunit_extremal_principle.md,
 general_payout_ancestry.md
@@ -961,7 +962,65 @@ the plateau length. Any successful argument must exploit arithmetic
 transversality between endpoint and carry digits, rather than the sizes of
 the affine derivatives alone.
 
-## 19. Next symbolic target
+## 19. PCD17: balanced correction storage grows linearly
+
+The normalized ledger coordinate from the extremal principle is
+
+\[
+Z_K=\frac{R_K}{2^{E_K+1}},
+\qquad
+Z_{K+1}=1+\frac{3Z_K-2}{2^{e_K}}.
+\]
+
+Consequently, the two balanced blocks act on \(Z\) by
+
+\[
+\Psi_3(Z)=\frac{27}{32}Z+\frac34,
+\qquad
+\Psi_4(Z)=\frac{81}{64}Z+\frac34.
+\]
+
+Start immediately after the initial valuation-three payout, where
+\(Z_0=15/16\), and append \(L\ge1\) mechanical balanced blocks. If
+\(\mu_{i,L}\) is the homogeneous multiplier transporting the injection at
+block \(i\) through the remaining suffix, then
+
+\[
+Z_L=\mu_{0,L}Z_0+\frac34\sum_{i=1}^{L}\mu_{i,L},
+\qquad \mu_{L,L}=1.
+\]
+
+Every nonempty suffix is itself a consecutive mechanical interval, so PCD16
+gives \(2/3<\mu_{i,L}<3/2\). Therefore
+
+\[
+\frac23Z_0+\frac34\left(1+(L-1)\frac23\right)
+<Z_L<
+\frac32Z_0+\frac34\left(1+(L-1)\frac32\right).
+\]
+
+Substituting \(Z_0=15/16\) yields
+
+\[
+\boxed{
+\frac{L}{2}+\frac78
+<Z_L<
+\frac{9L}{8}+\frac{33}{32}.
+}
+\]
+
+Therefore:
+
+> **PCD17.** Along the balanced \(q=3\) obstruction, normalized correction
+> storage grows linearly in the number of appended payout blocks.
+
+This is a useful but deliberately limited conclusion. It shows that the raw
+ledger coordinate cannot belong to a compact finite-state model; only a
+renormalized coordinate such as \(Z_L/L\) can remain bounded. It does not
+bound the PCD14 power-of-three carry, which may be vastly larger and still
+controls cylinder plateaus.
+
+## 20. Next symbolic target
 
 For a blocked-concentrated record, pair the dominant blocked ancestor with the
 largest remaining ancestor and transport both corrections to one diagonal.
@@ -986,11 +1045,70 @@ therefore use global information absent from a cylinder: prior descent,
 merger into a smaller repunit tail, or a quantitative lower bound on the least
 positive exponent representative relative to the balanced prefix length.
 
-PCD10 makes the immediate symbolic target a sublinear plateau theorem. The
-uniform proposal \(L=2\) is refuted at \(m=1200\), and random-like exponent
+PCD10 makes a sublinear plateau theorem the immediate target for the
+quantitative bound. For qualitative eventual descent, IEF10 already excludes
+the exact infinite mechanical itinerary and IEF11 excludes all its fixed
+phase shifts. IEF12 goes further and excludes every Sturmian intercept at the
+critical slope. The missing qualitative step is now classification: show
+that every infinite blocked-diffuse terminal branch is Sturmian, satisfies
+the IEF11 periodic-prefix criterion by another mechanism, or name the
+distinct non-Sturmian residual language it enters.
+
+IEF13 makes "another mechanism" explicit. Uniformly bounded critical factor
+discrepancy and \(\operatorname{dio}(w)>1\) already suffice. In particular,
+all bounded-discrepancy languages of linear factor complexity are discharged.
+Hence the qualitative PCD classification should record two new residual
+flags: growing factor discrepancy and superlinear factor complexity.
+
+IEF14 refines the first flag: growing discrepancy is discharged whenever the
+periodic-prefix agreement surplus \(G\) beats \(2K+2\log_2N\). The remaining
+PCD ledger should therefore retain this adaptive margin, not discrepancy in
+isolation.
+
+For negative discrepancy, also retain the IEF15 suffix partition
+\(Z_L=1+2^{cr_L-2}Z_{L-1}\). Deep negative drift with bounded \(Z_L\) is a
+finite discharge, so a surviving high-discrepancy ledger must show why this
+partition function replenishes.
+
+Finally, IEF16 forces \(\liminf S_L/L=0\) on any rational non-cyclic survivor.
+The PCD ledger can therefore discard linear density drift of either sign and
+reserve the carry analysis for sublinear or critical-envelope fluctuations.
+
+IEF17 is the resulting terminal ledger. Any non-cyclic PCD survivor must meet
+all five of its coordinates simultaneously; new carry or ancestry rules
+should be measured against that intersection rather than against the original
+blocked-diffuse population.
+
+IEF18 sharpens the ledger's periodic-prefix coordinate: the rational height
+depends on total and suffix-positive drift of the chosen preperiod and period,
+not on the full symmetric factor discrepancy. Thus a PCD branch survives this
+axis only if every useful approximant has bounded directional margin
+\(G-J(A)-J(B)-2\log_2N\).
+
+IEF19 gives the corresponding asymptotic split. Sublinear cumulative drift
+and repetition exponent greater than one force that directional margin to
+diverge. Hence a non-cyclic PCD survivor must have repetition exponent one or
+positive linear limsup drift, in addition to satisfying the remaining ledger
+coordinates.
+
+IEF20 reaches into the positive-limsup side: fixed-surplus repetitions are
+still discharged if they recur at scales where the entire earlier drift
+envelope is sublinear relative to the new footprint. The complementary PCD
+branch must keep every useful recurrence scale coupled to a directionally
+visible excursion. Exponent one separately forces superlinear factor
+complexity, but no ancestry theorem here yet rules that out.
+
+IEF21 computes that directional visibility exactly. The height cost of a full
+block factor is its terminal draw-up from the factor minimum; the agreement
+surplus separately pays only for drift lost after the footprint. Thus a PCD
+survivor must retain a linear terminal draw-up or linear endpoint loss on
+every fixed-surplus approximant. An internal high-drift phase that returns to
+the relevant valley before the cut is discharged rather than residual.
+
+The uniform proposal \(L=2\) is refuted at \(m=1200\), and random-like exponent
 digits would be expected to have unbounded but logarithmic plateaus. PCD11
-reduces each plateau decision to a bounded local exponent lift. The next task
-is to view PCD13--PCD14 as a word-matching cocycle driven by the mechanical gap word.
+reduces each plateau decision to a bounded local exponent lift. For the
+quantitative target, view PCD13--PCD14 as a word-matching cocycle driven by the mechanical gap word.
 The gap sequence is the Sturmian coding of the rotation defined by
 \(T_m=\lfloor2m/c\rfloor\). Seek a deterministic bound on consecutive
 equalities \(t_m=\kappa_m\), such as \(O(\log m)\), or anything \(o(m)\).
@@ -1000,9 +1118,12 @@ Baker-type non-shadowing estimate or a carry-augmented transducer. PCD15 rules
 out a fixed-width endpoint-only machine: it must explicitly model how carry
 bits replenish the window. PCD16 also rules out extracting a long-scale real
 contraction from the balanced word: arithmetic separation must do the work.
+PCD17 shows that normalized ledger storage itself grows linearly, so an
+induced record state must either retain this unbounded scale or normalize it
+without losing the carry/endpoint coupling.
 Mechanical pairing of canonical shell atoms stops here.
 
-## 20. Reproduction
+## 21. Reproduction
 
     python scripts/explore_payout_concentration.py --limit 5001 --top 0
     python scripts/explore_mixed_shell_pairs.py --limit 5001 --top 100
@@ -1027,3 +1148,4 @@ Mechanical pairing of canonical shell atoms stops here.
 | PCD14 | During a plateau the full carry obeys \(C'=(C-t)/2^\delta\); a plateau run therefore matches consecutive carry bits against the concatenated affine starting lifts | Proved here | Exact full-carry algebra and iteration |
 | PCD15 | For either balanced suffix and every fixed width \(M\ge\delta+1\), endpoints equal modulo \(2^M\) have the same lift but successors differing by \(3^{|\mathbf v|}2^{M-\delta}\not\equiv0\pmod{2^M}\); fixed-width endpoint state is not closed | Proved here | Exact affine transition; scripts/verify_repunit_general_payout_ancestry.py |
 | PCD16 | Every consecutive interval of the balanced mechanical block word has homogeneous multiplier \(\mu_W\) satisfying \(2/3<\mu_W<3/2\), independently of its length | Proved here | Mechanical floor discrepancy; scripts/verify_repunit_general_payout_ancestry.py |
+| PCD17 | After the initial valuation-three payout and \(L\ge1\) balanced mechanical blocks, normalized correction storage satisfies \(L/2+7/8<Z_L<9L/8+33/32\) | Proved here | Affine storage recursion plus PCD16; scripts/verify_repunit_general_payout_ancestry.py |

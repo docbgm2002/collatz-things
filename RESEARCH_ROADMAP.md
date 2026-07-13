@@ -26,9 +26,16 @@ plans later completed, retired, or narrowed. The current working position is:
 2. the fixed-block, shallow synchronization, terminal-payout, and compressed
    collision-state routes do not close it;
 3. no new broad census should be launched without a precise arithmetic lemma;
-4. the live symbolic candidate is the single-ancestor reachability problem in
-   `docs/repunit/primitive_ancestry_lemma.md`;
-5. `docs/repunit/repunit_equidistribution_reframing.md` gives finite evidence
+4. the live obstruction is the balanced \(q=3\) repunit-cylinder family from
+   PCD8--PCD17; the immediate target is arithmetic non-shadowing between its
+   affine endpoint-lift digits and one power-of-three carry;
+5. correction/cylinder transversality is the companion attack: any useful
+   theorem must control the least exponent representative and retain
+   primitivity or prior-descent information absent from finite cylinders;
+6. the single-ancestor \(q=2\) reachability results in
+   `docs/repunit/primitive_ancestry_lemma.md` remain valid, but are now a
+   proved side branch rather than the main bottleneck;
+7. `docs/repunit/repunit_equidistribution_reframing.md` gives finite evidence
    for a related shortcut-map `6n` target. Its parity-neutrality interpretation
    is strategic and conjectural, not a proof of convergence and not a
    substitute for the accelerated-map target below.
@@ -164,6 +171,138 @@ between \(2/3\) and \(3/2\), independently of interval length. Hence the
 balanced dynamics is a near-isometry at all scales: a plateau theorem must
 come from arithmetic non-shadowing between the endpoint and carry streams,
 not from accumulated real contraction or expansion.
+
+PCD17 identifies what those near-isometries do to the exact ledger coordinate.
+After \(L\) appended balanced blocks,
+\(L/2+7/8<Z_L<9L/8+33/32\). Thus correction storage grows linearly even while
+the deficit stays in its narrow mechanical band. Any induced record model
+must normalize this scale while retaining the arithmetic carry coupling.
+
+The next phase is therefore narrower than the original programme:
+
+1. derive a carry-replenished or growing-window transition that is genuinely
+   closed under the PCD11 affine lifts;
+2. formulate plateau length as an explicit non-shadowing inequality or
+   divisibility statement for that transition;
+3. intersect any survivors with least-representative, primitivity, and
+   prior-descent data from Attack 4;
+4. optimize the exact cylinder engine before extending the \(m=1500\) finite
+   certificate; brute-force full-modulus exponentiation is not the next
+   mathematical step;
+5. maintain `docs/repunit/coverage_portfolio.md` as an ordered residual cover:
+   every proposed theorem must state a sound descent-or-smaller-merge rule,
+   its common case universe, its overlap with earlier rules, and the exact
+   residual branch it leaves;
+6. use the integral-escape criterion in
+   `docs/repunit/integral_escape_frontier.md`: for universal eventual descent,
+   it is enough to show that every infinite residual branch has nonzero
+   exponent lifts infinitely often. A sublinear plateau bound is still needed
+   only for a quantitative target such as \(\sigma(a_n)\le3n\);
+7. attack the dual endpoint residue
+   \(q_L\equiv B_L2^{-E_L}\pmod{3^{R_L}}\). IEF3 shows that any lower bound
+   eventually dominating \(L\) excludes a fixed positive integer from the
+   infinite balanced itinerary. The finite diagnostic gives the much stronger
+   floor \(q_L\ge2^{5L-1}\) through \(L=10000\), but no universal bound is yet
+   claimed. IEF5 reduces the needed theorem further: if \(s(L)\) is the last
+   nonzero dual-digit position, it is enough to prove
+   \(27^{s(L)}/L\to\infty\). Thus even extremely sparse resets suffice.
+8. **Exploit the integral bridge.** IEF7 proves that the dual digit is exactly
+   the lift digit of the canonical starting cylinder. For the qualitative
+   theorem it is enough to show that this one stream is nonzero infinitely
+   often, with no reset-gap rate. First target the continued-fraction
+   denominators of the mechanical slope, where standard Sturmian words give
+   recursive block decompositions.
+9. **Prove the renormalized valuation lemma.** IEF8 composes bridge pairs
+   exactly and reduces the characteristic Sturmian standard step to
+   \[
+   \Delta_k=q_{S_{k-1}^{a_k}}-u_{S_{k-2}}.
+   \]
+   It is enough to prove \(v_2(\Delta_k)<E_{k-2}\) infinitely often. The
+   finite diagnostic finds \(v_2(\Delta_k)\le4\) through \(Q_k=111457\), but
+   the live task is an exact recurrence or invariant for this valuation, not
+   a larger bound search. Since every tail standard word starts in the class
+   \(23\pmod{32}\), the especially sharp sufficient target is
+   \(q_{S_{k-1}^{a_k}}\not\equiv23\pmod{32}\) infinitely often.
+10. **Attack the critical \(2\)-adic Hecke--Mahler value.** IEF9 writes the
+    unique full balanced starting value as
+    \[
+    \xi=-\frac13-\frac43\sum_{i\ge1}
+    (2/3)^i4^{\lfloor\gamma i\rfloor},
+    \qquad \gamma=\frac12\log_2(3/2).
+    \]
+    Proving \(\xi\notin\mathbb Q\) closes the balanced branch. Standard complex
+    Hecke--Mahler results stop at the strict convergence boundary, whereas
+    this value has \((2/3)4^\gamma=1\) Archimedeanly and converges only
+    \(2\)-adically. Use the IEF8 standard-word repetitions to construct and
+    compare rational periodic approximants.
+11. **Record the balanced discharge and rebuild the frontier.** IEF10 carries
+    out that periodic-approximant comparison and proves that no positive
+    integer realizes the complete deterministic balanced itinerary. IEF11
+    extracts a general periodic-prefix discharge rule and proves that every
+    fixed phase shift is covered. IEF12 uses the universal Sturmian repetition
+    theorem to discharge every intercept at the critical slope. Treat the
+    whole Sturmian family as discharged for qualitative eventual descent. The
+    next portfolio task is to determine whether every terminal PCD residual
+    is Sturmian, satisfies IEF11 by another mechanism, or belongs to a
+    genuinely different language requiring a separate rule. Do not infer the
+    quantitative bound \(\sigma(a_n)\le3n\) from IEF10--IEF21.
+12. **Split the non-Sturmian frontier on two exact axes.** IEF13 proves that
+    bounded critical factor discrepancy together with
+    \(\operatorname{dio}(w)>1\) is already a discharge condition. This
+    includes every bounded-critical-discrepancy word of linear factor
+    complexity. Therefore every qualitative survivor must have unbounded
+    critical discrepancy or superlinear factor complexity. Build the next
+    residual ledger from these two predicates; do not use asymptotic density
+    as a substitute for uniform factor discrepancy.
+13. **Use the adaptive discrepancy budget.** IEF14 bounds the inverse height
+    of a prefix/period approximant by
+    \(O(N_k^2 2^{N_k+2K_k})\). Discharge any branch for which agreement excess
+    satisfies \(G_k-2K_k-2\log_2N_k\to\infty\). The remaining high-discrepancy
+    ledger must show that this margin stays bounded along every useful
+    periodic-prefix family.
+14. **Discharge sustained negative drift.** Track
+    \(S_L=\sum_{j\le L}(cr_j-2)\) and
+    \(Z_L=\sum_{j\le L}2^{S_L-S_j}\). IEF15 reduces any branch with
+    \(S_{L_k}\to-\infty\) and bounded \(Z_{L_k}\) to verification through
+    \(65\sup Z_{L_k}/64\). The remaining high-discrepancy branch must avoid
+    both this contraction condition and the IEF14 adaptive margin.
+15. **Impose density-criticality first.** IEF16 translates the known
+    rational non-cyclic parity-density condition into
+    \(\liminf S_L/L=0\). Remove any branch with nonzero linear lower drift
+    before applying IEF14--IEF15. The remaining discrepancy frontier is
+    necessarily sublinear or oscillatory around a critical lower envelope.
+16. **Work only on the consolidated intersection.** IEF17 combines FIN1 and
+    IEF13--IEF16 into five simultaneous survivor conditions. Future rules
+    must report which coordinate they shrink and recompute the intersection;
+    do not return to percentages over overlapping raw cases. Keep cyclic
+    trajectories in the separate cycle ledger.
+17. **Use directional height, not symmetric discrepancy, on the repetition
+    axis.** For each parity preperiod/period pair \((A_k,B_k)\), compute
+    \(J(Y)=\max(0,\delta(Y),\max_{T\text{ suffix}}\delta(T))\). IEF18 replaces
+    the IEF14 cost \(2K_k\) by \(J(A_k)+J(B_k)\). The live branch must keep
+    \(G_k-J(A_k)-J(B_k)-2\log_2N_k\) bounded along every useful approximant.
+18. **Split the terminal symbolic branch exactly.** IEF19 discharges
+    \(S_L=o(L)\) whenever \(\operatorname{dio}(w)>1\). Together with IEF16,
+    every non-cyclic survivor must satisfy
+    \(\operatorname{dio}(w)=1\) or \(\limsup S_L/L>0\). Focus new rules on
+    those two predicates and their intersection; unbounded but sublinear
+    discrepancy is no longer a residual category by itself.
+19. **Localize recurrence to critical windows.** IEF20 discharges any
+    fixed-surplus periodic-prefix sequence whose full earlier drift envelope
+    is \(o(n_k)\) at its block-footprint scale. This reaches into the
+    \(\limsup S_L/L>0\) branch: a survivor must separate every useful
+    repetition scale from critical windows, not merely make occasional linear
+    excursions. On the exponent-one side,
+    \(\operatorname{dio}(w)=1\) forces \(p(n,w)/n\to\infty\), but this is only
+    a classification until terminal PCD/cylinder ancestry is shown to impose
+    stronger recurrence.
+20. **Use exact directional valleys at oscillation transitions.** IEF21 proves
+    \(J(\chi(W))=S_{|W|}-\min_{j\le|W|}S_j\) exactly. It replaces IEF20's
+    full drift envelope by two terminal draw-ups and the loss from footprint
+    to agreement endpoint. A positive-excursion survivor must therefore keep
+    a linear draw-up or linear endpoint loss on every fixed-surplus periodic
+    approximation; internal peaks that return to a local valley no longer
+    count as protection.
 
 ### Map convention for the two targets
 

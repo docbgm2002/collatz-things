@@ -3,6 +3,7 @@
 **Status:** research programme. This document records proposed attacks,
 falsification criteria, and the order in which they should be attempted. It
 does not assert a proof of repunit-tail descent or of the Collatz conjecture.
+The programme is synchronized through PCD17.
 
 ## 1. Why a new programme is justified
 
@@ -25,10 +26,24 @@ For every attack:
 - minimize counterexamples to each proposed lemma;
 - record negative results as reusable constraints;
 - stop broad computation unless it tests a named arithmetic statement;
+- maintain the ordered residual cover in `coverage_portfolio.md`: measure a
+  rule only on cases not discharged by earlier sound descent-or-merge rules,
+  and require an exact proof that the final residual set is empty;
 - promote claims only through CLAIM_LEDGER.md and a matching verifier when
   appropriate.
 
 ## 3. Attack order
+
+| Attack | Current state | Handoff |
+|---|---|---|
+| 1. General-payout shell ancestry | Completed as GPA1--GPA2 | Blocked \(q=3,4\pmod6\) classes moved to Attack 3 |
+| 2. Correction-set geometry | Parked, still available | Re-enter for GPA2-eligible or Attack 4 rigid families |
+| 3. Payout concentration/diffusion | Active, sharply narrowed | Prove carry/endpoint non-shadowing for the balanced \(q=3\) family |
+| 4. Correction/cylinder transversality | Active companion | Add least-representative, primitivity, or prior-descent information |
+| 5. Ancestry capacity/expansion | Queued | Use only after a deterministic exceptional family is isolated |
+| 6. Induced record map | Queued with constraints | State must pass PCD15 and normalize the PCD17 linear scale |
+| 7. Conditioned transfer operators | Queued | Must retain exceptional-cylinder arithmetic |
+| 8. Computer-assisted discovery | Supporting | Optimize exact cylinder lifting before enlarging the certificate |
 
 ### Attack 1: general-payout shell ancestry
 
@@ -147,6 +162,173 @@ PCD16 also rules out a purely real contraction argument: every consecutive
 balanced block interval has homogeneous multiplier in \((2/3,3/2)\),
 independently of length. The next mechanism must therefore be arithmetic
 non-shadowing between the replenished endpoint window and the carry stream.
+PCD17 applies that distortion theorem to the exact ledger storage:
+\(L/2+7/8<Z_L<9L/8+33/32\) after \(L\) appended blocks. Thus the raw ledger
+coordinate is necessarily unbounded; an induced record state must normalize
+it without erasing its coupling to the carry.
+
+**Current handoff.** Attack 3 no longer seeks another concentration statistic,
+local residue exclusion, endpoint-only transducer, or real contraction. Its
+remaining target is a closed carry-replenished transition and a deterministic
+non-shadowing bound for \(t_m=\kappa_m\). Attack 4 should be developed in
+parallel as the source of least-representative, primitivity, and prior-descent
+constraints. Larger cylinder censuses are deferred until the exact lifting
+engine avoids repeated full-modulus exponentiation.
+
+The integral-escape reformulation in `integral_escape_frontier.md` separates
+the qualitative and quantitative goals. Universal eventual descent needs only
+the exclusion of an infinite terminal plateau on every residual branch, or
+equivalently infinitely many nonzero exponent lifts. The stronger sublinear
+plateau target is retained only when pursuing an explicit bound such as
+\(\sigma(a_n)\le3n\).
+
+IEF3 adds a dual arithmetic route for the balanced terminal branch. If
+\(q_L\equiv B_L2^{-E_L}\pmod{3^{R_L}}\) is the least nonnegative endpoint
+residue, then any bound \(q_L/L\to\infty\) excludes a fixed positive starting
+state from the infinite word. The exact diagnostic currently finds
+\(q_L\ge2^{5L-1}\) through \(L=10000\). Proving any superlinear lower bound is
+now a named symbolic target; the finite exponential floor is not presumed.
+IEF5 shows that a nonzero dual digit resets \(q\) to modulus scale and proves
+\(q_L>3^{R_{s(L)}}/672\), where \(s(L)\) is the last reset. It is therefore
+enough to establish the very weak gap condition \(27^{s(L)}/L\to\infty\);
+positive digit density and short zero runs are unnecessary.
+
+IEF7 identifies the dual digit with the lift digit of the canonical relaxed
+starting cylinder modulo \(2^{E_L}\). This sharpens the qualitative route
+again: proving that the common digit is nonzero infinitely often directly
+excludes every fixed positive starting state, without any reset-gap rate.
+The converse only constructs integral affine block endpoints and may include
+extra powers of two, so it is not an exact Collatz realization. The next
+symbolic experiment groups the mechanical word at the continued-fraction
+denominators of \(2/\log_2(3/2)-3\), seeking a standard-word recursion that
+forces a nonzero lift at infinitely many such scales.
+
+IEF8 now supplies that recursion. After the first appended block, the
+characteristic Sturmian prefixes satisfy
+\(S_k=S_{k-1}^{a_k}S_{k-2}\), and their bridge pairs compose without carrying
+the full affine correction. The top standard lift is nonzero whenever
+
+\[
+v_2\!\left(q_{S_{k-1}^{a_k}}-u_{S_{k-2}}\right)<E_{k-2}.
+\]
+
+This valuation inequality infinitely often is the current qualitative
+handoff. The diagnostic finds a maximum valuation of \(4\) through
+\(Q_k=111457\), against a tail depth of \(125743\). No bounded-valuation claim
+is made. Derive a recurrence for the cross-difference or a low-bit invariant
+that survives standard-word composition; enlarging the convergent census is
+secondary.
+
+Because every tail standard prefix begins with the \(r=3\) block,
+\(u_{S_{k-2}}\equiv23\pmod{32}\). It is therefore sufficient to prove
+\(q_{S_{k-1}^{a_k}}\not\equiv23\pmod{32}\) infinitely often. This is the
+smallest current target, but PCD15 still forbids treating the endpoint residue
+alone as a closed five-bit state.
+
+IEF9 supplies a separate analytic formulation of the same infinite residual.
+The complete balanced parity vector has odd positions
+\(d_i=i+2\lceil\gamma i\rceil\), where
+\(\gamma=\log_2(3/2)/2\), and inverse-conjugacy value
+
+\[
+\xi=-\frac13-\frac43\sum_{i\ge1}
+(2/3)^i4^{\lfloor\gamma i\rfloor}.
+\]
+
+This series converges in \(\mathbb Q_2\) but lies on the exact Archimedean
+Hecke--Mahler boundary \((2/3)4^\gamma=1\). Proving
+\(\xi\notin\mathbb Q\) eliminates the balanced itinerary. Existing complex
+transcendence theorems require strict interior convergence, so the acceptable
+next step is a genuinely \(2\)-adic irrationality argument, preferably using
+the IEF8 standard-word repetitions and their rational periodic approximants.
+
+IEF10 completes the weaker positive-integer exclusion. Repeating a standard
+parity prefix gives a rational \(2\)-adic approximant of height
+\(O(E_k2^{E_k})\), while the characteristic word shares
+\(E_k+E_{k-1}\) bits with it. If a fixed integer realized the tail, an
+ordinary nonzero integer of size \(O_x(E_k2^{E_k})\) would be divisible by
+\(2^{E_k+E_{k-1}}\). Baker's finite irrationality measure for the logarithmic
+slope makes \(E_k\) at most polynomial in \(E_{k-1}\), giving a contradiction.
+The deterministic infinite balanced branch is therefore discharged
+qualitatively. IEF11 extracts the actual reusable rule: agreement for
+\(E_k+G_k\) bits with a period-\(E_k\) rational inverse of height
+\(H(E_k)2^{E_k}\) is enough whenever
+\(G_k-\log_2H(E_k)\to\infty\). Fixed phase shifts lose only a fixed number of
+agreement bits and are therefore covered. Attack 3 now hands back to the
+residual portfolio: classify whether other terminal languages meet this
+periodic-prefix criterion or need separate rules.
+
+IEF12 closes the apparent intercept loophole. Bugeaud and Kim prove that
+every Sturmian word has infinitely many prefix-plus-period completions with a
+uniform agreement exponent exceeding \(2.5\). Critical factor discrepancy
+controls the nonuniform balanced code length up to an additive constant,
+leaving linear parity-bit excess, while the
+eventually periodic Collatz inverse has height \(O(N^2 2^N)\). Thus every
+critical-slope Sturmian intercept is discharged. The residual classification
+must now detect the first genuinely non-Sturmian behaviour rather than search
+for another phase of the same mechanical word.
+
+IEF13 removes much of that non-Sturmian region as well. If every finite block
+factor has bounded critical discrepancy and the block word has Diophantine
+exponent greater than \(1\), bounded discrepancy makes the nonuniform code
+length asymptotically constant per block, so every positive repetition
+surplus remains linear after the parity morphism. Bounded
+discrepancy keeps rational inverse height at \(O_D(N^2 2^N)\), so IEF11
+applies. The new attack split is exact: force unbounded critical discrepancy,
+force superlinear factor complexity, or obtain descent before either limit
+language forms.
+
+IEF14 replaces the coarse bounded/unbounded discrepancy split by an adaptive
+one. At a prefix/period approximant, let \(K\) be the largest critical
+discrepancy of a factor in its footprint and \(G\) its parity-bit agreement
+surplus. The rational inverse has height \(O(N^2 2^{N+2K})\), so
+\(G-2K-2\log_2N\to\infty\) is enough. Experimental ledgers should report this
+margin directly.
+
+IEF15 attacks negative discrepancy without symbolic approximation. With
+\(S_L\) the cumulative log multiplier and
+\(Z_L=\sum_{j\le L}2^{S_L-S_j}\), the exact affine composition gives
+\(x_L\le2^{S_L}x_0+(65/64)Z_L\). If \(S_L\to-\infty\) along endpoints where
+\(Z_L\le B\), a minimal counterexample is at most \(65B/64\), reducing the
+branch to a finite verification.
+
+IEF16 should be applied before both adaptive rules. The known necessary
+lower-parity-density equality for a rational non-cyclic orbit is exactly
+\(\liminf S_L/L=0\) in block coordinates. Hence neither positive nor negative
+linear lower drift is a live terminal language; only sublinear discrepancy
+and critical-envelope oscillation remain.
+
+IEF17 consolidates the result into one survivor profile: above the FIN1
+window, density-critical, outside the IEF13 low-complexity discharge, with no
+divergent periodic-prefix margin, and with \(Z>64\cdot10^6/65\) eventually along every
+arbitrarily deep negative excursion. Attack work should now target this
+intersection only; cycles remain separate.
+
+IEF18 tightens the periodic-prefix coordinate. For a preperiod/period pair
+\((A,B)\), it charges only the total and suffix-positive parity drift
+\(J(A)+J(B)\), rather than the symmetric IEF14 budget \(2K\). Future searches
+should rank candidates by this directional margin and retain the exact
+rational-height margin as a finite diagnostic.
+
+IEF19 removes unbounded sublinear discrepancy from the residual by itself.
+If \(S_L=o(L)\), any word with \(\operatorname{dio}(w)>1\) is discharged.
+Together with IEF16, the terminal symbolic attack therefore splits into
+\(\operatorname{dio}(w)=1\) and \(\limsup S_L/L>0\), subject to the other
+IEF17 coordinates.
+
+IEF20 localizes the same argument. A fixed-surplus periodic-prefix family is
+discharged whenever its complete preceding drift envelope is sublinear at the
+footprint scale. Thus the positive-limsup attack should test whether recurrence
+returns at much larger critical scales after each excursion. On the other
+side, exponent one forces \(p(n,w)/n\to\infty\); proving that terminal cylinder
+ancestry forbids this strong return scarcity remains open.
+
+IEF21 makes the oscillation test directional and exact. For a full block word,
+\(J(\chi(W))\) is its endpoint drift minus its past minimum. A useful
+preperiod/period approximation is therefore discharged when the two terminal
+draw-ups and the footprint-to-agreement drift loss are sublinear. Searches
+should report these three quantities; a large internal peak that is shed
+before a cut is not a surviving obstruction.
 
 ### Attack 4: correction/cylinder transversality
 
@@ -163,6 +345,20 @@ rigid family.
 
 **Stopping rule.** Reject independence claims that do not control the minimum
 representative or omit record and primitive hypotheses.
+
+**Current entry point.** PCD9 shows that finite cylinder compatibility is
+automatic for the balanced family, while PCD10--PCD14 identify the least
+representative and carry data that finite compatibility omits. Study the joint
+encoding
+
+\[
+\mathbf e\longmapsto
+\bigl(A(\mathbf e),n_0(\mathbf e),C(\mathbf e),t(\mathbf e)\bigr)
+\]
+
+at cylinder changes and plateau endpoints. The first acceptable lemma must
+distinguish the balanced word from arbitrary realised cylinders using
+primitivity, earlier merger, or a quantitative minimum-representative bound.
 
 ### Attack 5: ancestry capacity and expansion
 
@@ -191,6 +387,12 @@ asymptotic transition types unavailable at individual odd steps.
 **Stopping rule.** Any state compression must pass an adversarial continuation
 test: equal compressed states may not permit incompatible future behaviour.
 
+**Inherited constraints.** PCD15 refutes fixed-width endpoint residue plus
+Sturmian phase as a closed state, and PCD17 makes raw \(Z_K\) unbounded even
+inside the balanced deficit band. A viable record map must replenish endpoint
+bits from the carry and normalize ledger scale without identifying states
+that admit incompatible continuations.
+
 ### Attack 7: conditioned transfer operators
 
 Construct an operator for repunit exponent cylinders surviving a deficit
@@ -209,6 +411,13 @@ surviving statements to human proof.
 SAT/SMT and exact dynamic programming may operate on valuation words and
 corrections, but numerical descent prediction without a symbolic statement is
 not a deliverable.
+
+**Immediate engineering task.** The current balanced-cylinder implementation
+repeats full-modulus power computations as precision grows and does not scale
+cleanly from \(1500\) to \(10000\) prefixes. Before extending PCD12, replace
+that update with a streaming, checkpointed, or otherwise incrementally lifted
+power residue. The output must still certify the exact PCD13 carry identity at
+every transition.
 
 ## 4. Review protocol
 

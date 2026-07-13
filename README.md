@@ -35,8 +35,16 @@ state is:
   routes have been refuted or shown insufficient;
 - the shortcut-map `6n` data is consistent with neutral parity statistics,
   but this is an empirical diagnosis, not an equidistribution theorem;
-- broad computation is paused pending one precise arithmetic lemma, currently
-  formulated through the ranked attacks in
+- the live lemma is arithmetic non-shadowing between affine endpoint-lift
+  digits and a power-of-three carry in the balanced \(q=3\) cylinder family;
+  correction/cylinder transversality supplies the companion primitivity and
+  least-representative constraints;
+- the integral-escape reformulation supplies a new terminal route: it is
+  enough to exclude eventually-zero exponent lifts, and the dual endpoint
+  residue modulo \(3^{R_L}\) gives an explicit word-only least-representative
+  target whose superlinear growth would rule out the infinite balanced word;
+- broad computation is paused until it tests that lemma and the exact cylinder
+  engine is made incremental, as recorded in
   `docs/repunit/next_generation_attack_program.md`.
 
 `RESEARCH_ROADMAP.md` retains the chronological development. Its later
@@ -162,8 +170,8 @@ is where the no-go program terminates.
   Yu's \(p\)-adic Baker theorem.
 - [`docs/repunit/repunit_extremal_principle.md`](docs/repunit/repunit_extremal_principle.md)
   gives an exact payout ledger and shell-ancestry expansion for record
-  valuation deficits, and isolates a primitive reachability lemma as the next
-  proof target.
+  valuation deficits. Its primitive reachability lemma launched the completed
+  REPANC/GPA ancestry branches and the active payout programme.
 - [`docs/repunit/primitive_ancestry_lemma.md`](docs/repunit/primitive_ancestry_lemma.md)
   **(REPANC1).** In the smallest-shell \(q=2\) case, correction equality at
   an admissible aligned source length is already sufficient for reachability:
@@ -184,7 +192,7 @@ is where the no-go program terminates.
   particular, the common dominant \(q=3\) branch must use multi-ancestor or
   amortized payout structure rather than the single canonical partner.
 - [`docs/repunit/payout_concentration_diffusion.md`](docs/repunit/payout_concentration_diffusion.md)
-  **(PCD1–PCD16).** The payout ledger has an exact
+  **(PCD1–PCD17).** The payout ledger has an exact
   initial/eligible/blocked trichotomy and effective-count alternative. In the
   primitive census through \(n=5001\), the \(110\) records with \(D_K\ge2\)
   split \(88/0/16/6\) across the eligible, initial, blocked-concentrated, and
@@ -222,7 +230,55 @@ is where the no-go program terminates.
   balanced mechanical block composition has real multiplier strictly between
   \(2/3\) and \(3/2\), regardless of length. The balanced obstruction is a
   near-isometry at every scale, so arithmetic carry/endpoint separation—not
-  accumulated real contraction—is the remaining route.
+  accumulated real contraction—is the remaining route. The same distortion
+  bound shows that normalized correction storage grows linearly between
+  \(L/2+7/8\) and \(9L/8+33/32\) after \(L\) balanced blocks; raw ledger
+  storage is therefore not a compact state variable.
+- [`docs/repunit/integral_escape_frontier.md`](docs/repunit/integral_escape_frontier.md)
+  **(IEF1--IEF5, IEF7--IEF21).** A residual \(2\)-adic exponent branch
+  contains a positive integer exactly when its canonical lift blocks are
+  eventually zero. For the
+  balanced \(q=3\) word, the dual endpoint residue modulo \(3^{R_L}\) gives a
+  second escape route: any superlinear least-representative bound excludes a
+  fixed positive orbit. The residue has a closed affine recursion, and every
+  nonzero dual digit resets it to modulus scale. The quantitative reset-gap
+  bound is still open, but IEF10 bypasses it for qualitative exclusion. The
+  exact integral bridge identifies the dual digit with
+  the starting-cylinder lift digit, so qualitative exclusion only requires
+  proving that this common stream is not eventually zero. **(IEF6)** records
+  the finite \(L\le10000\) diagnostic. IEF8 supplies an exact
+  continued-fraction renormalization and reduces the next theorem to one
+  cross-difference \(2\)-adic valuation at the standard Sturmian scales.
+  IEF9 independently identifies the complete balanced start as one critical
+  \(2\)-adic Hecke--Mahler value; proving that value irrational would close
+  the branch. IEF10 needs less: periodic standard-word approximants, PCD16,
+  and Baker's finite irrationality measure prove directly that no positive
+  integer realizes the infinite deterministic balanced itinerary. IEF11
+  isolates the reusable periodic-prefix discharge criterion and proves that
+  every fixed phase shift is excluded as well. IEF12 combines that criterion
+  with the Bugeaud--Kim repetition theorem to exclude every Sturmian word of
+  the critical slope, for every intercept. The remaining qualitative
+  frontier is therefore genuinely non-Sturmian. IEF13 identifies the broader
+  mechanism: bounded critical factor discrepancy plus Diophantine exponent
+  greater than \(1\) is enough. In particular, bounded discrepancy plus
+  linear factor complexity is discharged. Thus any survivor must have
+  unbounded discrepancy or superlinear symbolic complexity. IEF14 further
+  discharges growing-discrepancy languages when periodic-prefix agreement
+  surplus outruns twice their local discrepancy budget. IEF15 independently
+  reduces sustained negative-drift languages to an explicit finite check via
+  their bounded suffix partition function. IEF16 translates the known
+  critical lower-parity-density theorem into \(\liminf S_L/L=0\), excluding
+  either sign of linear density drift. IEF17 consolidates FIN1 and these rules
+  into one five-coordinate non-cyclic survivor profile. IEF18 sharpens its
+  periodic-prefix coordinate by charging only total and suffix-positive
+  discrepancy, rather than twice the full symmetric factor discrepancy.
+  IEF19 then discharges every itinerary having sublinear prefix drift and
+  repetition exponent greater than one. A non-cyclic survivor must therefore
+  have repetition exponent one or positive linear drift excursions. IEF20
+  reaches into the latter branch by discharging fixed-surplus repetitions in
+  asymptotically critical drift windows. IEF21 sharpens this to exact terminal
+  draw-up and endpoint-loss costs, so large internal peaks alone do not protect
+  a branch.
 - [`docs/repunit/repunit_run_length_identity.md`](docs/repunit/repunit_run_length_identity.md)
   proves the fuel-enemy bridge \(\tau(x_K)=v_2(3^{m_K}+d_K)-E_K-1\) and the
   exact valuation-one run-length identity, unifying the burn, enemy-coordinate,
@@ -289,13 +345,22 @@ the proved-results track:
   automaton/normal-form notes. The open residual \(\sigma(a_n)\) after
   the repunit landing is unchanged by all of the above.
 - [`docs/repunit/primitive_ancestry_lemma.md`](docs/repunit/primitive_ancestry_lemma.md) - theory note
-  isolating the dominant-payout ancestry/reachability lemma as the next
-  symbolic target after `docs/repunit/repunit_extremal_principle.md`.
+  proving the \(q=2\) ancestry reductions REPANC1--REPANC3; this is now a
+  supporting side branch rather than the main bottleneck.
 - [`docs/repunit/next_generation_attack_program.md`](docs/repunit/next_generation_attack_program.md) —
   ranked research programme covering general payouts, correction-set geometry,
   payout concentration versus diffusion, transversality, ancestry capacity,
   induced record maps, transfer operators, and computer-assisted lemma
-  discovery, with explicit stopping rules.
+  discovery, with explicit stopping rules and a synchronized attack-status
+  table through PCD17.
+- [`docs/repunit/coverage_portfolio.md`](docs/repunit/coverage_portfolio.md) —
+  ordered residual-cover framework for combining any number of individually
+  sound descent-or-smaller-merge rules without double-counting overlaps or
+  mixing percentages from different case universes.
+- [`docs/repunit/integral_escape_frontier.md`](docs/repunit/integral_escape_frontier.md)
+  — terminal residual criterion: the surviving \(2\)-adic set may be nonempty
+  provided every infinite branch has nonzero exponent lifts infinitely often,
+  excluding every positive-integer exponent.
 - [`docs/repunit/repunit_equidistribution_reframing.md`](docs/repunit/repunit_equidistribution_reframing.md) —
   capstone diagnostic for the distinct shortcut-map `6n` target. Exact
   bookkeeping is combined with finite data consistent with parity density
@@ -389,6 +454,12 @@ python scripts/explore_repunit_extremal_prefixes.py --limit 2001
 python scripts/explore_primitive_q2_correlation.py
 python scripts/explore_payout_concentration.py --limit 5001 --top 0
 python scripts/explore_mixed_shell_pairs.py --limit 5001 --top 100
+python scripts/explore_balanced_q3_cylinders.py --payouts 1500 --show 3
+python scripts/explore_balanced_q3_dual_frontier.py --blocks 10000 --direct-check 2000 --show 5
+python scripts/explore_balanced_q3_zero_cylinders.py --blocks 10000 --phase 0 --show 5
+python scripts/explore_balanced_q3_sturmian_renormalization.py --max-denominator 111457 --direct-check 5000
+python scripts/verify_balanced_q3_hecke_mahler.py --odd-steps 5000 --precision 100
+python scripts/verify_balanced_q3_periodic_approximants.py --max-denominator 4563 --precision 120
 python scripts/verify_repunit_run_length.py --limit 201
 python scripts/explore_repunit_enemy_factorization.py --limit 4001 --bound 1000000
 python scripts/verify_entropy_balance.py
@@ -422,9 +493,13 @@ Interpret the output according to the claim ledger:
 15. `docs/density-cycles/cycle_reduction.md`
 
 For the open repunit programme after that proved-results sequence, read
-`docs/repunit/repunit_extremal_principle.md`, then
-`docs/repunit/primitive_ancestry_lemma.md`, and finally the explicitly
-empirical `docs/repunit/repunit_equidistribution_reframing.md`.
+`docs/repunit/repunit_extremal_principle.md`, the completed ancestry branches
+`docs/repunit/primitive_ancestry_lemma.md` and
+`docs/repunit/general_payout_ancestry.md`, then the active
+`docs/repunit/payout_concentration_diffusion.md` and
+`docs/repunit/next_generation_attack_program.md`. The portfolio view is in
+`docs/repunit/coverage_portfolio.md`. The explicitly empirical
+`docs/repunit/repunit_equidistribution_reframing.md` is a separate capstone.
 
 ## Correction history (standard, not embarrassment)
 

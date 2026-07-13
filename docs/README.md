@@ -38,11 +38,41 @@ For the mature no-go results, read `no-go/shadow_certificate.md`,
 For the exact density result, read `density-cycles/corridor_rate.md`.
 
 For the open repunit programme, start with
-`repunit/repunit_extremal_principle.md` and
-`repunit/primitive_ancestry_lemma.md`, then read
-`repunit/general_payout_ancestry.md`,
-`repunit/payout_concentration_diffusion.md`, and the ordered research plan in
-`repunit/next_generation_attack_program.md`. The separate
+`repunit/repunit_extremal_principle.md`, then read the synchronized attack
+status in `repunit/next_generation_attack_program.md` and the active PCD1--PCD17
+development in `repunit/payout_concentration_diffusion.md`.
+`repunit/primitive_ancestry_lemma.md` and
+`repunit/general_payout_ancestry.md` supply the completed ancestry branches.
+`repunit/coverage_portfolio.md` organizes these mechanisms as an ordered
+residual cover and distinguishes genuine descent-or-merge rules from density
+or classification results.
+`repunit/integral_escape_frontier.md` gives the terminal criterion: a
+\(2\)-adic residual may remain nonempty if every surviving exponent acquires
+nonzero high lift digits infinitely often and therefore is not a positive
+integer. It also proves an exact bridge between the balanced starting-cylinder
+lift and dual endpoint digit, reducing qualitative exclusion to showing that
+one deterministic digit stream is not eventually zero. IEF10 completes that
+step for the exact balanced itinerary using periodic Sturmian approximants and
+a Baker growth bound. IEF11 extracts a general periodic-prefix discharge rule
+and closes every fixed phase shift. IEF12 then uses the general repetition
+theorem for Sturmian words to discharge every intercept at the critical
+slope. IEF13 extends the rule to every bounded-critical-discrepancy language
+with Diophantine exponent greater than \(1\), including every such language
+of linear factor complexity. The remaining frontier is unbounded discrepancy
+or superlinear complexity; IEF14 supplies an adaptive margin that also removes
+some growing-discrepancy languages, while IEF15 finitely reduces sustained
+negative-drift branches. IEF16 additionally forces every rational non-cyclic
+survivor to have zero linear lower discrepancy. IEF17 records the exact
+intersection left after all these rules, with cycles kept separate. IEF18
+then sharpens the periodic-prefix coordinate using the directional drift that
+actually contributes to rational height; IEF14 remains a coarser corollary.
+IEF19 uses that estimate to discharge sublinear-drift words with repetition
+exponent greater than one, leaving exponent one or positive linear excursions.
+IEF20 additionally discharges fixed-surplus repetitions occurring in critical
+drift windows, even when the global limsup is positive. IEF21 replaces the
+full window envelope by exact terminal draw-up and endpoint-loss costs, so
+internal peaks that return to a local valley are also covered.
+The separate
 `repunit/repunit_equidistribution_reframing.md` is an empirical strategic
 diagnosis for a shortcut-map stopping-time target, not a theorem and not a
 replacement for the accelerated-map proof target.

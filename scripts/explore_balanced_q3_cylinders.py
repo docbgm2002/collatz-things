@@ -5,8 +5,10 @@ The word begins with a q=3 payout.  Subsequent blocked payouts use the
 mechanical gaps from floor(2m/log2(3/2)); gaps are three or four and all
 intervening valuations are one.  For every post-payout prefix this
 script computes the exact exponent class n modulo 2^E without constructing a
-discrete-log table.  It reports whether the class contains odd repunit
-exponents and the least positive representative when it does.
+discrete-log table.  The power-of-three residue and its exponent generator
+are streamed inside a checkpointed precision window.  It reports whether the
+class contains odd repunit exponents and the least positive representative
+when it does.
 
 This is an exact cylinder diagnostic.  It does not assert that a surviving
 representative is primitive or that its full tail avoids descent.
@@ -146,7 +148,16 @@ def starting_residue_for_word(word):
     return residue, E
 
 
-def analyse(count):
+def analyse(count, precision_chunk_bits=2048):
+    if count < 1:
+        raise ValueError("count must be positive")
+    if precision_chunk_bits < 1:
+        raise ValueError("precision_chunk_bits must be positive")
+
+    prefix_plan = list(balanced_prefixes(count))
+    final_E = sum(sum(suffix) for _, _, suffix in prefix_plan)
+    final_power_bits = final_E + 2
+
     rows = []
     c = 0
     E = 0
@@ -157,9 +168,10 @@ def analyse(count):
     previous_n = None
     previous_E = 0
     power_value = None
+    exponent_generator = None
     power_modulus_bits = 0
-    reserve_bits = 256
-    for payout_index, time, suffix in balanced_prefixes(count):
+    power_modulus = None
+    for payout_index, time, suffix in prefix_plan:
         old_E = E
         old_starting_residue = starting_residue
         exponent_lift = None
@@ -197,26 +209,28 @@ def analyse(count):
         target = 2 * starting_residue + 1
         if previous_n is None:
             n0 = discrete_log_base3_power2(target, E)
-            power_modulus_bits = E + 2 + reserve_bits
-            power_value = pow(3, n0, 1 << power_modulus_bits)
+            power_modulus_bits = min(
+                final_power_bits, E + 2 + precision_chunk_bits
+            )
+            power_modulus = 1 << power_modulus_bits
+            power_value = pow(3, n0, power_modulus)
+            exponent_generator = power_two_generator(E, power_modulus_bits)
         else:
             required_bits = E + 2
             extension_bits = E - old_E
-            if power_modulus_bits < required_bits:
-                power_modulus_bits = required_bits + reserve_bits
-                power_value = pow(3, previous_n, 1 << power_modulus_bits)
-
+            if required_bits > power_modulus_bits:
+                power_modulus_bits = min(
+                    final_power_bits,
+                    required_bits + precision_chunk_bits,
+                )
+                power_modulus = 1 << power_modulus_bits
+                power_value = pow(3, previous_n, power_modulus)
+                exponent_generator = power_two_generator(
+                    old_E, power_modulus_bits
+                )
             modulus = 1 << required_bits
             value = power_value % modulus
             old_power_value = value
-            generator = power_two_generator(old_E, required_bits)
-            exponent_lift = None
-            for candidate in range(1 << (E - old_E)):
-                if value == target:
-                    exponent_lift = candidate
-                    break
-                value = value * generator % modulus
-            assert exponent_lift is not None
 
             local_modulus = 1 << extension_bits
             old_target = 2 * old_starting_residue + 1
@@ -231,16 +245,20 @@ def analyse(count):
                 (starting_lift - exponent_carry)
                 * pow(coefficient, -1, local_modulus)
             ) % local_modulus
-            assert exponent_lift == predicted_lift
+            exponent_lift = predicted_lift
             assert (exponent_lift == 0) == (starting_lift == exponent_carry)
             n0 = previous_n + (exponent_lift << old_E)
 
-            stored_modulus = 1 << power_modulus_bits
-            stored_generator = power_two_generator(old_E, power_modulus_bits)
             power_value = (
-                power_value * pow(stored_generator, exponent_lift, stored_modulus)
-            ) % stored_modulus
+                power_value
+                * pow(exponent_generator, exponent_lift, power_modulus)
+            ) % power_modulus
             assert power_value % modulus == target
+
+            for _ in range(extension_bits):
+                exponent_generator = (
+                    exponent_generator * exponent_generator
+                ) % power_modulus
         if n0 is None:
             rows.append(
                 {
@@ -372,12 +390,21 @@ def parse_args():
         default=20,
         help="number of prefix rows to print; use 0 for all",
     )
+    parser.add_argument(
+        "--precision-chunk",
+        type=int,
+        default=2048,
+        help="high power-of-three bits retained between exact checkpoints",
+    )
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    print_report(analyse(args.payouts), args.show)
+    print_report(
+        analyse(args.payouts, args.precision_chunk),
+        args.show,
+    )
 
 
 if __name__ == "__main__":
