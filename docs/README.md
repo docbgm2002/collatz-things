@@ -4,7 +4,7 @@ Research notes are grouped by topic:
 
 - [`core/`](core/) - base map identities, residue rails, and parity-vector notes.
 - [`no-go/`](no-go/) - potential-function no-go theorems, tower/spine synthesis,
-  and related certificate notes.
+  closed outside-box triage, and the outside-box avenue portfolio.
 - [`density-cycles/`](density-cycles/) - survivor-density, stopping-time, and
   cycle-reduction notes.
 - [`repunit/`](repunit/) - Mersenne-to-repunit structure, rail-5 analysis, tail

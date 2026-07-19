@@ -15,6 +15,7 @@ Run scripts from the repository root, for example:
 
 ```bash
 python scripts/verify_claim_ledger.py
+python scripts/verify_repunit_storage_dominance.py --limit 5001
 python scripts/verify_shadow.py
 python scripts/explore_repunit_sync_tree.py --through-step 7 --max-total 24 --common-depth 24
 ```

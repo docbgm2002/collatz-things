@@ -208,6 +208,11 @@ The result closes the bookkeeping gap between raw valuation surplus and exact
 descent. Future block-surplus lemmas may use Corollary 4 without silently
 discarding \(c_K\).
 
+Avenue A ([`../no-go/avenue_a_comparison_dynamics.md`](../no-go/avenue_a_comparison_dynamics.md))
+uses Theorem 3 as a bridge: under the soft gate \(K_\downarrow\le T\), the
+affine product bound forces \(\phi<2\) through first descent (storage
+dominance).
+
 ---
 
 ## 6. Verification

@@ -49,9 +49,11 @@ state is:
 
 `RESEARCH_ROADMAP.md` retains the chronological development. Its later
 checkpoints supersede earlier proposed experiments where they conflict.
-`RESIDUAL_ATLAS.md` is the live residual scoreboard: it treats the IEF17
-survivor profile as the sole qualitative residual object and ranks the next
-lemmas that would shrink that intersection.
+`RESIDUAL_ATLAS.md` is a demoted classification scoreboard for the mechanical
+\(3/4\)-block language. Fresh outside-box architectures to try one at a time
+are listed in
+`docs/no-go/outside_box_avenue_portfolio.md` (closed barriers remain in
+`docs/no-go/outside_box_avenue_triage.md`).
 
 ## Proved-results track
 
@@ -420,6 +422,9 @@ standard library; every assertion is exact integer or rational arithmetic.
 ```bash
 # ledger governance
 python scripts/verify_claim_ledger.py
+
+# Avenue A finite check
+python scripts/verify_repunit_storage_dominance.py --limit 5001
 
 # no-go program
 python scripts/verify_shadow.py

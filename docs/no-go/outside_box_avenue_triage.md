@@ -4,6 +4,10 @@
 atlas programme was demoted.  Each was stopped at its first structural or
 finite falsifier rather than enlarged into another census.
 
+**Forward pointer.** Surviving and newly proposed architectures are listed
+in [`outside_box_avenue_portfolio.md`](outside_box_avenue_portfolio.md).
+This triage file remains the record of closed routes and barriers.
+
 ## 1. Base conversion and binary digit complexity
 
 The input

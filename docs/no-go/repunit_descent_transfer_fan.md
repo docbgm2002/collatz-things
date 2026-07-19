@@ -159,12 +159,19 @@ homogeneous term leaves the exact correction order.
 
 Thus (SD) proves the strict sign law. An exact scan finds no violation of
 (SD) at any state through and including first descent for every odd
-$3\le n\le5001$. This finite fact is not promoted to a theorem. The new
-proof target is:
+$3\le n\le5001$
+(`scripts/verify_repunit_storage_dominance.py`). This finite fact is not
+promoted to a theorem. The active writeup is
+`avenue_a_comparison_dynamics.md`. The new proof target is:
 
 > **First-descent storage-dominance lemma (open).** Every odd repunit tail
 > satisfies $0<R_i(n)<3^{n+i}$ through and including its first descent below
 > $M_n$.
+
+The bound is sharp in time: on every small odd seed, and on $n=471$, the
+first failure of $R_i<3^{n+i}$ occurs strictly after first descent. Relative
+storage admits the exact series in the Avenue A note; the open step is to
+estimate that payout sum under the prefix constraint $x_j\ge M_n$.
 
 The unconstrained correction-layer maximum is
 

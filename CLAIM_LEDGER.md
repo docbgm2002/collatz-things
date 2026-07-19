@@ -195,6 +195,9 @@ reproducible generator for an explicitly finite or mixed ledger row:
 - `docs/fuse/binary_fuel_bad_block_notes.md`
 - `docs/repunit/repunit_equidistribution_reframing.md`
 - `docs/repunit/next_generation_attack_program.md`
+- `docs/no-go/outside_box_avenue_triage.md`
+- `docs/no-go/outside_box_avenue_portfolio.md`
+- `docs/no-go/avenue_a_comparison_dynamics.md`
 - `docs/nested-anchor/near_threshold_episode_notes.md`
 - `docs/diagnostics/diagnostics_attractor_sieve_spike.md`
 - all other `explore_*.py` programs
