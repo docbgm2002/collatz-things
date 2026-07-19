@@ -49,6 +49,9 @@ state is:
 
 `RESEARCH_ROADMAP.md` retains the chronological development. Its later
 checkpoints supersede earlier proposed experiments where they conflict.
+`RESIDUAL_ATLAS.md` is the live residual scoreboard: it treats the IEF17
+survivor profile as the sole qualitative residual object and ranks the next
+lemmas that would shrink that intersection.
 
 ## Proved-results track
 
@@ -357,6 +360,9 @@ the proved-results track:
   ordered residual-cover framework for combining any number of individually
   sound descent-or-smaller-merge rules without double-counting overlaps or
   mixing percentages from different case universes.
+- [`RESIDUAL_ATLAS.md`](RESIDUAL_ATLAS.md) — live qualitative residual
+  scoreboard: freezes the IEF17 survivor intersection as the sole atlas
+  object and ranks coordinate-shrinking lemmas L1--L6.
 - [`docs/repunit/integral_escape_frontier.md`](docs/repunit/integral_escape_frontier.md)
   — terminal residual criterion: the surviving \(2\)-adic set may be nonempty
   provided every infinite branch has nonzero exponent lifts infinitely often,
@@ -412,6 +418,9 @@ All programs live under [`scripts/`](scripts/README.md) and use the Python
 standard library; every assertion is exact integer or rational arithmetic.
 
 ```bash
+# ledger governance
+python scripts/verify_claim_ledger.py
+
 # no-go program
 python scripts/verify_shadow.py
 python scripts/verify_leading_digit.py

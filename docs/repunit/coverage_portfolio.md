@@ -238,6 +238,9 @@ The narrowest missing portfolio statement is:
 > IEF18 directional margin bounded along every useful approximant; then
 > discharge that intersection.
 
+The live scoreboard for that residual intersection is the root note
+`RESIDUAL_ATLAS.md`.
+
 For the stronger quantitative target, the former task remains: bound balanced
 cylinder plateau length using the coupled endpoint and carry, with enough
 primitivity or prior-descent information to exclude the finite-cylinder

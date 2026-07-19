@@ -13,6 +13,8 @@ Research notes are grouped by topic:
 - [`nested-anchor/`](nested-anchor/) - nested anchor escape and route diagnostics.
 - [`diagnostics/`](diagnostics/) - broad exploratory diagnostics and probabilistic
   or entropy viewpoints.
+- [`residual-atlas/`](residual-atlas/) - bounded side-project working notes for
+  the residual-atlas checkpoint (`RESIDUAL_ATLAS.md`); not a claim chain.
 
 The root [`README`](../README.md) and [`claim ledger`](../CLAIM_LEDGER.md)
 remain the main entry points.
@@ -46,6 +48,10 @@ development in `repunit/payout_concentration_diffusion.md`.
 `repunit/coverage_portfolio.md` organizes these mechanisms as an ordered
 residual cover and distinguishes genuine descent-or-merge rules from density
 or classification results.
+The root [`RESIDUAL_ATLAS.md`](../RESIDUAL_ATLAS.md) freezes IEF17 as the
+live qualitative residual object and ranks the next coordinate-shrinking
+lemmas. Bounded-phase working notes live in
+[`residual-atlas/`](residual-atlas/).
 `repunit/integral_escape_frontier.md` gives the terminal criterion: a
 \(2\)-adic residual may remain nonempty if every surviving exponent acquires
 nonzero high lift digits infinitely often and therefore is not a positive

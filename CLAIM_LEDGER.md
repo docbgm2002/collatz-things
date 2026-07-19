@@ -5,8 +5,43 @@ repository. If a note conflicts with this file, the note must be repaired
 before its claim is used downstream.
 
 “Proved here” records the repository's internal proof status. It does not by
-itself assert novelty. Literature and attribution checks are tracked
-separately in `BIBLIOGRAPHY_PASS.md`.
+itself assert novelty. `BIBLIOGRAPHY_PASS.md` records the completed literature
+review for the no-go programme; later, topic-specific attribution checks are
+recorded in their source notes. Neither convention asserts that a comprehensive
+literature review has been completed unless the cited record says so.
+
+## Status and verification conventions
+
+The status cell records the mathematical claim class; qualifiers after a
+semicolon record provenance, subsumption, or review state. The principal
+classes are **Proved here**, **Finite certificate**, **Conditional result**,
+**Known theorem applied/rederived/translated**, **Proved by counterexample**,
+and **Refuted**. Mixed rows must say which part has which class.
+
+Verification artifacts have two roles:
+
+- `verify_*.py` programs are maintained checks of identities or stated finite
+  domains. They support, but do not replace, human proofs of universal claims.
+- `explore_*.py` programs are bounded generators or diagnostics. They may
+  generate an explicitly finite or mixed ledger row, or be cited as a
+  cross-check on a universal row; they are never by themselves a proof of a
+  universal claim.
+
+Run `python scripts/verify_claim_ledger.py` to check table structure, unique
+IDs, status classes, and referenced repository paths.
+
+## Topic index
+
+- **Core map and rails:** BF, RAIL, FIN, PAR.
+- **Potential no-go and ancestry:** RNG, NLP, TWR, FFN, SH, SPN, BND, MER.
+- **Repunit rails and geometry:** REP5, REP5G.
+- **Repunit affine, merger, and collision machinery:** REPAFF, REPMRG,
+  GAPMRG, COLDEF, REP256, REPLOW, RUNLEN, REPEXT.
+- **Repunit ancestry and payout programme:** REPANC, GPA, NSF, PCD.
+- **Integral escape frontier:** IEF.
+- **Density, cycles, and survivor corridors:** DEN, CYC, TREE, COR.
+- **Other bounded potentials and external-theorem applications:** POT, BAKER,
+  BAKERC, REPEP.
 
 | ID | Claim | Status | Source | Verification / dependency |
 |---|---|---|---|---|
@@ -53,8 +88,8 @@ separately in `BIBLIOGRAPHY_PASS.md`.
 | GAPMRG2 | If \(n\equiv31\bmod64\), then \(x_2(n)=x_4(n-2)\) | Proved here | `docs/repunit/repunit_gap_merger_analysis.md` | Exact prefixes \((6)\) and \((2,1,1)\); `scripts/verify_repunit_gap_mergers.py` |
 | GAPMRG2B | If \(n\equiv79\bmod128\), \(199\bmod256\), \(323\bmod512\), or \(1289\bmod4096\), then \(x_3(n)=x_5(n-2)\) | Proved here | `docs/repunit/repunit_gap_merger_analysis.md` | Four exact smallest-shell prefix pairs; the fourth is hidden by source-selection order in the first-merger table |
 | GAPMRG3 | If \(n\equiv2047\bmod4096\), then \(x_2(n)=x_6(n-4)\) | Proved here | `docs/repunit/repunit_gap_merger_analysis.md` | Exact prefixes \((12)\) and \((3,1,2,3,1)\); `scripts/verify_repunit_gap_mergers.py` |
-| GAPMRG4 | Through odd \(n\le10001\), the shell \(|E-F|=2\) accounts for 4527 of 4783 mergers and 2735 of 2858 mergers with exponent gap \(2,4,\) or \(6\) | Finite certificate | `docs/repunit/repunit_gap_merger_analysis.md` | `scripts/verify_repunit_gap_mergers.py`; proportions \(94.65\%\) and \(95.70\%\) |
-| GAPMRG5 | The 17 level-\(4\) gap-\(2\) cylinders listed in `docs/repunit/repunit_gap2_sync_tree.md` each force \(x_4(n)=x_6(n-2)\) as a first synchronization | Proved here + depth-bounded classification | `docs/repunit/repunit_gap2_sync_tree.md` | Symbolic valuation-word enumeration through cumulative depth 24; all 17 lie on \(|E-F|=2\) |
+| GAPMRG4 | Through odd \(n\le10001\), the shell \(\lvert E-F\rvert=2\) accounts for 4527 of 4783 mergers and 2735 of 2858 mergers with exponent gap \(2,4,\) or \(6\) | Finite certificate | `docs/repunit/repunit_gap_merger_analysis.md` | `scripts/verify_repunit_gap_mergers.py`; proportions \(94.65\%\) and \(95.70\%\) |
+| GAPMRG5 | The 17 level-\(4\) gap-\(2\) cylinders listed in `docs/repunit/repunit_gap2_sync_tree.md` each force \(x_4(n)=x_6(n-2)\) as a first synchronization | Proved here + depth-bounded classification | `docs/repunit/repunit_gap2_sync_tree.md` | Symbolic valuation-word enumeration through cumulative depth 24; all 17 lie on \(\lvert E-F\rvert=2\) |
 | GAPMRG6 | At modulus \(2^{24}\), the resolved gap-\(2\) first-hit cylinders through levels \(2,\ldots,7\) cover 1,012,093 of 8,388,608 odd classes | Finite symbolic certificate | `docs/repunit/repunit_gap2_sync_tree.md` | `scripts/explore_repunit_sync_tree.py`; \(12.0651\%\), with deeper unresolved cylinders omitted |
 | GAPMRG7 | At modulus \(2^{20}\), with levels \(2,\ldots,7\) and cumulative valuations at most \(20\), the gap-\(2,4,6\) synchronization-tree union covers 66,441 of 524,288 odd classes | Finite symbolic certificate | `docs/repunit/repunit_multigap_sync_union.md` | `scripts/verify_repunit_sync_union.py`; \(12.672615\%\), versus \(12.023926\%\) for gap \(2\) alone |
 | COLDEF1 | For aligned states, the normalized correction difference obeys \(\delta'=\delta+e-f\) and \(z'=(3z+2^\alpha-2^\beta)/2^{\min(\alpha+e,\beta+f)}\) | Proved here | `docs/repunit/repunit_collision_defect_dynamics.md` | Exact normal-form recurrence; next-step merger iff the numerator is zero |
@@ -83,6 +118,10 @@ separately in `BIBLIOGRAPHY_PASS.md`.
 | REPANC2 | Every REPANC1 correction match satisfies \(3^i-2^{i+1}\le3\cdot2^{u-j+1}(3^j-2^j)-3^{j+1}+2^{u+2}\), hence \(i<1+(u+\log_2(6(3/2)^j+4))/\log_2 3\) | Proved here | `docs/repunit/primitive_ancestry_lemma.md` Section 13 | Exact correction-layer bounds; checked on all matches in `scripts/verify_repunit_ancestry_realization.py` |
 | REPANC3 | For a fixed realised high word, each admissible REPANC1 match produces the aligned merge for every sufficiently large exponent in its cylinder; nonmembership produces none and does not refine the exponent class | Proved here | `docs/repunit/primitive_ancestry_lemma.md` Section 9B | Consequence of REPANC1 and parity-itinerary uniqueness; cylinder lifts checked by `scripts/verify_repunit_ancestry_realization.py` |
 | GPA1 | For every realised payout \(q\ge2\), equality of its canonical shell-partner correction with a source correction at an admissible aligned length automatically realises the complete smaller repunit valuation word and forces a next-step merge | Proved here | `docs/repunit/general_payout_ancestry.md` Section 2 | Exact-itinerary argument; `scripts/verify_repunit_general_payout_ancestry.py` |
+| NSF1 | For every post-payout state \(X\) and shell height \(h\ge1\) with \(u_h=E+q-2h\ge0\), the odd partner \(Y_h=4^hX+(4^h-1)/3\) has correction \(C_h=A_{j+1}+2^{u_h+1}(4^h-1)/3\) and satisfies \(f(Y_h)=f(X)\) | Proved here | `docs/repunit/noncanonical_shell_fan.md` Sections 1--2 | Exact collision-shell algebra; `scripts/verify_noncanonical_shell_fan.py` |
+| NSF2 | A noncanonical shell-fan correction match at any admissible aligned source length automatically realises the complete smaller repunit word and forces a next-step merge; the match is uniform across sufficiently large representatives of the high cylinder | Proved here | `docs/repunit/noncanonical_shell_fan.md` Section 3 | GPA1 exact-itinerary argument with arbitrary shell height; exhaustive small matches checked by `scripts/verify_noncanonical_shell_fan.py` |
+| NSF3 | A shell-fan target satisfies \(C_h\equiv0\pmod3\) exactly when \(h\equiv1\pmod3\) for odd \(q\), or \(h\equiv2\pmod3\) for even \(q\); the other two height classes are not excluded modulo \(3\) | Proved here | `docs/repunit/noncanonical_shell_fan.md` Section 4 | Exact residue calculation; this does not establish a correction match; `scripts/verify_noncanonical_shell_fan.py` |
+| NSF4 | On the highest dangerous exceptional PCD2 record for each tail through odd \(n\le5001\), 19 modulo-three-eligible fan targets occur; their survivor counts modulo \(3,\ldots,3^{10}\) are \(17,14,12,9,8,6,3,1,1,1\); only \((n,j,q,h,u,i)=(471,27,3,2,40,30)\) survives modulo \(3^{10}\), and its exact obstruction depth is \(13\) | Finite certificate | `docs/repunit/noncanonical_shell_fan.md` Section 7 | Exact reverse suffix recursion, checked on all small layers; `scripts/explore_noncanonical_shell_fan_records.py --limit 5001 --max-power 10 --exact-survivors` |
 | GPA2 | If \(q\equiv3,4\pmod6\), the canonical shell-partner correction is divisible by \(3\), whereas every positive-length source correction is nonzero modulo \(3\); hence canonical shell reachability is impossible | Proved here | `docs/repunit/general_payout_ancestry.md` Section 3 | Exact residue argument; `scripts/verify_repunit_general_payout_ancestry.py` |
 | PCD1 | Every payout ledger has the exact initial/eligible/blocked mass trichotomy; in the blocked branch, for every \(0<\eta<1\), either one blocked ancestor carries at least \(\eta\) of the blocked mass or the blocked effective count exceeds \(1/\eta\) | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 2 | Positivity, exact normalization, and the square-sum inequality |
 | PCD2 | Through odd \(n\le5001\), the \(110\) primitive record prefixes with \(D_K\ge2\) split \(88/0/16/6\) across the ordered eligible, initial, blocked-concentrated, and blocked-diffuse branches; all six diffuse records lie on \(n=471\) | Finite certificate | `docs/repunit/payout_concentration_diffusion.md` Section 3 | Exact integer branch comparisons; `scripts/explore_payout_concentration.py --limit 5001 --top 0` |
@@ -98,7 +137,7 @@ separately in `BIBLIOGRAPHY_PASS.md`.
 | PCD12 | Through the first \(1500\) balanced payout prefixes, all \(32\) five-bit and all \(64\) six-bit exponent lifts occur; zero occurs \(39\) times, with plateau histogram \(\{1:1423,2:37,3:1\}\) | Finite certificate | `docs/repunit/payout_concentration_diffusion.md` Section 14 | `scripts/explore_balanced_q3_cylinders.py --payouts 1500 --show 3` |
 | PCD13 | If a cylinder of total valuation \(E\) is extended by a suffix of total valuation \(\delta\), with starting lift \(t\), exponent carry \(\kappa\), and \(E+2\ge\delta\), then its exponent lift is \(z\equiv(t-\kappa)[h_E(2r+1)]^{-1}\pmod{2^\delta}\); hence a plateau occurs exactly when \(t=\kappa\) | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 15 | Binomial truncation; `scripts/explore_balanced_q3_cylinders.py` asserts the identity on every extension |
 | PCD14 | With full carry \(C=(3^n-(2r+1))/2^{E+2}\), a plateau extension of total valuation \(\delta\) and starting lift \(t\) obeys \(C'=(C-t)/2^\delta\); iterated plateaus match consecutive carry bits against the concatenated affine lifts | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 16 | Exact carry identity and iteration |
-| PCD15 | For either balanced suffix and every fixed \(M\ge\delta+1\), endpoint states equal modulo \(2^M\) have the same starting lift but successor residues differing by \(3^{|\mathbf v|}2^{M-\delta}\not\equiv0\pmod{2^M}\); endpoint-only fixed-width state is not closed | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 17 | Exact affine transition; `scripts/verify_repunit_general_payout_ancestry.py` |
+| PCD15 | For either balanced suffix and every fixed \(M\ge\delta+1\), endpoint states equal modulo \(2^M\) have the same starting lift but successor residues differing by \(3^{\lvert\mathbf v\rvert}2^{M-\delta}\not\equiv0\pmod{2^M}\); endpoint-only fixed-width state is not closed | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 17 | Exact affine transition; `scripts/verify_repunit_general_payout_ancestry.py` |
 | PCD16 | Every consecutive interval of the balanced mechanical block word has homogeneous multiplier \(\mu_W\) satisfying \(2/3<\mu_W<3/2\), independently of its length | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 18 | Mechanical floor discrepancy; `scripts/verify_repunit_general_payout_ancestry.py` |
 | PCD17 | After the initial valuation-three payout and \(L\ge1\) balanced mechanical blocks, normalized correction storage satisfies \(L/2+7/8<Z_L<9L/8+33/32\) | Proved here | `docs/repunit/payout_concentration_diffusion.md` Section 19 | Affine storage recursion plus PCD16; `scripts/verify_repunit_general_payout_ancestry.py` |
 | IEF1 | A nested exponent-cylinder branch with depths \(E_m\to\infty\) contains a positive integer iff its canonical representatives are eventually constant, equivalently iff its exponent-lift blocks are eventually zero | Proved here | docs/repunit/integral_escape_frontier.md Section 3 | Canonical residues equal the integer once \(2^{E_m}\) exceeds it |
@@ -120,8 +159,8 @@ separately in `BIBLIOGRAPHY_PASS.md`.
 | IEF17 | A non-cyclic positive-integer survivor in the terminal \(3/4\)-block language must simultaneously lie above \(10^6\), have \(\liminf S_L/L=0\), satisfy \(\operatorname{dio}(w)=1\) or \(\limsup S_L/L>0\), evade every divergent IEF18 margin (including every IEF21 directional-valley sequence), and satisfy \(Z_{L_k}>64\cdot10^6/65\) eventually along every subsequence with \(S_{L_k}\to-\infty\) | Proved survivor-profile intersection | docs/repunit/integral_escape_frontier.md Section 21 | Ordered contrapositives of FIN1 and IEF13--IEF16, sharpened by IEF18--IEF21; cyclic trajectories remain separate |
 | IEF18 | An aperiodic \(q=3\) itinerary is not realized by a fixed positive integer if eventually periodic prefix approximants satisfy \(G_k-J(A_k)-J(B_k)-2\log_2N_k\to\infty\), where \(J(Y)\) is the maximum of zero, the total positive parity drift, and the largest positive suffix drift of \(Y\) | Proved here | docs/repunit/integral_escape_frontier.md Section 22 | Directional correction bound gives inverse height \(O(N_k^2 2^{N_k+J(A_k)+J(B_k)})\); IEF11 applies and IEF14 is a coarser corollary |
 | IEF19 | No fixed positive integer realizes an aperiodic \(3/4\)-block itinerary with \(S_L=o(L)\) and \(\operatorname{dio}(w)>1\); hence every non-cyclic survivor satisfies \(\operatorname{dio}(w)=1\) or \(\limsup S_L/L>0\) | Proved here | docs/repunit/integral_escape_frontier.md Section 23 | The exact code-length identity \(E(j)=\lambda j+S_j/c\) converts every fixed block repetition surplus into linear parity-bit surplus; sublinear prefix drift also makes both directional budgets \(o(N_k)\); combine IEF18 and IEF16 |
-| IEF20 | No fixed positive integer realizes an aperiodic \(3/4\)-block itinerary having periodic-prefix approximants with block footprint \(n_k\to\infty\), agreement at least \((1+\varepsilon)n_k\), and earlier drift envelope \(D_k=\max_{j\le m_k}|S_j|=o(n_k)\) | Proved here | docs/repunit/integral_escape_frontier.md Section 24 | Exact code-length identity gives linear agreement surplus and the drift envelope makes \(J(\chi(U_k))+J(\chi(V_k))=o(n_k)\), so IEF18 applies; this can discharge words with positive global drift limsup |
-| IEF21 | For a full block word \(W\), \(J(\chi(W))=S_{|W|}-\min_{j\le|W|}S_j\) exactly; hence no fixed positive integer realizes an aperiodic itinerary having fixed-surplus periodic-prefix approximants with sublinear two-cut terminal draw-up \(H_k\) and sublinear footprint-to-agreement drift loss \(L_k\) | Proved here | docs/repunit/integral_escape_frontier.md Section 25 | Suffixes beginning inside \(1^r00\) are dominated by block-boundary suffixes; the exact code-length identity and IEF18 then give the discharge; scripts/explore_balanced_q3_residual_axes.py cross-checks the parity and block costs exactly |
+| IEF20 | No fixed positive integer realizes an aperiodic \(3/4\)-block itinerary having periodic-prefix approximants with block footprint \(n_k\to\infty\), agreement at least \((1+\varepsilon)n_k\), and earlier drift envelope \(D_k=\max_{j\le m_k}\lvert S_j\rvert=o(n_k)\) | Proved here | docs/repunit/integral_escape_frontier.md Section 24 | Exact code-length identity gives linear agreement surplus and the drift envelope makes \(J(\chi(U_k))+J(\chi(V_k))=o(n_k)\), so IEF18 applies; this can discharge words with positive global drift limsup |
+| IEF21 | For a full block word \(W\), \(J(\chi(W))=S_{\lvert W\rvert}-\min_{j\le\lvert W\rvert}S_j\) exactly; hence no fixed positive integer realizes an aperiodic itinerary having fixed-surplus periodic-prefix approximants with sublinear two-cut terminal draw-up \(H_k\) and sublinear footprint-to-agreement drift loss \(L_k\) | Proved here | docs/repunit/integral_escape_frontier.md Section 25 | Suffixes beginning inside \(1^r00\) are dominated by block-boundary suffixes; the exact code-length identity and IEF18 then give the discharge; scripts/explore_balanced_q3_residual_axes.py cross-checks the parity and block costs exactly |
 | REPLOW3 | The low-prefix classes are nested truncations of the unique odd \(\alpha\in\mathbb Z_2\) satisfying \(3^{\alpha+1}=-7\), and can extend beyond any prescribed finite recovery horizon | Proved here | `docs/repunit/repunit_low_prefix_obstruction.md` | Closed form \(v_2(3^{n+1}+7)\ge K+3\); `scripts/verify_repunit_low_prefix.py` |
 | REPLOW4 | A positive exponent realising \((2,1^{K-1})\) satisfies \(K<\log_2(3)(n+1)-2\), so this 2-adic branch cannot shadow for \(3n\) steps | Proved here | `docs/repunit/repunit_low_prefix_obstruction.md` | Divisibility plus ordinary size bound |
 | DEN1 | Almost every odd integer has finite stopping time, with the explicit bound stated in the note | Known theorem rederived | `docs/density-cycles/stopping_time_density.md` | Terras/Everett; verifier checks finite instances of the ingredients |
@@ -140,9 +179,13 @@ separately in `BIBLIOGRAPHY_PASS.md`.
 
 ## Exploratory documents
 
-These notes are not dependencies of the proved-results track:
+These notes and directories are not dependencies of universal proofs in the
+proved-results track. A specifically cited `explore_*.py` run may still be the
+reproducible generator for an explicitly finite or mixed ledger row:
 
 - `RESEARCH_ROADMAP.md`
+- `RESIDUAL_ATLAS.md`
+- `docs/residual-atlas/`
 - `docs/fuse/fuse_map_theory.md`
 - `docs/fuse/fuse_burn_attack.md`
 - `docs/repunit/repunit_tail_attack.md`
@@ -154,7 +197,7 @@ These notes are not dependencies of the proved-results track:
 - `docs/repunit/next_generation_attack_program.md`
 - `docs/nested-anchor/near_threshold_episode_notes.md`
 - `docs/diagnostics/diagnostics_attractor_sieve_spike.md`
-- all `explore_*.py` programs
+- all other `explore_*.py` programs
 
 ## Archived documents
 
@@ -167,4 +210,7 @@ dependencies of maintained claims.
 A claim may be promoted to **Proved here** only when its quantifiers and domain
 are explicit, the human proof covers all cases, its dependencies are already
 proved, and any verifier tests the same statement without silently replacing a
-universal quantifier by a finite range.
+universal quantifier by a finite range. Claims depending essentially on an
+external theorem must instead identify that provenance in their status and
+source note. Finite certificates must give the exact domain and a reproducible
+command or artifact.

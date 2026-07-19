@@ -900,14 +900,12 @@ ordinary height at most \(3E_k2^{E_k}\).
 
 ### Extra \(2\)-adic agreement
 
-The standard recursion starts the characteristic word with
-
-\[
-S_kS_{k-1}.
-\]
-
-Since \(S_{k-1}\) is a prefix of \(S_k\), the true parity word and
-\(W_k^\infty\) agree for at least
+The standard recursion starts the characteristic word with \(S_k\). After
+that copy, the recursion supplies either \(S_{k-1}\) or another copy of
+\(S_k\), depending on the next partial quotient. Since \(S_{k-1}\) is a
+prefix of \(S_k\), in either case the characteristic word and \(S_k^\infty\)
+agree for at least \(|S_k|+|S_{k-1}|\) block symbols. Consequently, the true
+parity word and \(W_k^\infty\) agree for at least
 
 \[
 M_k=E_k+E_{k-1}
@@ -966,9 +964,12 @@ Indeed,
 \]
 
 For approximants with \(|\beta-p/q|<1\), the two integer coefficients in the
-numerator are \(O(q)\). The required power-law lower bound is therefore the
-standard finite-irrationality-measure corollary of a Baker--Matveev lower
-bound for linear forms in logarithms
+numerator are \(O(q)\). A Baker--Matveev bound therefore gives
+\(|2q\log2-(3q+p)\log(3/2)|>q^{-C_0}\) for some fixed \(C_0\). Dividing by
+the fixed factor \(\log(3/2)\) and by \(q\) gives
+\(|\beta-p/q|>q^{-(C_0+1)}\); renaming the exponent gives the displayed
+constant \(C\). This is the standard finite-irrationality-measure corollary
+of a lower bound for linear forms in logarithms
 ([Matveev 2000](https://doi.org/10.1070/IM2000v064n06ABEH000314)). The
 numerator is the nonzero linear form
 
@@ -1100,24 +1101,34 @@ the required eventually periodic prefixes for **every** Sturmian word,
 including every intercept.
 
 Let \(s\) be any Sturmian word in the block alphabet \(\{3,4\}\). Their
-Theorems 4.3 and 4.5 imply the following combinatorial consequence. There are
-arbitrarily large pairs of words \(U,V\), with \(V\ne\varnothing\), for which
-\(s\) and \(UV^\infty\) agree for \(L\) block symbols and
+Theorem 3.4 and Lemma 10.3 imply the following combinatorial consequence.
+There are arbitrarily large pairs of words \(U,V\), with
+\(V\ne\varnothing\), for which \(s\) and \(UV^\infty\) agree for \(L\) block
+symbols and
 
 \[
 L\ge 2.4\bigl(|U|+|V|\bigr).
 \tag{2}
 \]
 
-Indeed, every Sturmian base-\(b\) number has irrationality exponent at least
+Indeed, Theorem 3.4 gives
 
 \[
-\kappa=\frac53+\frac{4\sqrt{10}}{15}=2.5099\ldots,
+\operatorname{rep}(s)\le\sqrt{10}-\frac32,
 \]
 
-and that exponent can be read from approximants obtained by cutting the
-digit word and completing it periodically. Taking any constant below
-\(\kappa\), such as \(2.4\), gives (2) infinitely often
+and Lemma 10.3 converts this recurrence bound into the Diophantine exponent
+bound
+
+\[
+\operatorname{dio}(s)\ge
+\kappa:=\frac53+\frac{4\sqrt{10}}{15}=2.5099\ldots.
+\]
+
+Here \(\operatorname{dio}(s)\) is the supremum of the ratios
+\(|UV^w|/(|U|+|V|)\) attained by arbitrarily long prefixes \(UV^w\). Such a
+prefix agrees with \(UV^\infty\) for \(|UV^w|\) symbols. Taking any constant
+below \(\kappa\), such as \(2.4\), therefore gives (2) infinitely often
 ([Bugeaud--Kim 2019](https://doi.org/10.1090/tran/7378),
 [arXiv:1510.00279](https://arxiv.org/abs/1510.00279)).
 
