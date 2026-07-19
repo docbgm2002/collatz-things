@@ -78,6 +78,11 @@ IEF20 additionally discharges fixed-surplus repetitions occurring in critical
 drift windows, even when the global limsup is positive. IEF21 replaces the
 full window envelope by exact terminal draw-up and endpoint-loss costs, so
 internal peaks that return to a local valley are also covered.
+The Collatz-free terminal dual-digit escape is ledger claims IEF22--IEF24
+in `repunit/dio1_cocycle_problem.md` (Theorem G: no infinite path in the
+residue graph; IEF24 excludes positive integers from infinite
+\(\mathcal L_{3/4}\) itineraries via IEF7). Route A context is
+`repunit/hecke_mahler_route_a.md`.
 The separate
 `repunit/repunit_equidistribution_reframing.md` is an empirical strategic
 diagnosis for a shortcut-map stopping-time target, not a theorem and not a

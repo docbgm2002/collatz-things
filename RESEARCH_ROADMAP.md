@@ -23,22 +23,22 @@ This file preserves the programme's development, so some early sections are
 plans later completed, retired, or narrowed. The current working position is:
 
 1. universal descent of every odd-indexed repunit tail remains open;
-2. the fixed-block, shallow synchronization, terminal-payout, and compressed
-   collision-state routes do not close it;
-3. no new broad census should be launched without a precise arithmetic lemma;
-4. the live obstruction is the balanced \(q=3\) repunit-cylinder family from
-   PCD8--PCD17; the immediate target is arithmetic non-shadowing between its
-   affine endpoint-lift digits and one power-of-three carry;
-5. correction/cylinder transversality is the companion attack: any useful
-   theorem must control the least exponent representative and retain
-   primitivity or prior-descent information absent from finite cylinders;
+2. the residual atlas is **demote-1** (cover failure): IEF22--IEF24 empty the
+   positive-integer residual inside \(\mathcal L_{3/4}\) only; that is closed
+   classification, not a cover of blocked-diffuse primitives (L5);
+3. **live spine target:** first-descent storage-dominance (SD1) in
+   [`docs/no-go/avenue_a_comparison_dynamics.md`](docs/no-go/avenue_a_comparison_dynamics.md),
+   feeding the surplus-transfer sign law in
+   `docs/no-go/repunit_descent_transfer_fan.md`;
+4. no new broad census should be launched without a precise arithmetic lemma;
+5. PCD / cylinder / ancestry results remain valid side structure; the
+   atlas is not the descent route;
 6. the single-ancestor \(q=2\) reachability results in
-   `docs/repunit/primitive_ancestry_lemma.md` remain valid, but are now a
-   proved side branch rather than the main bottleneck;
+   `docs/repunit/primitive_ancestry_lemma.md` remain a proved side branch;
 7. `docs/repunit/repunit_equidistribution_reframing.md` gives finite evidence
    for a related shortcut-map `6n` target. Its parity-neutrality interpretation
-   is strategic and conjectural, not a proof of convergence and not a
-   substitute for the accelerated-map target below.
+   is strategic and conjectural, not a substitute for the accelerated-map
+   target.
 
 The first simplifications of item 4 are now proved as REPANC1–REPANC3. In the
 \(q=2\) smallest shell, correction equality in an admissible aligned layer

@@ -122,10 +122,35 @@ Working note: [`avenue_a_comparison_dynamics.md`](avenue_a_comparison_dynamics.m
 - Deficit dictionary: \(d=(3^n-1)\rho\), \(P=2\cdot3^i(d-d_0)\).
 - Affine bridge: \(K_\downarrow\le T\) and landing \(\ge3\) \(\Rightarrow\) SD½
   \(\Rightarrow\) SD1 (uses the proved affine-tail bound + SD-T-budget).
+- Height-block dictionary: \(K_\downarrow=1+\sum h_j\) on stay-above heights.
+- Distinct-residue theorem: no collision mod \(2^{n+1}\) before
+  \(j_0(n)\le T\) forces \(K_\downarrow\le j_0\le T\) (SD-length-distinct);
+  even-index Mersennes are never in the image of \(f\).
+- \(L=1\) dictionary (SD-L1-class) and no seed \(L=1\) collision
+  (SD-L1-seed; \(e_0=2\) unconditional, \(e_0\ge3\) through \(5001\)).
+- \(L=1\) reduced to two gates (high landing / \(v\ge n+3\)); first
+  landing safe; odd \(e\) forces \(3\mid R\); orbit never has \(3\mid x\);
+  under SD½ an \(e=2\)/\(s=1\)/\(h=n+2\) landing is exactly
+  \(x^\star\mapsto M_{n+2}\) with \(x^\star=(2^{n+4}-5)/3\).
+- Preimage \(x^\star\) excluded for \(n\equiv1\pmod6\) (via \(3\mid x^\star\)),
+  for \(n=3,5\) (orbit inspection), and for \(n\equiv3,5\pmod6\) through
+  \(2001\) by orbit scan plus affine \(E\)-window gap
+  (\(i_*>K_\downarrow\) for \(n\ge9\)); Baker / irrationality of
+  \(\log_2 3\) cover the large-\(n\) tail under
+  \(K_\downarrow=n^{O(1)}\) or \(o(2^{n/\mu})\). Block law
+  \(E_K\ge K+\pi+1\) proved; empirically \(K\le6n\).
+- Valuation-gate form: \(e=2\) \(L=1\) iff \(x=1+|s|2^{n+3}\); unit
+  \(z_n=1+2^{n+3}\) window-gapped through \(501\). Height/\(v\) gates
+  hold through odd \(n\le501\); max \(v\) after \(e\ge3\) is \(16\)
+  through \(501\).
+- Empirically the only pre-descent mod-\(2^{n+1}\) collision for
+  odd \(n\le59\) is at \(n=5\) (\(L=3\)); no \(L=1\) through \(n=501\).
 - Descent to \(1\) impossible after a pure \(e=1\) prefix (\(P=0\)).
-- Finite: SD1 through \(5001\); \(K_\downarrow\le T\) through \(511\);
-  SD½ / no descent-to-\(1\) through \(4001\); empirical \(K_\downarrow=O(n)\).
-- Open gates: prove \(K_\downarrow\le T\); exclude descent-to-\(1\) for \(P>0\).
+- Finite: SD1 and \(K_\downarrow\le T\) through \(5001\); SD½ / no
+  descent-to-\(1\) through \(4001\); empirical \(K_\downarrow=O(n)\).
+- Open gates: prove \(K_\downarrow=n^{O(1)}\) (finishes \(x^\star\) and
+  \(z_n\)); \(|s|\ge3\) / \(s>1\) height / \(e\ge4\); \(L\ge2\);
+  descent-to-\(1\) for \(P>0\).
 
 ---
 
@@ -619,11 +644,18 @@ hard stop.
 
 ## Suggested first session when we “get to work”
 
-Open Avenue A only:
+Open Avenue A only (current cut):
 
-1. Write the storage-dominance statement as a lemma with explicit quantifiers.
-2. Check it against the full-fan explorer through the existing finite domain.
-3. Attempt a human proof from the exact normal form
-   \(R_K=A_K+2^{E_K+1}\); identify the first missing inequality.
-4. If proved, move to the schedule lemma; if falsified, record the
-   counterexample and skip to Avenue B’s exotic partition using that seed.
+1. SD1 and the finite certificate are already written in
+   `avenue_a_comparison_dynamics.md`; residual atlas IEF work is closed
+   locally (demote-1 + IEF22--IEF24).
+2. Live cut: **Gap SD-K-block-8-17 remainder.** Cor early closes
+   density \(9/1024\) of \(k\) (progressions \(3,171\bmod256\),
+   \(323\bmod512\), \(579\bmod1024\)) plus \(n=81\). Next:
+   \(k\equiv11\pmod{64}\); remaining \(67\bmod256\) slices. Finite:
+   equality only at \(n=17\). Parallel residual: SD-L1 growing height /
+   \(e=2\) \(\lvert s\rvert\ge3\). EC1-near is \(\Theta(n)\).
+3. With full EC1 and landing \(\ge3\), promote SD1 via Corollary SD1-affine;
+   then ST1 / schedule.
+4. If EC1 is falsified in the contradiction regime, record the seed and
+   skip to Avenue B’s exotic partition.

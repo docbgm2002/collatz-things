@@ -102,7 +102,16 @@ the following simultaneously:
 \]
 
 IEF17 proves that every non-cyclic positive-integer survivor in this terminal
-language lies in \(\mathcal R\). It does **not** prove \(\mathcal R=\emptyset\).
+language lies in \(\mathcal R\).
+
+**Update (IEF22--IEF24).** The dual-digit escape Theorem G (`dio1_cocycle_problem.md`)
+proves that no infinite \(\{3,4\}\)-block word has an eventually-zero IEF4
+digit stream. With IEF7 this excludes every positive integer from realizing
+an infinite itinerary in \(\mathcal L_{3/4}\) in the integrality sense
+(IEF24). Thus \(\mathcal R\) contains no positive-integer survivor.
+Cover lemma **L5** remains: this empties the residual *inside*
+\(\mathcal L_{3/4}\), and does not by itself prove every blocked-diffuse
+primitive enters that language.
 
 Cyclic trajectories are excluded from \(\mathcal R\) by definition of the
 ledger and remain on the cycle track.
@@ -211,6 +220,12 @@ normal form (`docs/residual-atlas/E_mix_seed.md`,
 classification framework for \(\mathcal L_{3/4}\), not as a spine-descent
 route.
 
+**Postscript (2026-07-19).** IEF22--IEF24 empty the positive-integer
+residual inside \(\mathcal L_{3/4}\) (L6 local discharge recorded in
+`PHASE_CHECKPOINT.md`). Demote-1 is unchanged. Primary programme returns to
+Avenue A / first-descent storage-dominance
+(`docs/no-go/avenue_a_comparison_dynamics.md`) and the transfer fan.
+
 ## 8. Next lemmas (checkpoint order)
 
 Each item is a candidate, not a claim. Order follows the bounded-phase plan,
@@ -312,19 +327,22 @@ or a **named residual predicate**. Otherwise they are diagnostics.
 
 ## 11. Guardrails (short)
 
-- \(\mathcal R=\emptyset\) is a theorem only inside the language of
-  \(\mathcal R\); L5 is required for a spine route.
+- \(\mathcal R=\emptyset\) (IEF24) is a theorem only inside the language of
+  \(\mathcal R\); L5 is required for a spine route and remains demoted.
 - Nonempty \(2\)-adic ghosts are allowed.
 - Finite diagnostics are not discharges.
-- IEF10--IEF21 do not imply \(\sigma(a_n)\le3n\).
+- IEF10--IEF24 do not imply \(\sigma(a_n)\le3n\).
 - Percentages are prioritization tools, not covers.
-- Do not bet the whole programme on this atlas during the bounded phase.
+- Do not bet the whole programme on this atlas; live spine work is Avenue A
+  / SD1 after demote-1.
 
 ## 12. Related files
 
 - `docs/residual-atlas/` — side-project working notes
 - `CLAIM_LEDGER.md` — claim status
 - `docs/repunit/integral_escape_frontier.md` — IEF1--IEF21
+- `docs/repunit/dio1_cocycle_problem.md` — IEF22--IEF24 (local dual-digit escape)
+- `docs/no-go/avenue_a_comparison_dynamics.md` — live SD1 attack
 - `docs/repunit/coverage_portfolio.md` — ordered cover mechanics
 - `docs/repunit/payout_concentration_diffusion.md` — PCD residual language
 - `docs/repunit/next_generation_attack_program.md` — attack tactics
