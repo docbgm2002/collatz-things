@@ -22,6 +22,10 @@ def v2(value: int) -> int:
     return (value & -value).bit_length() - 1
 
 
+def h_of(x: int) -> int:
+    return v2(x + 1)
+
+
 def scan_tail(n: int, step_limit: int = 200_000) -> dict[str, int]:
     threshold = (1 << n) - 1
     x = (3**n - 1) // 2
@@ -1083,6 +1087,244 @@ def check_block8_mod17(limit: int) -> None:
     )
 
 
+def _block_deltas_after_first(n: int, max_blocks: int = 6) -> tuple[int, list[int]]:
+    """Return (h1, list of Delta_j for j=2..max_blocks) on the residual tail."""
+    h1 = v2(3 ** (n + 2) + 37) - 5
+    x1 = (3 ** (n + 1) - 1) // 8
+    assert v2(3 * x1 + 1) == 2
+    x = (3 * x1 + 1) >> 2
+    while h_of(x) >= 2:
+        x = (3 * x + 1) >> 1
+    deltas: list[int] = []
+    for _ in range(2, max_blocks + 1):
+        raw = 3 * x + 1
+        e = v2(raw)
+        x = raw >> e
+        hl = h_of(x)
+        rails = 0
+        while h_of(x) >= 2:
+            x = (3 * x + 1) >> 1
+            rails += 1
+        heff = 1 + rails if rails < hl - 1 else hl
+        deltas.append(11 * (e - 1) - 9 * heff)
+        while h_of(x) >= 2:
+            x = (3 * x + 1) >> 1
+    return h1, deltas
+
+
+def _iter_k11_mod64(limit_k: int):
+    """Yield (n, k) for k ≡ 11 (mod 64) with 11 <= k <= limit_k."""
+    for k in range(11, limit_k + 1, 64):
+        yield 64 * k + 17, k
+
+
+def check_block8_k11_mod256(limit_k: int) -> None:
+    """Certify Lemma SD-K-b4start-mod256 / Cor SD-K-blocks24-k11mod64.
+
+    For k ≡ 11 (mod 64), checks block-4 start x mod 32 and (Δ2,Δ3,Δ4) on
+    each k mod 256 slice inside that class.  ``limit_k`` is the maximum k
+    scanned (not the maximum n).
+    """
+    if limit_k < 11:
+        print("block8-k11-mod256: SKIP (need limit_k >= 11)")
+        return
+
+    expected_delta = {
+        11: (2, 2, 2),
+        75: (2, 2, -7),
+        139: (2, 2, 2),
+        203: (2, 2, -16),
+    }
+    expected_x32 = {
+        11: {1, 17},
+        75: {25},
+        139: {1, 17},
+        203: {9},
+    }
+
+    checked = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        r = k % 256
+        assert r in expected_delta, (n, k, r)
+        if r == 203 and k % 512 != 203:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=4)
+        assert tuple(deltas[:3]) == expected_delta[r], (n, k, r, deltas[:3])
+
+        # block-4 start residue (after blocks 2 and 3)
+        x1 = (3 ** (n + 1) - 1) // 8
+        x = (3 * x1 + 1) >> 2
+        while h_of(x) >= 2:
+            x = (3 * x + 1) >> 1
+        for _ in range(2):
+            raw = 3 * x + 1
+            e = v2(raw)
+            x = raw >> e
+            while h_of(x) >= 2:
+                x = (3 * x + 1) >> 1
+            while h_of(x) >= 2:
+                x = (3 * x + 1) >> 1
+        assert x % 32 in expected_x32[r], (n, k, r, x % 32)
+        checked += 1
+
+    print(
+        "block8-k11-mod256: PASS "
+        f"(k≡11 mod 64, k<= {limit_k}, checked={checked}; "
+        f"Δ2..4 and block-4 start x mod 32 on slices 11/75/139/203 mod 256; "
+        f"203 slice only at k≡203 mod 512)"
+    )
+
+
+def check_block8_k11_mod512(limit_k: int) -> None:
+    """Certify mod-512 refinements on k≡11 (mod 64) (Lemma SD-K-b4start-mod512,
+    Cor SD-K-block5-mod512-k11slice).  ``limit_k`` is the maximum k scanned."""
+    if limit_k < 11:
+        print("block8-k11-mod512: SKIP (need limit_k >= 11)")
+        return
+
+    b4_203 = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        if k % 512 != 203:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=4)
+        assert tuple(deltas[:3]) == (2, 2, -16), (n, k, deltas[:3])
+        b4_203 += 1
+
+    b5_267 = 0
+    b5_523 = 0
+    b5_779 = 0
+    b5_11 = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        _, deltas = _block_deltas_after_first(n, max_blocks=5)
+        if k % 512 == 267:
+            assert tuple(deltas[:4]) == (2, 2, 2, 2), (n, k, deltas[:4])
+            b5_267 += 1
+        if k % 1024 == 523:
+            assert deltas[3] == -7 and tuple(deltas[:3]) == (2, 2, 2), (n, k, deltas)
+            b5_523 += 1
+        if k % 1024 == 779:
+            assert deltas[3] == 2 and tuple(deltas[:3]) == (2, 2, 2), (n, k, deltas)
+            b5_779 += 1
+        if k % 2048 == 11:
+            assert deltas[3] == -16 and tuple(deltas[:3]) == (2, 2, 2), (n, k, deltas)
+            b5_11 += 1
+
+    print(
+        "block8-k11-mod512: PASS "
+        f"(k<= {limit_k}; b4 k≡203 mod512={b4_203}; "
+        f"b5 k≡267 mod512={b5_267}, k≡523 mod1024={b5_523}, "
+        f"k≡779 mod1024={b5_779}, k≡11 mod2048={b5_11})"
+    )
+
+
+def check_block8_k11_mod8192(limit_k: int) -> None:
+    """Certify mod-8192 block-4/5/6 refinements on k≡11 (mod 64).
+
+    Supports Lemma SD-K-b4start-mod8192, Cor SD-K-block5-mod8192-1035,
+    Cor SD-K-block6-mod8192-k267slice and the 267-family gap theorems.
+    """
+    if limit_k < 11:
+        print("block8-k11-mod8192: SKIP (need limit_k >= 11)")
+        return
+
+    b4_mod8192 = {
+        3531: (2, 2, -52),
+        7627: (2, 2, -88),
+    }
+    b4_count = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        if k % 8192 not in b4_mod8192:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=4)
+        assert tuple(deltas[:3]) == b4_mod8192[k % 8192], (n, k, deltas[:3])
+        b4_count += 1
+
+    b5_mod8192 = {
+        1035: -43,
+        3083: -25,
+        5131: -34,
+        7179: -25,
+    }
+    b5_count = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        if k % 8192 not in b5_mod8192:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=5)
+        assert tuple(deltas[:3]) == (2, 2, 2), (n, k, deltas[:3])
+        assert deltas[3] == b5_mod8192[k % 8192], (n, k, deltas)
+        b5_count += 1
+
+    # Block 6 on k≡267 (mod 512): stable (Δ2..Δ6) at mod 8192.
+    b6_mod8192 = {
+        267: (2, 2, 2, 2, 35),
+        779: (2, 2, 2, 2, 2),
+        1291: (2, 2, 2, 2, 13),
+        1803: (2, 2, 2, 2, -16),
+        2315: (2, 2, 2, 2, -12),
+        2827: (2, 2, 2, 2, 2),
+        3339: (2, 2, 2, 2, 4),
+        3851: (2, 2, 2, 2, -7),
+        4363: (2, 2, 2, 2, 46),
+        4875: (2, 2, 2, 2, 2),
+        5387: (2, 2, 2, 2, 13),
+        5899: (2, 2, 2, 2, -34),
+        6411: (2, 2, 2, 2, 24),
+        6923: (2, 2, 2, 2, 2),
+        7435: (2, 2, 2, 2, -5),
+        7947: (2, 2, 2, 2, -7),
+    }
+    b6_count = 0
+    gap6_count = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        if k % 512 != 267:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=6)
+        r = k % 8192
+        assert r in b6_mod8192, (n, k, r, tuple(deltas[:5]))
+        assert tuple(deltas[:5]) == b6_mod8192[r], (n, k, r, deltas[:5])
+        b6_count += 1
+        if sum(deltas[:5]) >= 16:
+            gap6_count += 1
+
+    b7_mod8192 = {
+        267: 13,
+        779: 13,
+        1291: -7,
+        1803: 13,
+        2315: 4,
+        2827: 2,
+        3339: 15,
+        3851: 2,
+        4363: -7,
+        4875: 46,
+        5387: 13,
+        5899: 2,
+        6411: -25,
+        6923: -34,
+        7435: 24,
+        7947: 13,
+    }
+    b7_count = 0
+    gap7_count = 0
+    for n, k in _iter_k11_mod64(limit_k):
+        if k % 512 != 267:
+            continue
+        _, deltas = _block_deltas_after_first(n, max_blocks=7)
+        r = k % 8192
+        assert r in b7_mod8192, (n, k, r, deltas[5:])
+        assert deltas[5] == b7_mod8192[r], (n, k, r, deltas[5])
+        b7_count += 1
+        if sum(deltas[:6]) >= 16:
+            gap7_count += 1
+
+    print(
+        "block8-k11-mod8192: PASS "
+        f"(k<= {limit_k}; b4 mod8192={b4_count}; b5 mod8192={b5_count}; "
+        f"b6 k≡267 mod512={b6_count}, cum6>=16={gap6_count}; "
+        f"b7={b7_count}, cum7>=16={gap7_count})"
+    )
+
+
 def check_height_s(limit: int, s_max: int = 32) -> None:
     """Certify y_n(s)=s*2^{n+2}-1 absent for 3<=s<=s_max on pre-descent orbits.
 
@@ -1355,6 +1597,21 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="also verify h1/rest bound for n=17 mod 64",
     )
+    parser.add_argument(
+        "--check-block8-k11-mod256",
+        action="store_true",
+        help="also verify block-4 dictionary on k≡11 mod 64 slices mod 256 (limit = max k)",
+    )
+    parser.add_argument(
+        "--check-block8-k11-mod512",
+        action="store_true",
+        help="also verify mod-512 block-4/5 refinements on k≡11 mod 64 (limit = max k)",
+    )
+    parser.add_argument(
+        "--check-block8-k11-mod8192",
+        action="store_true",
+        help="also verify mod-8192 block-4/5/6 refinements on k≡11 mod 64 (limit = max k)",
+    )
     return parser.parse_args()
 
 
@@ -1397,3 +1654,9 @@ if __name__ == "__main__":
         check_block8_first(args.limit)
     if args.check_block8_mod17:
         check_block8_mod17(args.limit)
+    if args.check_block8_k11_mod256:
+        check_block8_k11_mod256(args.limit)
+    if args.check_block8_k11_mod512:
+        check_block8_k11_mod512(args.limit)
+    if args.check_block8_k11_mod8192:
+        check_block8_k11_mod8192(args.limit)

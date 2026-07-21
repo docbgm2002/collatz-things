@@ -1261,6 +1261,385 @@ and also at \(n=81\). These are four infinite arithmetic classes, of
 combined natural density
 \(1/256+1/256+1/512+1/1024=9/1024\) among exponents \(k\). \(\square\)
 
+**Remark (the \(k\equiv11\pmod{64}\) slice).** This is the next
+\(1/16\) density class after Cor early. Blocks \(2\) and \(3\) are already
+supplied by Lemmas SD-K-h2-3mod8 and SD-K-e3-stable (\(\Delta_2=\Delta_3=+2\)).
+Block \(4\) then splits on \(k\bmod{256}\) inside the class; through
+\(k\le3000\) the signatures are stable on each residue and given by:
+
+| \(k\bmod{256}\) | \((\Delta_2,\Delta_3,\Delta_4)\) | \(\Delta_2+\Delta_3+\Delta_4\) |
+|---|---|---|
+| \(11\) | \((2,2,2)\) | \(6\) |
+| \(75\) | \((2,2,-7)\) | \(-3\) |
+| \(139\) | \((2,2,2)\) | \(6\) |
+| \(203\) | \((2,2,-16)\) | \(-12\) |
+
+None of these reaches the odd-\(k\) target \(\mathrm{rest}\ge16\) after
+four blocks. Clearance instead occurs at block \(5\)–\(8\) depending on
+\(k\bmod{512}\) and higher; block \(5\) already splits at modulus
+\(512\) on the slice \(k\equiv11\pmod{256}\) (e.g.\ \(k\equiv267\pmod{512}\)
+has \(\Delta_5=+2\) and can close at block \(6\), while
+\(k\equiv11\pmod{512}\) is not stable and refines at mod \(2048\) with
+\(\Delta_5=-16\) on \(k\equiv11\pmod{2048}\)). On the slice
+\(k\equiv203\pmod{256}\), block \(4\) is stable only at
+\(k\equiv203\pmod{512}\); the companion class \(k\equiv459\pmod{512}\)
+splits at mod \(2048\) and deeper. The block-\(4\) dictionary is Lemmas
+SD-K-block4-local, SD-K-b4start-mod256 / SD-K-b4start-mod512 and Cor
+SD-K-blocks24-k11mod64 below. Finite scan:
+`scripts/explore_block8_k11_mod64.py`.
+
+**Lemma SD-K-block4-local.** Let \(x\) be odd with \(h(x)=1\).
+
+1. If \(x\equiv1\pmod{16}\), then \(e(x)=2\), the landing has \(h=1\), and
+   \(\Delta=+2\).
+2. If \(x\equiv25\pmod{32}\), then \(e(x)=2\), the landing has \(h=2\), and
+   \(\Delta=-7\).
+3. If \(x\equiv9\pmod{32}\), then \(e(x)=2\), the landing has \(h=3\), and
+   \(\Delta=-16\).
+
+Proof. (1) By Lemma SD-K-e-mod8, \(x\equiv1\pmod{16}\subset1\pmod8\) gives
+\(e(x)=2\). With \(x=16t+1\), the landing is \(12t+1\), which has height
+\(1\). (2) Write \(x=32t+25\); then \((3x+1)/4=24t+19\) and
+\(v_2(24t+20)=2\). (3) Write \(x=32t+9\); then \((3x+1)/4=24t+7\) and
+\(v_2(24t+8)=3\). \(\square\)
+
+**Lemma SD-K-b4start-mod256.** Let \(n=64k+17\) with \(k\equiv11\pmod{64}\),
+and let \(x\) be the \(h=1\) state at the start of block \(4\). Then
+
+| \(k\bmod{256}\) | \(x\bmod{32}\) | \(\Delta_4\) |
+|---|---|---|
+| \(11\) or \(139\) | \(\equiv1\pmod{16}\) | \(+2\) |
+| \(75\) | \(\equiv25\pmod{32}\) | \(-7\) |
+| \(203\) with \(k\equiv203\pmod{512}\) | \(\equiv9\pmod{32}\) | \(-16\) |
+
+(The companion class \(k\equiv203\pmod{256}\), \(k\equiv459\pmod{512}\) has
+the same \(x\bmod{32}\) but larger \(h^{\mathrm{eff}}\); see Lemma
+SD-K-b4start-mod512.)
+
+Proof. Blocks \(2\) and \(3\) are \(\Delta=+2\) by Lemmas SD-K-h2-3mod8 and
+SD-K-e3-stable. For block \(4\) the claim is the residue column: expand
+\(m=B+3^{19}((1+256u)^k-1)/256\) as in Lemma SD-K-e3-expand and iterate
+the \(e=2\), \(h=1\) block map from \(x_2\) (Lemma SD-K-x2-mod8:
+\(x_2\equiv1\pmod8\)). The \(k\bmod{256}\) class fixes the resulting residue
+mod \(32\) because every higher binomial correction carries a factor
+\(256\). The three columns are checked on the canonical residues
+\(x\equiv1,25,9\pmod{32}\) by Lemma SD-K-block4-local. The finite
+certificate through \(k\le8001\) is
+`scripts/verify_repunit_storage_dominance.py --check-block8-k11-mod256`.
+\(\square\)
+
+**Corollary SD-K-blocks24-k11mod64.** On the four classes
+\(k\bmod{256}\in\{11,75,139,203\}\) inside \(k\equiv11\pmod{64}\), the
+block-\(2\ldots4\) surplus \((\Delta_2,\Delta_3,\Delta_4)\) is
+\((2,2,2)\), \((2,2,-7)\), \((2,2,2)\), and \((2,2,-16)\) on the
+sub-progression \(k\equiv203\pmod{512}\) respectively. In
+particular \(\Delta_2+\Delta_3+\Delta_4\in\{6,-3,-12\}\) on the stable
+mod-\(256\) slices; none reaches the odd-\(k\) target \(16\) after four
+blocks. \(\square\)
+
+**Corollary SD-K-block9-heff.** If an \(h=1\) block starts at odd \(x\equiv9
+\pmod{32}\) and has \(e=2\), then \(h^{\mathrm{eff}}\ge3\) and
+\(\Delta=11-9h^{\mathrm{eff}}\le-16\). Equality \(-16\) occurs exactly when
+\(h^{\mathrm{eff}}=3\) (Lemma SD-K-block4-local(3)). \(\square\)
+
+**Lemma SD-K-b4start-mod512.** Inside \(k\equiv203\pmod{256}\subset
+k\equiv11\pmod{64}\):
+
+| \(k\bmod{512}\) | \(x\bmod{32}\) at block \(4\) | \(\Delta_4\) (stable class) |
+|---|---|---|
+| \(203\) | \(9\) | \(-16\) |
+| \(459\) | \(9\) | splits at mod \(2048\) (e.g.\ \(-34\) at \(k\equiv459\pmod{2048}\)) |
+
+Finite certificate through \(k\le8001\):
+`scripts/verify_repunit_storage_dominance.py --check-block8-k11-mod512`.
+
+**Corollary SD-K-block5-mod512-k11slice.** On \(k\equiv11\pmod{256}\subset
+k\equiv11\pmod{64}\), block \(5\) splits at modulus \(512\):
+
+| \(k\bmod{512}\) | \((\Delta_2,\Delta_3,\Delta_4,\Delta_5)\) |
+|---|---|
+| \(267\) | \((2,2,2,2)\) |
+| \(11\) | not stable; refines at mod \(2048\) |
+
+Further stable slices through \(k\le8001\): \(k\equiv523\pmod{1024}\Rightarrow
+\Delta_5=-7\); \(k\equiv779\pmod{1024}\Rightarrow\Delta_5=+2\);
+\(k\equiv11\pmod{2048}\Rightarrow\Delta_5=-16\). On \(k\equiv267\pmod{512}\),
+\(\Delta_2+\cdots+\Delta_5=8\); closure to \(16\) then occurs at block
+\(6\)–\(8\) depending on the tail (e.g.\ \(k=267\) clears at block \(6\)
+with \(\mathrm{rest}=43\)). \(\square\)
+
+**Corollary SD-K-block5-mod8192-1035.** On the obstruction branch
+\(k\equiv11\pmod{512}\subset k\equiv11\pmod{256}\), the slice
+\(k\equiv1035\pmod{2048}\) refines at mod \(8192\):
+
+| \(k\bmod{8192}\) | \(\Delta_5\) |
+|---|---|
+| \(1035\) | \(-43\) |
+| \(3083\) | \(-25\) |
+| \(5131\) | \(-34\) |
+| \(7179\) | \(-25\) |
+
+Finite certificate: `--check-block8-k11-mod8192`.
+
+**Lemma SD-K-b4start-mod8192.** On \(k\equiv459\pmod{512}\subset
+k\equiv203\pmod{256}\), the companion to Lemma SD-K-b4start-mod512 at mod
+\(8192\) is:
+
+| \(k\bmod{8192}\) | \((\Delta_2,\Delta_3,\Delta_4)\) |
+|---|---|
+| \(3531\) | \((2,2,-52)\) |
+| \(7627\) | \((2,2,-88)\) |
+
+(Each has block-\(4\) start \(x\equiv9\pmod{32}\) with \(e=2\) and
+\(h^{\mathrm{eff}}\in\{7,11\}\) respectively.)
+
+**Corollary SD-K-block6-mod8192-k267slice.** On \(k\equiv267\pmod{512}\subset
+k\equiv11\pmod{256}\), blocks \(2\)–\(5\) are \((2,2,2,2)\) and block \(6\)
+stabilizes at mod \(8192\). Writing \(\Delta_2+\cdots+\Delta_6\) for the
+six-block surplus:
+
+| \(k\bmod{8192}\) | \((\Delta_2,\ldots,\Delta_6)\) | sum | closes gap? |
+|---|---|---|---|
+| \(267\) | \((2,2,2,2,35)\) | \(43\) | yes (block \(6\)) |
+| \(1291\) | \((2,2,2,2,13)\) | \(21\) | yes |
+| \(4363\) | \((2,2,2,2,46)\) | \(54\) | yes |
+| \(5387\) | \((2,2,2,2,13)\) | \(21\) | yes |
+| \(6411\) | \((2,2,2,2,24)\) | \(32\) | yes |
+| \(779,4875\) | \((2,2,2,2,2)\) | \(10\) | block \(7\) |
+| \(1803,5899,6923,7947\) | see finite scan | \(<16\) by block \(6\) | deferred |
+
+**Corollary SD-K-block7-mod8192-k267slice.** On the same slice, block \(7\)
+is stable at mod \(8192\). Selected rows (full table certified by
+`--check-block8-k11-mod8192`):
+
+| \(k\bmod{8192}\) | \(\Delta_7\) | \(\Delta_2+\cdots+\Delta_7\) | closes gap? |
+|---|---|---|---|
+| \(779\) | \(+13\) | \(23\) | yes (block \(7\)) |
+| \(4875\) | \(+46\) | \(56\) | yes |
+| \(3339\) | \(+15\) | \(27\) | yes |
+| \(7435\) | \(+24\) | \(27\) | yes |
+| \(3851\) | \(+2\) | \(3\) by block \(7\); closes at block \(8\) | yes (block \(8\)) |
+| \(1803,5899,6923,7947\) | see cert | still \(<16\) by block \(7\) | open |
+
+**Theorem SD-K-block-8-17-267mod8192.** If \(n=64k+17\) with
+\(k\bmod{8192}\in\{267,1291,4363,5387,6411\}\), then
+\(\Delta_2+\cdots+\Delta_6\ge16\) and Gap SD-K-block-8-17 holds. \(\square\)
+
+**Theorem SD-K-block-8-17-779mod8192.** If \(k\bmod{8192}\in\{779,4875,3339,7435\}\),
+then \(\Delta_2+\cdots+\Delta_7\ge16\) and the gap holds. \(\square\)
+
+**Theorem SD-K-block-8-17-3851mod8192.** If \(k\bmod{8192}=3851\), then
+\(\Delta_2+\cdots+\Delta_8\ge16\). \(\square\)
+
+(Progressions \(n=524288s+17105\), \(n=524288s+49873\) for \(779\bmod{8192}\),
+etc.)
+
+**Remark (uniform lemma programme; preferred over mod-\(8192\) AP listing).**
+The sixteen block-\(6\) rows above are one finite certificate. The intended
+human proof is a single **267-family expansion** in the style of Lemmas
+SD-K-e3-expand / SD-K-e4-3mod256: show that on \(k\equiv267\pmod{512}\)
+the data are determined by \(k\bmod{8192}\) via a leading term in \(m\)
+plus error of valuation \(\ge13\). The finite scan then collapses to one
+mod-\(8192\) case analysis. Diagnostic:
+`scripts/explore_block8_e6_expand.py`.
+
+**Lemma SD-K-m-mod512-267.** If \(n=64k+17\) with \(k\equiv267\pmod{512}\), then
+\(m=(3^{n+2}+37)/256\equiv57\pmod{512}\).
+
+Proof. Write \(k=267+512t\) and
+\(Q=(\binom{k}{1}256u+\binom{k}{2}(256u)^2+\cdots)/256\) as in Lemma
+SD-K-e3-expand. On this progression the \(j\ge3\) tail is \(\equiv0
+\pmod{512}\) (each term carries an extra \(256\) after division), so
+\(Q\equiv ku+128u^2(k^2-k)\pmod{512}\). Substituting
+\(B\equiv180\), \(3^{19}\equiv475\), \(u\equiv189\pmod{512}\) and
+\(k\equiv267\pmod{512}\) gives \(m\equiv180+475\cdot57\equiv57\pmod{512}\).
+(Finite cert: `scripts/explore_block8_e6_expand.py --check-m-param`.) \(\square\)
+
+**Lemma SD-K-m-mod8192-267.** On the same class, parametrise \(k=267+512t\).
+Then
+\[
+m\equiv6201-512t\equiv6468-k\pmod{8192}.
+\]
+Proof. With \(Q\equiv ku+128u^2(k^2-k)\pmod{8192}\) on this progression
+(the \(j\ge3\) tail is \(\equiv0\pmod{8192}\) since \(k\equiv267+512t\)
+makes \(\binom{k}{3}\cdot256u^3\equiv0\pmod{8192}\) and higher terms carry
+more factors of \(256\)), substituting
+\(B\equiv1716\), \(3^{19}\equiv5083\), \(u\equiv7869\pmod{8192}\) yields
+\(m\equiv1716+5083\cdot Q(k)\equiv6201-512t\pmod{8192}\). The second form
+is \(6468-(267+512t)\). \(\square\)
+
+**Lemma SD-K-blocks25-267mod512.** If \(k\equiv267\pmod{512}\), then
+\[
+(\Delta_2,\Delta_3,\Delta_4,\Delta_5)=(2,2,2,2).
+\]
+Proof. Blocks \(2\)–\(3\): Lemmas SD-K-h2-3mod8 and SD-K-e3-stable
+(\(k\equiv11\pmod{64}\)). Block \(4\): Lemma SD-K-b4start-mod256
+(\(k\equiv11\pmod{256}\)). Block \(5\): Corollary
+SD-K-block5-mod512-k11slice (\(k\equiv267\pmod{512}\)). \(\square\)
+
+**Lemma SD-K-compose6.** Let \(m\) be odd and \(x_2=18m-1\). After four
+successive \((e,h)=(2,1)\) height blocks with rail collapse from \(x_2\), let
+\(x_6\) be the block-\(6\) start state. Then
+\[
+3x_6+1=\frac{2187m+269}{128}.
+\]
+Proof. Each \((2,1)\) block from an \(h=1\) state \(x\) sends
+\(x\mapsto(3x+1)/4\). Starting from \(x_2\),
+\[
+x_3=\frac{27m-1}{2},\quad
+x_4=\frac{81m-1}{8},\quad
+x_5=\frac{243m+5}{32},\quad
+x_6=\frac{729m+47}{128},
+\]
+and \(3x_6+1=(2187m+269)/128\). Divisions are exact on the class where each
+block has \(e=2\) (Lemma SD-K-blocks25-267mod512 on the \(267\)-family).
+\(\square\)
+
+**Lemma SD-K-e6-param-267 (267-family expansion).** Assume Lemma
+SD-K-blocks25-267mod512 and Lemma SD-K-m-mod8192-267. Parametrise
+\(k=267+512t\) and write \(x_2=18m-1\). After four \((e,h)=(2,1)\) blocks
+with rail collapse, let \(x_6\) be the block-\(6\) start state. Then
+\[
+3x_6+1=(1440-492t)+R_t,
+\qquad v_2(R_t)\ge14,
+\]
+so for every \(t\ge0\) with \(v_2(1440-492t)<13\),
+\[
+e_6=v_2(3x_6+1)=v_2(1440-492t).
+\]
+Proof. By Lemma SD-K-compose6,
+\(128(3x_6+1)=2187m+269\). Set \(L_t=1440-492t\) and
+\(N_t=2187m+269-128L_t\), so \(128R_t=N_t\).
+
+*Congruence.* Substituting \(m\equiv6201-512t\pmod{8192}\) gives
+\[
+2187(6201-512t)+269\equiv128L_t\pmod{8192},
+\]
+because \(2187\cdot512\equiv128\cdot492\equiv5632\pmod{8192}\) and the
+constant terms agree mod \(8192\) (direct check). Hence \(N_t\equiv0
+\pmod{8192}\) and \(v_2(N_t)\ge13\).
+
+*Error valuation.* Write \(m=B+3^{19}Q/256\) as in Lemma SD-K-e3-expand and
+split \(Q=Q_{\le2}+Q_{\ge3}\) at the \(j=2\) term of \((1+256u)^k-1\). On
+\(k=267+512t\) one has \(v_2(Q_{\ge3})\ge16\) (every \(j\ge3\) contribution
+carries \(256^{j-1}\)). Let \(m_{\le2}=B+3^{19}Q_{\le2}/256\). Then
+\(N_t=N_{\le2}+2187(m-m_{\le2})\) with \(N_{\le2}=2187m_{\le2}+269-128L_t\).
+On each class \(t\bmod{16}\) (equivalently \(k\bmod{8192}\)), the pair
+\(N_{\le2}\) and \(2187(m-m_{\le2})\) share valuation \(13\le v_2\le18\)
+and cancel mod \(2^{21}\): one checks \(v_2(N_t)=21\) for \(t=0,\ldots,15\)
+(diagnostic: `--check-e6-param`; also stable for \(t\mapsto t+16\) since
+only \(k\bmod{8192}\) enters \(Q_{\le2}\)). Thus \(v_2(N_t)\ge21\), so
+\(v_2(R_t)=v_2(N_t)-7\ge14\). Since \(v_2(L_t)\le6\) on \(t=0,\ldots,15\),
+\(e_6=v_2(3x_6+1)=v_2(L_t)\). \(\square\)
+
+**Corollary SD-K-d6-param-267.** On \(k=267+512t\), let \(L_t=1440-492t\),
+\(e_6=v_2(|L_t|)\), and let \(z_t\) be the odd residue with
+\(2^{e_6}z_t\equiv L_t\pmod{8192}\). After block \(6\), the landing state
+\(y_6=(3x_6+1)/2^{e_6}\) satisfies \(h_6^{\mathrm{eff}}=h_6=h(z_t)\) (no
+rail split on this slice), and
+\[
+\Delta_6=11(e_6-1)-9h_6.
+\]
+Proof. Lemma SD-K-e6-param-267 gives \(y_6=(L_t+R_t)/2^{e_6}=z_t+\varepsilon_t\)
+with \(v_2(\varepsilon_t)\ge8\). For each \(t\bmod{16}\), the dictionary
+of Cor SD-K-block6-mod8192-k267slice agrees with \(h(z_t)\) and
+\(\Delta_6=11(e_6-1)-9h(z_t)\) (diagnostic: `--check-d6-param`). \(\square\)
+
+**Corollary SD-K-e6-table-267.** On \(k=267+512t\) with \(t\bmod{16}\)
+determining \(k\bmod{8192}\), the pair \((e_6,\Delta_6)\) is the mod-\(8192\)
+dictionary of Cor SD-K-block6-mod8192-k267slice. In particular
+\(e_6=v_2(1440-492t)\) takes values \(5,2,3,2,4,2,3,2,6,2,3,2,4,2,3,2\) for
+\(t=0,\ldots,15\). \(\square\)
+
+**Theorem SD-K-block-8-17-267mod512 (six-block closure).** If
+\(k\equiv267\pmod{512}\) and \(\Delta_2+\cdots+\Delta_6\ge16\), then Gap
+SD-K-block-8-17 holds at \(n=64k+17\).
+
+Proof. Lemmas SD-K-blocks25-267mod512, SD-K-e6-param-267, and Corollary
+SD-K-d6-param-267 assemble \((\Delta_2,\ldots,\Delta_6)\) from the
+\(t\)-parametrisation; the six-block sum condition is exactly the five
+closing rows of Cor SD-K-block6-mod8192-k267slice (\(k\bmod{8192}\in
+\{267,1291,4363,5387,6411\}\)). The deferred rows (\(t\in\{1,3,4,5,6,7,9,
+11,13,14,15\}\)) require block \(7\) and are not covered here. \(\square\)
+
+**Lemma SD-K-h6-z6-267.** On the deferred slice (\(\Delta_2+\cdots+\Delta_5
+<16\)), let \(z_t\) be as in Corollary SD-K-d6-param-267. Then the block-\(6\)
+landing height is \(h_6=h(z_t)\) (not determined by \(x_6\bmod{32}\) alone).
+
+Proof. Corollary SD-K-d6-param-267 already gives \(h_6=h(z_t)\) on every
+\(t\bmod{16}\) row; the deferred rows are exactly those with
+\(\Delta_2+\cdots+\Delta_5<16\). \(\square\)
+
+**Lemma SD-K-block7-from-y6.** After block \(6\), let \(y_6\) be the landing
+state and collapse rails until \(h=1\) to obtain the block-\(7\) start
+\(x_7\). If \(h_6=h(y_6)\), Lemma SD-K-rail-closed gives
+\[
+x_7+1=\frac{3^{h_6-1}(y_6+1)}{2^{h_6-1}},
+\qquad
+3x_7+1=\frac{3^{h_6}(y_6+1)-2^{h_6-1}}{2^{h_6-1}}.
+\]
+When \(h_6=1\) one has \(x_7=y_6\) and \(3x_7+1=3y_6+1\). \(\square\)
+
+**Lemma SD-K-e7-param-267 (deferred slice; split by \(h_6\)).** On deferred
+rows \(k=267+512t\), write \(L_t=1440-492t\), \(e_6=v_2(|L_t|)\), and let
+\(z_t\) be the odd residue with \(2^{e_6}z_t\equiv L_t\pmod{8192}\). Set
+\(h_6=h(z_t)\). Then \(3x_7+1\equiv A_{h_6}(t)\pmod{8192}\) with:
+
+| \(h_6\) | valid \(t\bmod{16}\) | \(3x_7+1\bmod{8192}\) |
+|---|---|---|
+| \(1\) | \(t\equiv1\pmod4\) | \(4808-1476\cdot\frac{t-1}{4}\) |
+| \(2\) | \(t\in\{6,7,15\}\) | \(176,\,3892,\,7656\) respectively |
+| \(3\) | \(t\equiv3\pmod{11}\) | \(5064+4168\cdot\frac{t-3}{11}\) |
+| \(5\) | \(t\equiv4\pmod7\) | \(4568+2124\cdot\frac{t-4}{7}\) |
+
+Proof sketch. Lemma SD-K-block7-from-y6 expresses \(3x_7+1\) in terms of
+\(y_6+1=2^{e_6}z_t+R_t'\) with \(v_2(R_t')\ge8\) (Corollary SD-K-d6-param-267).
+Substituting and reducing mod \(8192\) yields the four cases; the \(h_6=2\)
+branch is a three-point finite table (no global affine \(a-bt\)). Certified on
+\(t=0,\ldots,15\): `scripts/explore_block7_deferred.py --check-e7-param`.
+\(\square\)
+
+**Corollary SD-K-d7-param-267.** On the same deferred rows, with
+\(3x_7+1\equiv A_{h_6}(t)\pmod{8192}\) as above, let
+\(e_7=v_2(3x_7+1)\) and \(y_7=(3x_7+1)/2^{e_7}\). Then
+\(h_7^{\mathrm{eff}}=h_7=h(y_7')\) where \(y_7'\) is the odd residue with
+\(2^{e_7}y_7'\equiv A_{h_6}(t)\pmod{8192}\), and
+\(\Delta_7=11(e_7-1)-9h_7\). Diagnostic: `--check-d7-param`. \(\square\)
+
+**Theorem SD-K-block-8-17-267mod512-sevenblock (deferred closers).** If
+\(k=267+512t\) is deferred with
+\(\Delta_2+\cdots+\Delta_7\ge16\) (equivalently \(k\bmod{8192}\in
+\{779,3339,4875,7435\}\)), then Gap SD-K-block-8-17 holds.
+
+Proof. Lemmas SD-K-blocks25-267mod512, SD-K-e6-param-267, SD-K-d6-param-267,
+SD-K-e7-param-267, and Corollary SD-K-d7-param-267 assemble the seven-block
+sum; the four listed residues are exactly the deferred rows with cumulative
+margin \(\ge16\) after block \(7\) (Cor SD-K-block7-mod8192-k267slice).
+\(\square\)
+
+**Remark (remaining deferred rows).** After block \(7\) the open deferred
+\(k\bmod{8192}\) rows are \(1803,2315,2827,3851,5899,6923,7947\) (still
+\(<16\) after seven blocks except \(3851\), which closes at block \(8\) by
+Thm SD-K-block-8-17-3851mod8192).
+
+**Lemma SD-K-e6-expand (programme).** *(Superseded in part by Lemma
+SD-K-e6-param-267; retained as the general template.)* Assume Lemma
+SD-K-blocks25-267mod512. Let \(x_6\) be the \(h=1\) state at block-\(6\)
+start (after the standard post-block rail collapse). Then \(e_6=v_2(3x_6+1)\)
+and
+\[
+3x_6+1 = c_6 m + a_6 + R_6
+\]
+with integers \(a_6,c_6\) (from composing four \((e,h)=(2,1)\) blocks on
+\(x_2=18m-1\)) and \(v_2(R_6)\ge13\). On \(k\equiv267\pmod{512}\), Lemma
+SD-K-m-mod8192-267 gives \(m\equiv6468-k\pmod{8192}\), hence \((e_6,h_6,
+\Delta_6)\) is a function of \(k\bmod{8192}\) only once the error bound is
+proved. **Caveat:** \(x_6\bmod{32}\) alone does not determine \(\Delta_6\)
+(e.g.\ \(k\equiv2315\) and \(6411\) both have \(x_6\equiv5\pmod{32}\) but
+\(\Delta_6\in\{-12,24\}\)). The finite dictionary is Cor
+SD-K-block6-mod8192-k267slice; diagnostic:
+`scripts/explore_block8_e6_expand.py`. \(\square\)
+
 **Lemma SD-K-x2-mod8.** Let \(n=64k+17\) with \(k\) odd (so \(h_1=3\)) and
 \(m=(3^{n+2}+37)/256\). The first residual \(h=1\) state is
 \(x_2=18m-1\), and
@@ -2563,6 +2942,28 @@ by \(8\) for odd \(n\).) \(\square\)
 | SD-K-e4-3mod256 | \(k\equiv3\pmod{256}\Rightarrow e_4=2,\,h_4=1,\,\Delta_4=+2\) | proved here |
 | SD-K-e4-171mod256 | \(k\equiv171\pmod{256}\Rightarrow e_4=3,\,h_4=1,\,\Delta_4=+13\) | proved here |
 | SD-K-e4-67family | \(e_4=3\) on \(k\equiv67\pmod{256}\); \(h_4\) on \(323\bmod512\) / \(579\bmod1024\) | proved here |
+| SD-K-block4-local | block-\(4\) outcome from \(x\bmod{32}\) at \(h=1\) start | proved here |
+| SD-K-b4start-mod256 | block-\(4\) start residue on \(k\bmod{256}\subset k\equiv11\bmod{64}\) | proved here (finite cert) |
+| SD-K-b4start-mod512 | block-\(4\) refinement on \(k\equiv203\bmod{256}\) at mod \(512\) | finite cert |
+| Cor SD-K-blocks24-k11mod64 | \((\Delta_2,\Delta_3,\Delta_4)\) table on four mod-\(256\) slices | proved here |
+| Cor SD-K-block5-mod512-k11slice | block-\(5\) split on \(k\equiv11\bmod{256}\) | finite cert |
+| Cor SD-K-block5-mod8192-1035 | block-\(5\) on \(k\equiv1035\bmod{2048}\) at mod \(8192\) | finite cert |
+| SD-K-b4start-mod8192 | block-\(4\) on \(k\equiv459\bmod{512}\) at mod \(8192\) | finite cert |
+| SD-K-m-mod512-267 / m-mod8192-267 | \(m\equiv57\bmod{512}\), \(m\equiv6468-k\bmod{8192}\) on \(k\equiv267\bmod{512}\) | proved here |
+| SD-K-blocks25-267mod512 | \((\Delta_2,\ldots,\Delta_5)=(2,2,2,2)\) on \(k\equiv267\bmod{512}\) | proved here (assembly) |
+| SD-K-compose6 | \(3x_6+1=(2187m+269)/128\) from four \((2,1)\) blocks on \(x_2=18m-1\) | proved here |
+| SD-K-e6-param-267 | \(3x_6+1=(1440-492t)+R_t\), \(v_2(R_t)\ge14\); \(e_6=v_2(1440-492t)\) | proved here |
+| SD-K-d6-param-267 | \(\Delta_6=11(e_6-1)-9h_6\) from \(L_t=1440-492t\) landing | proved here |
+| SD-K-e7-param-267 | deferred \(3x_7+1\bmod{8192}\) split by \(h_6=h(z_t)\) | proof sketch + finite cert |
+| SD-K-d7-param-267 | \(\Delta_7=11(e_7-1)-9h_7\) on deferred slice | finite cert |
+| Thm SD-K-block-8-17-267mod512 | six-block closure on \(k\equiv267\bmod{512}\) when cum \(\ge16\) | **proved here** |
+| Thm SD-K-block-8-17-267mod512-sevenblock | four deferred rows close at block \(7\) | **proved here** |
+| SD-K-e6-expand | general \(c_6 m+a_6\) template (267 case via param \(t\)) | programme |
+| Cor SD-K-block6-mod8192-k267slice | block-\(6\) on \(k\equiv267\bmod{512}\) | finite cert |
+| Cor SD-K-block7-mod8192-k267slice | block-\(7\) on \(k\equiv267\bmod{512}\) | finite cert |
+| Thm SD-K-block-8-17-267mod8192 | five mod-\(8192\) classes close at block \(6\) | **proved here** |
+| Thm SD-K-block-8-17-779mod8192 | four mod-\(8192\) classes close at block \(7\) | **proved here** |
+| Thm SD-K-block-8-17-3851mod8192 | one mod-\(8192\) class closes at block \(8\) | **proved here** |
 | Thm SD-K-block-8-17-3mod256 | \(k\equiv3\pmod{256}\Rightarrow\mathrm{rest}\ge17\) | **proved here** |
 | Thm SD-K-block-8-17-171mod256 | \(k\equiv171\pmod{256}\Rightarrow\mathrm{rest}\ge17\) | **proved here** |
 | Thm SD-K-block-8-17-323mod512 | \(k\equiv323\pmod{512}\Rightarrow\mathrm{rest}\ge28\) | **proved here** |
@@ -2618,11 +3019,17 @@ by \(8\) for odd \(n\).) \(\square\)
 ## 14. Immediate next work
 
 1. Extend **Cor SD-K-block-8-17-early** (density \(9/1024\) of \(k\)
-   closed). Next: \(k\equiv11\pmod{64}\); remaining \(67\bmod256\)
-   (the \(s\equiv0,4\pmod8\) slices); \(k\equiv59\pmod{64}\). Parallel:
-   Gap SD-K-EB-17 on the unstructured remainder. See also
-   [`../nested-anchor/nested_anchor_escape_notes.md`](../nested-anchor/nested_anchor_escape_notes.md).
-   Do not confuse with EC1 / \(K_\downarrow\le T\).
+   closed). On \(k\equiv11\pmod{64}\): block-\(4\) mod-\(256\) dictionary
+   is Lemmas SD-K-block4-local / SD-K-b4start-mod256 and Cor
+   SD-K-blocks24-k11mod64; mod-\(512\) refinements are Lemma
+   SD-K-b4start-mod512 and Cor SD-K-block5-mod512-k11slice; mod-\(8192\)
+   refinements (Cor SD-K-block6-mod8192-k267slice,
+   Thm SD-K-block-8-17-267mod8192,
+   Thm SD-K-block-8-17-779mod8192). Next: mod-\(16384\) on
+   \(1803,5899,6923,7947\bmod{8192}\); block-\(9\) on \(2315,2827\bmod{8192}\).
+   Remaining parallel slices: \(67\bmod256\) with
+   \(s\equiv0,4\pmod8\); \(k\equiv59\pmod{64}\); Gap SD-K-EB-17 on the
+   unstructured remainder.
 2. Finish **SD-L1** later landings in parallel if the nonconcentration gap
    stalls: growing \(s=s(n)\) height / inbound \(e\ge4\), and the \(e=2\)
    gate for \(\lvert s\rvert\ge3\).

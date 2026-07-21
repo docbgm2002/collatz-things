@@ -35,7 +35,14 @@ python scripts/explore_9116_e0_two.py --limit 2001
 python scripts/explore_block8_x1.py --limit 2001
 python scripts/verify_repunit_storage_dominance.py --limit 2001 --check-block8-first
 python scripts/verify_repunit_storage_dominance.py --limit 2001 --check-block8-mod17
+python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod256
+python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod512
+python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod8192
 python scripts/explore_block8_mod17.py --limit 2001
+python scripts/explore_block8_k11_mod64.py --limit-k 8001
+python scripts/explore_block8_e6_expand.py --limit-k 8001
+python scripts/explore_block8_e6_expand.py --limit-k 8001 --check-m-param --check-e6-param --check-d6-param
+python scripts/explore_block7_deferred.py --check-e7-param --check-d7-param
 python scripts/explore_block8_residual_density.py --limit 4001
 python scripts/explore_block8_mod8_drift.py --limit 4001
 python scripts/verify_repunit_storage_dominance.py --limit 2001 --check-early-collisions
