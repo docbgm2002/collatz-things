@@ -59,7 +59,7 @@ done
 
 ## Known-open
 
-- Strong connectivity of the mod-2^m automaton for **all** m (verified 3..14).
+- ~~Strong connectivity of the mod-2^m automaton~~ — CLOSED by CONN1.
 - The general (a,b,c) form of the SUFF1 composition.
 - Manuscript §6 / Theorem E LaTeX is still not written; QLG1's row says so.
 
