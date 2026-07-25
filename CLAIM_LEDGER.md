@@ -222,3 +222,50 @@ universal quantifier by a finite range. Claims depending essentially on an
 external theorem must instead identify that provenance in their status and
 source note. Finite certificates must give the exact domain and a reproducible
 command or artifact.
+
+## General track (branch `no-go-general`, 2026-07-25)
+
+Added on a branch, **not human-reviewed**. Every row carries a passing exact-arithmetic
+verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step 6, and
+`UNIF1` first; those are the three where the label is doing the most work.
+
+| ID | Claim | Status | Source | Verification |
+|---|---|---|---|---|
+| QLG1 | Quantized-log no-go: exact closure criterion \(s=E\,2^{j}-K\,L_j\in[0,K]\); certificates refuting \(\log_2x+g(\lfloor2^{j}\log_2x\rfloor,\tau,x\bmod16)\) | Proved + finite certificate | manuscript §6 (**not yet written**) | `scripts/verify_quantized_log_criterion.py`; supersedes the claim in `\section{The boundary}` that a certificate needs total gain in \((0,2^{-j})\) — see correction below |
+| EXR1 | On a valuation-one step the storage coordinate and the deficit both scale by exactly \(3/2\); \(D_K-\log_2Z_K\) is invariant, so no argument using only valuation-one data can show deficit storage is unsustainable | Proved here | `docs/no-go/storage_exchange_rate.md` | `scripts/verify_storage_exchange_rate.py`; promoted from `repunit_extremal_principle.md` §9 |
+| SHG1 | For \(T(x)=(ax+b)/c^{v_c(ax+b)}\), \(\gcd(a,c)=\gcd(b,c)=1\), \(c\) prime: an expanding rational cycle (\(c^E<a^K\)) implies no potential \(\log_cx+g(c\text{-adically local data})\) is nonincreasing; \(\mathrm{len}_c\) is covered iff \(a^K/c^E<c\). SH1 is the \((3,1,2)\) instance | Proved here | `docs/no-go/general_shadow.md` | `scripts/verify_general_shadow.py`; 17 cycles across 11 maps |
+| QLG-GEN | The closure criterion is exactly \(\{K\log_ca\}\le K\{Q\log_ca\}/Q\) — an identity, unconditional, with the map absent | Proved (identity) | `docs/no-go/general_cost_law.md` | `scripts/verify_general_cost_law.py` |
+| DICH1 | \(\log_ca\) rational \(\iff a=c^k\), and then no expanding quantized-log certificate exists at any precision. The mechanism is present exactly when \(\log_ca\) is irrational | Proved here | `docs/no-go/general_cost_law.md` | `scripts/verify_general_cost_law.py` |
+| COST1 | Admissibility \(\iff\lfloor K\beta\rfloor/K\ge\lfloor Q\beta\rfloor/Q\) (the bound \(s\le K\) is vacuous); \(K_{\min}(Q)\le Q\); \(K_{\min}(Q)\) is a semiconvergent denominator of \(\beta\) | Proved here (steps 0–5); **step 6 is Khinchin applied, not reproved** | `docs/no-go/cost_law_proof.md` | `scripts/verify_cost_law_proof.py` |
+| WITN1 | Independently re-mined certificates for \(j=3..8\), \(m=16\), each closing exactly with strict integer gain; first window \(2^{\,j+6}\) throughout (**exploratory**) | Finite certificate | `docs/no-go/quantized_log_witnesses.md` | `scripts/verify_quantized_log_witnesses.py` |
+| CARRY1 | Under \(x\ge Q/(3\ln2(1-\varphi_Q))\), cell displacement is \(L_Q-Qe+\delta\), \(\delta\in\{0,1\}\); \(\sum\delta_i=s\), so \(s\) counts carrying edges | Proved here | `docs/no-go/sufficiency_reduction.md` | `scripts/verify_sufficiency_reduction.py`; height hypothesis shown necessary |
+| WALK1 | The mod-\(2^m\) automaton has self-loops of weight 1 at \(2^m-1\) and weight 2 at \(1\) (identities, all \(m\ge3\)); with connectivity this gives closed walks of length \(K\) and valuation \(\lfloor K\log_23\rfloor\) for all \(K\ge2\) | Proved here | `docs/no-go/sufficiency_reduction.md` | `scripts/verify_sufficiency_reduction.py` |
+| TAU1 | \(\tau\ge2\iff e=1\); \(e=1\Rightarrow\tau(f(x))=\tau(x)-1\); \(e\ge2\Rightarrow\tau=1\) with \(\tau(f(x))\) free. So \(\tau\) is a function of the \(e\)-word and imposes no extra constraint | Proved here | `docs/no-go/tau_coupling.md` | `scripts/verify_tau_coupling.py`; consistent with RUNLEN2 and the burn identity |
+| UNIF1 | The cell dip \(\min_i(\lfloor i\log_23\rfloor-E_i)\) is \(-cK+O(1)\), \(c\approx0.24\), so one height serves all \(K\) edges | Proved here (**finite certificate for the rate, one word ordering, \(K\le800\)**) | `docs/no-go/uniformity.md` | `scripts/verify_uniformity.py` |
+| SUFF-32 | \(x_1=2^n+27\), \(n\ge10\), gives an infinite family of closed certificates at \((j,m,K)=(3,16,2)\); \(n\ge10\) is sharp and predicted by CARRY1 | Proved here | `docs/no-go/uniformity.md` | `scripts/verify_uniformity.py`; verified to \(n=200\) |
+| SUFF1 | For every \(j\), every admissible \(K\), and every \(m\) with the automaton strongly connected: a closed certificate exists from \(\Theta=m+K+j+\log_2(1/\min(\varphi_Q,1-\varphi_Q))+K/4+O(1)\) bits. Strict gain is automatic from \(3^K>2^{\lfloor K\log_23\rfloor}\) | Proved here, **conditional on strong connectivity (verified \(m=3..14\), not proved)** | `docs/no-go/suff1.md` | `scripts/verify_suff1_composition.py` |
+
+### Correction history for this branch
+
+- **Manuscript-affecting.** `\section{The boundary}` states that a closed certificate
+  needs total gain in \((0,2^{-j})\), which "pure shadows cannot supply", with "no
+  uniform construction known". **Refuted by construction.** The bound applies to
+  single-witness chains only; multi-witness cycles reset in-cell position at each
+  junction and the correct criterion is the exact integer one (QLG1, COST1). The
+  Question posed in that section — whether a nonincreasing potential
+  \(\log_2x+g(\lfloor2^{j}\log_2x\rfloor,\tau,x\bmod2^m)\) exists — is answered
+  **no** for \(j\le8\) by explicit certificates (WITN1) and, at \((j,m)=(3,16)\), at
+  every height by an infinite family (SUFF-32).
+
+- **Simplification.** Theorem E(b)'s hypothesis \(\sum\varepsilon_i<1\) is **not
+  required for sufficiency**: the gain is \((3^K/2^E)\prod(1+1/(3x_i))>3^K/2^E>1\)
+  outright. Retain it only if E(b) is used for necessity.
+
+- **Simplification.** The window \(s\in[0,K]\) is equivalent to \(s\ge0\); the upper
+  bound is vacuous for irrational \(\log_ca\).
+
+- **Corrections caught by the verifiers during this session, all pre-promotion.**
+  (i) CARRY1 first stated without the height hypothesis — false for small \(x\) at
+  large \(j\). (ii) TAU1(T3) first tested by bounded scan, which reported a spurious
+  failure at \(t=16\); replaced by direct construction. (iii) SUFF-32 first claimed
+  from \(n\ge5\); false at \(n=9\), where \(\delta=1\).
