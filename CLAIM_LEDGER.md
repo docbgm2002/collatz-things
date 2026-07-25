@@ -247,6 +247,28 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 
 ### Correction history for this branch
 
+### Audit correction (2026-07-25)
+
+An earlier pass in the session that produced this branch asserted that the 2026-07-03
+merge `82b317d` **dropped** eight ledger rows (SH1, SH2, NLP2, NLPD, TWR1, SPN1, BND1,
+FFN1). **That assertion was wrong**, and the real git history says so:
+
+- `82b317d` has parents `aa51f05` (26 rows) and `19eed41` (73 rows) and produces 77.
+  It is a **union of two parallel development lines**, not a loss. No row present in
+  either parent is absent from the merge.
+- The eight rows were never in `CLAIM_LEDGER.md` before the merge either. They first
+  appear at `b4317d7` (2026-07-13), where they were added deliberately.
+- They are present on `main` today and have been since 2026-07-13.
+
+What was historically true is narrower: between 2026-07-03 and 2026-07-13 the README and
+manuscript referenced results whose canonical rows lived only in the source notes under
+`docs/no-go/`, not in the central ledger. That gap was closed on 2026-07-13 without
+outside prompting.
+
+No repair is therefore included on this branch, and none is needed. The rows below are
+all genuinely new — verified against `1af9514` to contain no duplicate IDs and no file
+collisions.
+
 - **Manuscript-affecting.** `\section{The boundary}` states that a closed certificate
   needs total gain in \((0,2^{-j})\), which "pure shadows cannot supply", with "no
   uniform construction known". **Refuted by construction.** The bound applies to

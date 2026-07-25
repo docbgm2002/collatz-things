@@ -3,6 +3,16 @@
 **Not human-reviewed.** Machine-verified only. Ten verifiers, all exact integer or
 rational arithmetic, all passing. A passing verifier is not a proof read.
 
+## Audit correction, read before anything else
+
+An earlier pass in the session that produced this branch claimed the 2026-07-03 merge
+dropped eight ledger rows. **That claim was false.** Real git history: `82b317d` is a
+union of two parallel lines (26 + 73 -> 77 rows) and loses nothing; the eight rows were
+never in the ledger before the merge either, and were added deliberately at `b4317d7`
+on 2026-07-13. The conclusion was drawn from a stale read of
+`raw.githubusercontent.com` and was stated with more confidence than the evidence
+supported. No ledger repair appears on this branch, and none is needed.
+
 ## What this branch does
 
 It answers the open Question posed in `\section{The boundary}` of
