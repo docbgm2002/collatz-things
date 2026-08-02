@@ -3018,6 +3018,27 @@ by \(8\) for odd \(n\).) \(\square\)
 
 ## 14. Immediate next work
 
+> **Read first:
+> [`avenue_a_mean_valuation_route.md`](avenue_a_mean_valuation_route.md).**
+> That note (exploratory, no ledger rows) reports three things bearing
+> directly on this list:
+>
+> - **Item 1 below has no terminating condition.** §3 there computes the
+>   minimum mean cycle of \(\Delta=11(e-1)-9h\) on the block automaton
+>   \(\bmod\,2^m\): it is negative and *independent of \(m\)*. Conditioning on
+>   \(k\bmod2^{j}\) pins only the first \(\Theta(j)\) blocks (PCD9), so the
+>   bash controls a constant-length prefix while the bad cycles live in the
+>   \(\Theta(n)\) tail. The eight proved `Thm SD-K-block-8-17-*` rows and
+>   Cor SD-K-block-8-17-early stand; the *scheme* does not extend to a cover.
+> - **Gap SD-K-nc-6 is exactly "mean valuation \(\ge20/11\)"** (§2 there),
+>   whose two window forms reproduce both exception lists recorded here
+>   (\(\{5,11\}\) at \(6n\); \(\{5,17,23\}\) at \(5n-2\)).
+> - **The \(5n-2\) and \(6n\) misses are disjoint** (§4 there, DISJ, odd
+>   \(7\le n\le1781\)), so proving the *disjunction* is strictly weaker than
+>   either gap and would retire the \(n=11\) and \(n=17\) special cases. The
+>   window \(t=cn\) is usable only for \(4.56<c\lesssim7.6\), so \(6n\) is
+>   well-chosen and should not be widened.
+
 1. Extend **Cor SD-K-block-8-17-early** (density \(9/1024\) of \(k\)
    closed). On \(k\equiv11\pmod{64}\): block-\(4\) mod-\(256\) dictionary
    is Lemmas SD-K-block4-local / SD-K-b4start-mod256 and Cor

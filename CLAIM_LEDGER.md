@@ -201,6 +201,10 @@ reproducible generator for an explicitly finite or mixed ledger row:
 - `docs/no-go/outside_box_avenue_triage.md`
 - `docs/no-go/outside_box_avenue_portfolio.md`
 - `docs/no-go/avenue_a_comparison_dynamics.md`
+- `docs/no-go/avenue_a_mean_valuation_route.md` — reformulation of
+  Gap SD-K-nc-6 as a mean-valuation bound, a mechanical no-go for the
+  mod-\(2^m\) case bash, and the DISJ finite certificate; contains two
+  recorded retractions. No rows proposed; `scripts/explore_mean_valuation_gap.py`
 - `docs/repunit/hecke_mahler_route_a.md`
 - `docs/repunit/l4_coupling_analysis.md`
 - `docs/nested-anchor/near_threshold_episode_notes.md`
