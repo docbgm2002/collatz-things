@@ -29,7 +29,7 @@ or the transversality audit, unless a restart condition is stated.
 | Already live / queued | Do not duplicate as “new” |
 |---|---|
 | Full actual-source transfer fan + storage-dominance | Avenue A below *extends* this, not replaces it |
-| PCD amortized charging / carry–endpoint non-shadowing | Keep in `next_generation_attack_program.md` |
+| PCD amortized charging / carry–endpoint non-shadowing | Keep in `../repunit/next_generation_attack_program.md` |
 | IEF theorems inside \(\mathcal L_{3/4}\) | Classification only after demote-1 |
 | Cycle ledger CYC1–CYC4 | Separate track |
 
@@ -659,3 +659,113 @@ Open Avenue A only (current cut):
    then ST1 / schedule.
 4. If EC1 is falsified in the contradiction regime, record the seed and
    skip to Avenue B’s exotic partition.
+
+
+## Avenue A Extension: The Fuel-Penalized Mantissa Potential (FPMP)
+
+**Status:** Candidate only. The stated mechanism does not work; the term that
+might work is unanalyzed. See §4 for the correction.
+**Building on:** `no_local_potential.md`, `../fuse/fuse_burn_attack.md`
+(Recharge Cost Lemma **candidate** — not an established lemma).
+
+### 1. The proposal
+
+`no_local_potential.md` proves that no potential
+$P(x) = \log_2 x + g(x \bmod 2^m, \tau(x))$ is nonincreasing along $f$, for
+any modulus and any $g$. The proposal is to add a mantissa term:
+
+$$ P(x) = \log_2 x + c \cdot \tau(x) + h(M(x)) $$
+
+with $c > \log_2(3/2) = \alpha \approx 0.585$ (say $c = 0.6$) and
+$M(x) \in [1,2)$ the mantissa of $x$.
+
+### 2. Step-wise accounting
+
+Using the Class A / Class B naming of `macro_step_lundberg.md` MAC1:
+
+1. **Class A (fuel-burning: $\tau \geq 2$, $v = 1$).**
+   $\Delta \log_2 x \approx \log_2(3/2) \approx 0.585$ and
+   $\Delta\tau = -1$, so $\Delta P \approx 0.585 - 0.6 = -0.015 < 0$.
+
+2. **Class B payout ($v \geq 2$).** $\Delta \log_2 x = \log_2 3 - v \leq
+   -0.415$.
+
+3. **The recharge event ($\tau = 1 \to \tau(f(x)) = K$).** The penalty term
+   jumps by $c(K-1)$. Under the Haar law $\Pr(K = i) = 2^{-i}$ of MAC2,
+   $$ \mathbb{E}[\Delta P_{\text{spike}}] \leq \sum_{K \geq 1} 2^{-K} c (K-1) = c. $$
+
+### 3. Target
+
+A constant $c > \log_2(3/2)$ making $P$ a supermartingale along $f$, with a
+bound on the trajectory's return time.
+
+### 4. Why this does not do what was claimed — **correction**
+
+Three problems, in increasing order of severity.
+
+**(a) The stated reason for evading the no-go is wrong.** §1 of the original
+draft argued that $\tau(x)$ escapes `no_local_potential.md` because it is
+"not a local coordinate — it is an unbounded integer variable." But the no-go
+theorem quantifies over *all* functions $g(x \bmod 2^m, \tau(x))$ with $\tau$
+as an explicit unbounded argument, and $c \cdot \tau(x)$ is the special case
+$g(r, t) = ct$. So the term singled out as the escape hatch is precisely the
+case the theorem covers. What actually falls outside the no-go is $h(M(x))$:
+the mantissa is high-end information, and `no_local_potential.md` §4 lists
+exactly that under "not covered (open)". The draft never analyzes $h$ — it
+only asserts that the Class B drop "absorbs any minor $\Delta h$" — so the
+one term doing real work is the one with no argument attached to it.
+
+**(b) $c$ does no work.** Over a complete macro-step $\tau$ returns to $1$, so
+$c \cdot \tau$ telescopes to zero and
+$$\mathbb{E}[\Delta P_{\text{macro}}] = \mathbb{E}[\Delta] = 2\log_2 3 - 4
+\approx -0.830$$
+*independently of $c$*. The §2 accounting confirms this rather than
+contradicting it: $(\log_2 3 - 3 + c) + \mathbb{E}[K-1](\alpha - c)
+= -0.815 - 0.015 = -0.830$ at $c = 0.6$, and the two terms move against each
+other exactly so as to cancel the $c$-dependence. FPMP is therefore MAC3 with
+the accounting redistributed *inside* the macro-step — a change of
+bookkeeping, not a new mechanism.
+
+**(c) The quantifiers do not support the conclusion.** §2.3 bounds the
+*expected* spike and §3 asks for a supermartingale. But a supermartingale is
+what LUN2 (`macro_step_lundberg.md` §4) already delivers, unconditionally and
+with the sharp exponent $\theta^* = \ln 2$ — and it still yields only an
+"almost all" theorem. Expected-value control cannot produce the pointwise
+descent that would close Collatz; that is precisely gap EC1. Establishing
+FPMP as stated would not improve on what is already proved.
+
+**What would be worth doing.** Drop $c\tau$ and study $h$ alone: is there a
+mantissa correction $h(M(x))$, or a mixed low–high window term, that is
+pointwise monotone? That is the open case named in `no_local_potential.md` §4
+and it is untouched by the no-go. It is also genuinely hard, because $M(x)$
+equidistributes only under an irrationality/Baker input — see
+`baker_explicit_constants_audit.md`.
+
+
+## Avenue A Extension: The Macro-Step Supermartingale
+
+**Status:** Superseded. This material is proved in full, with the
+independence and drift arguments spelled out, in
+`macro_step_lundberg.md` §§1–4 (MAC1–MAC3, LUN1–LUN2). See that note rather
+than this summary.
+
+The short version retained here for the portfolio index:
+
+- At $\tau(x) = 1$ the payout $v = v_2(3x+1)$ and the new fuel
+  $K = \tau(f(x))$ are independent, with $\Pr(v=j) = 2^{-(j-1)}$ for
+  $j \geq 2$ and $\Pr(K=i) = 2^{-i}$ for $i \geq 1$; so $\mathbb{E}[v] = 3$,
+  $\mathbb{E}[K] = 2$ (MAC2).
+- A macro-step is one Class B step (payout $v$, new fuel $K$) followed by
+  $K-1$ Class A steps, with
+  $\mathbb{E}[\Delta_{\text{macro}}] = 2\log_2 3 - 4 \approx -0.830$ (MAC3).
+- The Lundberg exponent is exactly $\theta^* = \ln 2$, giving
+  $\mu(E_a) \leq 2^{-a}$ (LUN1–LUN2).
+
+**Do not reuse the framing of the original draft**, which described the
+remaining obstacle as bounding the maximum excursion of this Bernoulli shift
+via large deviations. `macro_step_lundberg.md` §6 shows the escape set is
+*not* generic in the sense such an argument needs: it contains the full
+residue class $\tau(x) \geq \lceil a/\alpha\rceil + 1$ outright (FUEL1), so it
+is concentrated on frozen low-bit classes rather than spread across them. A
+large-deviations bound on this shift is therefore not the live question; see
+`macro_step_lundberg.md` §10 for what replaced it.

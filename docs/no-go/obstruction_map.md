@@ -30,12 +30,33 @@ what.
 | 3 | Kolmogorov / description-complexity argument | A residue mod an enormous power of two can have a very short description ("the discrete-log residue associated with \((2,1^{K-1})\)") | `docs/repunit/repunit_low_prefix_obstruction.md` §10 |
 | 4 | Generic Baker / \(p\)-adic logarithmic forms | The height gate: the fixed-\(d=7\) cancellation is special; generic \(d_K\) has bit-length comparable to \(E_K\), so a variable-\(d\) bound feeds the unknown valuation mass back into its own upper bound | `docs/repunit/repunit_baker_nonshadowing.md` §6 |
 | 5 | Any argument local to a valuation-one run | EXR1: the storage/accumulation exchange rate is exactly one, so \(D_K-\log_2Z_K\) is conserved | `docs/no-go/storage_exchange_rate.md` |
+| 6 | Any argument requiring the escape set \(E_a\) to be equidistributed or spectrally generic mod \(2^k\) | FUEL1: \(\tau(x)\ge\lceil a/\alpha\rceil+1\Rightarrow x\in E_a\), so \(E_a\) contains a full residue class in which its relative density is \(\ge2^a\) | `docs/no-go/macro_step_lundberg.md` §6 |
 
 Closures 1-3 all descend from a single object: the nested exponent classes
 converging \(2\)-adically to the ghost solution of \(3^{\alpha+1}=-7\).
 Closure 5 explains *why* that object is so hard to charge against — it
 generates long valuation-one runs, and by EXR1 nothing local can be charged
 against them.
+
+Closure 6 is the same residue-freezing that drives closures 1-3 and
+`no_local_potential.md` §1, seen one level up. Escape is driven by
+trailing-one fuel; fuel is a low-bit congruence; so the set of escaping
+starting points is *concentrated* on frozen classes rather than spread across
+them. Concretely, \(E_a\) contains the class \(x\equiv-1\pmod{2^{t_a}}\)
+outright, and the forced Walsh coefficient
+\(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert\ge(1-\mu)/(2^{t_a}-1)\) does not
+decay with sampling-domain size, so \(E_a\) is provably less generic than a
+random set of the same density at every scale. Any counting, equidistribution,
+or spectral-flatness route to a universal descent statement is attacking the
+one property \(E_a\) demonstrably lacks.
+
+> **Historical note.** Closure 6 was originally recorded the other way round:
+> `macro_step_lundberg.md` claimed computational *evidence for* equidistribution
+> (DISC1) and a white-noise spectrum (WALSH1), and named the analytic proof of
+> WALSH1 as its remaining gap. The evidence was an artifact of normalizing
+> against the Haar bound \(2^{-a}\) rather than the observed \(\mu(E_a)\).
+> Both claims are now ledgered as refuted; see the correction history in
+> `CLAIM_LEDGER.md`.
 
 ---
 
@@ -86,11 +107,27 @@ arguments, generic Baker, local valuation-one arguments. What survives:
 Routes 2 and 3 are the same problem seen from two sides: both need to charge
 present deficit against something the local data does not contain.
 
+### 4.3 An untested input to route 3
+
+`macro_step_lundberg.md` §5 (ANC1 and its corollary) gives a capacity bound on
+the reverse tree: for odd \(z\) with \(3\nmid z\), consecutive odd preimages
+differ by a factor \(>4\), so at most \(\lceil n/2\rceil\) of them have
+bit-length \(\le n\).
+
+This is the right *type* of object for route 3 — a non-local resource
+constraint, capping how much ancestry can be spent per bit of height, which is
+exactly what EXR1 says local data cannot supply. Whether the cap is tight
+enough to charge against the repunit deficit has **not been tested**, and the
+bound's novelty is doubtful (the preimage family and reverse-tree growth rates
+are standard; see Applegate–Lagarias). Recorded here because it is the only
+identified bridge between the macro-step programme and a live open item, not
+because it is expected to work.
+
 ---
 
 ## 5. Assessment
 
-The programme has produced one theorem (BAKER1-3), five closures, and no
+The programme has produced one theorem (BAKER1-3), six closures, and no
 unconditional progress on **T**. The closures are the more valuable output:
 they are permanent, they are cheap to state, and they redirect effort. But
 they also mean the repunit-tail route is not a short path to **T**, and the
@@ -105,4 +142,5 @@ or a Diophantine input strictly stronger than the fixed-\(d\) case of Yu.*
 ## 6. Dependencies
 
 No new claims. Cites REPLOW1-4, BAKER1-3, REPMRG1-3, REP256-1-2, REPEXT1-5,
-EXR1, GAPMRG1. All statuses as recorded in `CLAIM_LEDGER.md`.
+EXR1, GAPMRG1, FUEL1, ANC1, ANC1-CAP. All statuses as recorded in
+`CLAIM_LEDGER.md`.

@@ -15,30 +15,45 @@ REPOSITORY_PATH_RE = re.compile(
     r"(?<![A-Za-z0-9_.-])"
     r"((?:docs|scripts)/[A-Za-z0-9_./-]+\.(?:md|py))"
 )
+# Compared after stripping leading emphasis markers, so bolded forms such as
+# '**Refuted**' and '**Proved here, unconditional**' are accepted.
 STATUS_PREFIXES = (
     "Proved",
     "Finite",
     "Conditional",
     "Known",
-    "**Refuted**",
+    "Refuted",
+)
+
+
+HEADER_RE = re.compile(
+    r"\|\s*ID\s*\|\s*Claim\s*\|\s*Status\s*\|\s*Source\s*\|\s*[A-Za-z /]+\|\Z"
 )
 
 
 def claim_rows(lines: list[str]) -> list[tuple[int, list[str]]]:
-    """Return parsed rows from the ledger's five-column claim table."""
-    header_index = next(
-        index
-        for index, line in enumerate(lines)
-        if line == "| ID | Claim | Status | Source | Verification / dependency |"
-    )
+    """Return parsed rows from every five-column claim table in the ledger.
+
+    The ledger carries more than one such table (the main index, the general
+    track, and the macro-step programme), whose final column is headed either
+    'Verification' or 'Verification / dependency'.  Earlier versions of this
+    script located only the first table by exact string match and stopped at
+    its end, so rows in the later tables were silently unchecked.
+    """
+    header_indices = [
+        index for index, line in enumerate(lines) if HEADER_RE.fullmatch(line)
+    ]
+    if not header_indices:
+        raise ValueError("no five-column claim table header found")
 
     rows: list[tuple[int, list[str]]] = []
-    for index in range(header_index + 2, len(lines)):
-        line = lines[index]
-        if not line.startswith("|"):
-            break
-        cells = [cell.strip() for cell in line[1:-1].split("|")]
-        rows.append((index + 1, cells))
+    for header_index in header_indices:
+        for index in range(header_index + 2, len(lines)):
+            line = lines[index]
+            if not line.startswith("|"):
+                break
+            cells = [cell.strip() for cell in line[1:-1].split("|")]
+            rows.append((index + 1, cells))
     return rows
 
 
@@ -73,15 +88,19 @@ def validate() -> tuple[list[str], int]:
 
         if not claim:
             errors.append(f"line {line_number}: claim text is empty")
-        if not status.startswith(STATUS_PREFIXES):
+        # Status classes may be emphasised, e.g. '**Proved here, unconditional**'.
+        if not status.lstrip("*_").startswith(STATUS_PREFIXES):
             errors.append(
                 f"line {line_number}: unrecognized status class {status!r}"
             )
 
         source_paths = REPOSITORY_PATH_RE.findall(source)
-        if not source_paths:
+        # A row may be sourced to the manuscript rather than to a note in the
+        # repository; QLG1 is the standing example.
+        if not source_paths and "manuscript" not in source.lower():
             errors.append(
-                f"line {line_number}: source cell has no docs/*.md reference"
+                f"line {line_number}: source cell has no docs/*.md reference "
+                f"and does not cite the manuscript"
             )
 
         for path in REPOSITORY_PATH_RE.findall(f"{source} {verification}"):

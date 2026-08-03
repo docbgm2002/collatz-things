@@ -28,7 +28,14 @@ Verification artifacts have two roles:
   universal claim.
 
 Run `python scripts/verify_claim_ledger.py` to check table structure, unique
-IDs, status classes, and referenced repository paths.
+IDs, status classes, and referenced repository paths. It covers **all**
+five-column claim tables in this file — the main index, the general track, and
+the macro-step programme. Until 2026-08-03 it located only the first table by
+exact header match and stopped at its end, so the later tables' rows were
+silently unchecked; extending it raised the checked-row count from 134 to 160
+with no row edits required beyond two accepted shapes (emphasised status
+classes such as `**Refuted**`, and a source cell citing the manuscript rather
+than a note, as QLG1 does).
 
 ## Topic index
 
@@ -288,7 +295,51 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 | SUFF1 | For every \(j\), every admissible \(K\), and every \(m\) with the automaton strongly connected: a closed certificate exists from \(\Theta=m+K+j+\log_2(1/\min(\varphi_Q,1-\varphi_Q))+K/4+O(1)\) bits. Strict gain is automatic from \(3^K>2^{\lfloor K\log_23\rfloor}\) | **Proved here, unconditional** (its connectivity hypothesis is now CONN1) | `docs/no-go/suff1.md` | `scripts/verify_suff1_composition.py` |
 | CONN1 | The mod-\(2^m\) suffix automaton is strongly connected for every \(m\ge3\), via the explicit hub \(h_m=3^{-1}(2^{m-1}-1)\bmod2^m\): \(v_2(3h_m+1)=m-1\) so \(h_m\) reaches all odd residues in one step, and the class-growth lemma gives every live node a path to \(h_m\) in \(\le m-1\) steps (sharp, attained at \(2^m-1\)). **Removes the last hypothesis from SUFF1** | Proved here | `docs/no-go/connectivity.md` | `scripts/verify_connectivity.py`; general \((a,b,c)\) hub not written |
 
+## Macro-step Lundberg programme (2026-08-03)
+
+| ID | Claim | Status | Source | Verification |
+|---|---|---|---|---|
+| MAC1 | Every odd \(x\) is Class A (\(\tau\ge2\), then \(v=1\), \(f(x)=3\cdot2^{L-1}m-1\), \(\tau\) drops by 1, log-drift \(\alpha\)) or Class B (\(\tau=1\), then \(v\ge2\)); a macro-step is one Class B step followed by exactly \(K-1\) Class A steps | Proved here | `docs/no-go/macro_step_lundberg.md` §1 | Suffix-burn identity of `docs/fuse/fuse_burn_attack.md` §1; `scripts/verify_macro_step_lundberg.py` |
+| MAC2 | For Haar-uniform \(x\) with \(\tau(x)=1\), the payout \(v=v_2(3x+1)\) and new fuel \(K=\tau(f(x))\) are independent, with \(\Pr(v=j)=2^{-(j-1)}\ (j\ge2)\), \(\Pr(K=i)=2^{-i}\ (i\ge1)\); \(\mathbb E[v]=3\), \(\mathbb E[K]=2\) | Proved here | `docs/no-go/macro_step_lundberg.md` §2 | \(k\mapsto(3k+1)/2^u\) is a measure-preserving bijection onto \(\mathbb Z_2^\times\); `scripts/verify_macro_step_lundberg.py` |
+| MAC3 | The macro-step log-drift is \(\Delta=K\alpha+1-v\) with \(\mathbb E[\Delta]=2\log_23-4\approx-0.830075\) | Proved here | `docs/no-go/macro_step_lundberg.md` §3 | Linearity and MAC2; `scripts/verify_macro_step_lundberg.py` |
+| LUN1A | Over one macro-step the value ratio has expectation exactly one: \(\mathbb E[x_{\text{out}}/x_{\text{in}}]=1\), since \(2^\Delta=(3/2)^K2^{1-v}\) with \(\mathbb E[(3/2)^K]=3\) and \(\mathbb E[2^{1-v}]=1/3\). The map is a martingale in *value*; the Jensen gap to \(\mathbb E[\log_2]=2\log_23-4\) is \(\approx0.83\) bits | Proved here; **novelty unchecked** — `BIBLIOGRAPHY_PASS.md` not extended to it | `docs/no-go/macro_step_lundberg.md` §4 | Exact rational summation; `scripts/verify_macro_step_lundberg.py` |
+| LUN1 | \(M(\theta)=e^{\theta(\alpha-1)}/((2-e^{\theta\alpha})(2-e^{-\theta}))\) for \(\theta<\ln2/\alpha\), and the unique positive root of \(M(\theta)=1\) is exactly \(\theta^*=\ln2\). The clean exponent is forced by LUN1A: \(e^{(\ln2)\Delta}\) *is* the value ratio | Proved here | `docs/no-go/macro_step_lundberg.md` §4 | Closed-form geometric sums; strict convexity of \(\log M\); `scripts/verify_macro_step_lundberg.py` |
+| LUN2 | \(e^{(\ln2)S_N}\) is a non-negative martingale, so \(\Pr(\sup_N S_N\ge a)\le2^{-a}\); equivalently \(\mu(E_a)\le2^{-a}\). Recovers Terras/Everett-type density results with an exact exponent | Proved here; **i.i.d. step is a known theorem applied** (2-adic conjugacy, Lagarias 1985; Bernstein–Lagarias 1996), not reproved | `docs/no-go/macro_step_lundberg.md` §4 | Ville's inequality; intra-macro-step maximum shown to be attained at the endpoint |
+| ANC1 | For odd \(z\) with \(3\nmid z\), consecutive odd preimages satisfy \(x_{v+2}/x_v=4+3/(2^vz-1)>4\), so at most one odd preimage of \(z\) per bit-length | Proved here | `docs/no-go/macro_step_lundberg.md` §5 | `scripts/verify_macro_step_lundberg.py`, exhaustive for \(z\le20000\), \(v\le60\) |
+| FUEL1 | With \(t_a=\lceil a/\alpha\rceil+1\): \(\tau(x)\ge t_a\Rightarrow x\in E_a\). So \(E_a\) contains the full residue class \(x\equiv-1\pmod{2^{t_a}}\), in which its relative density is \(1/\mu(E_a)\ge2^a\) | Proved here | `docs/no-go/macro_step_lundberg.md` §6.2 | Composition of \(L-1\) Class A steps each of ratio \(>3/2\); `scripts/verify_walsh1.py` |
+| DISC1 | The escape set \(E_a\) is equidistributed across residue classes mod \(2^{a+2}\) | **Refuted** (by FUEL1) | `docs/no-go/macro_step_lundberg.md` §6.2 | Overrepresentation factor \(\ge2^a\) on one class; empirically \(11.99\times\) at \(a=5\) with 15 of 64 odd classes empty; `scripts/verify_walsh1.py` |
+| WALSH1 | \(\max_{\eta\ne0}\lvert\widehat{1_{E_a}}(\eta)\rvert\le C\cdot2^{-a}\) | Proved (trivial corollary of LUN2, \(C=1\), since \(\lvert\hat A(\eta)\rvert\le\hat A(0)=\mu(E_a)\)); **vacuous as a target** — was wrongly named this note's open problem | `docs/no-go/macro_step_lundberg.md` §6.3 | `scripts/verify_walsh1.py` |
+| WALSH1-WN | The white-noise reading: \(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert=o(\mu(E_a))\) as the sampling domain grows | **Refuted** (by FUEL1) | `docs/no-go/macro_step_lundberg.md` §6.3 | Cylinder containment forces \(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert\ge(1-\mu)/(2^{t_a}-1)\), independent of domain size, while the random baseline decays as \(N^{-1/2}\); `scripts/verify_walsh1.py` |
+| ANC1-CAP | For odd \(z\) with \(3\nmid z\), at most \(\lceil n/2\rceil\) odd preimages of \(z\) have bit-length \(\le n\) | Proved here (corollary of ANC1) | `docs/no-go/macro_step_lundberg.md` §5 | Immediate from the \(>4\) ratio; **novelty doubtful** — preimage family and reverse-tree growth are standard (Applegate–Lagarias), no bibliography pass run |
+
 ### Correction history for this branch
+
+### Macro-step programme correction (2026-08-03)
+
+The first draft of `docs/no-go/macro_step_lundberg.md` (committed under the
+misspelling `macro_step_lindberg.md`) recorded DISC1 and WALSH1 as supported by
+computational evidence, and named the analytic proof of WALSH1 as the single
+remaining gap. Both readings were wrong, and in opposite directions:
+
+- The supporting evidence measured residue-class excess against the Haar bound
+  \(2^{-a}\) rather than against the observed \(\mu(E_a)\), which is only
+  \(0.74\)–\(0.87\) of it and falling. A uniformly *deficient* set therefore
+  read as increasingly equidistributed, and the reported sign change at
+  \(a=4\) was entirely this artifact. The \(a=5\) row was additionally
+  impossible on its own terms: a maximum over classes cannot fall below the
+  mean, \(-0.251\), yet \(-0.430\) was reported.
+- WALSH1 as written is implied by LUN2 with \(C=1\), so it could not have been
+  an open problem at all.
+- FUEL1 then refutes both the equidistribution claim and the white-noise
+  reading outright. The mechanism is the residue-freezing already proved in
+  `docs/no-go/no_local_potential.md` §1: escape is driven by trailing-one
+  fuel, fuel is a low-bit congruence, so \(E_a\) is concentrated on frozen
+  classes rather than spread across them.
+
+Also corrected in the same pass: `scripts/verify_macro_step_lundberg.py` had
+the two MGF sign assertions reversed (\(M<1\) strictly inside \((0,\theta^*)\),
+not \(>1\)), which aborted the run before ANC1 and the escape probe executed;
+and LUN2's proof omitted the i.i.d. step, which is the only nontrivial part.
 
 ### Audit correction (2026-07-25)
 

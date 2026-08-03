@@ -5,6 +5,7 @@ Status: **live spine cut = Gap SD-K-block-8-17 remainder**
 Date stamp: 2026-07-21 (SD-K-e7-param-267).
 Do not reopen residual-atlas L5 / E_mix unless user explicitly asks.
 Do not ledger-promote SD1/EC1/SD-L1 until a full human proof closes the gate.
+Do not reopen the macro-step counting route (see §6 below).
 
 ---
 
@@ -74,3 +75,35 @@ Thm SD-K-block-8-17-267mod512-sevenblock on \(779,3339,4875,7435\bmod{8192}\)).
 | `scripts/explore_block8_e6_expand.py` | block \(6\) cert |
 | `scripts/explore_block7_deferred.py` | block \(7\) deferred cert |
 | `scripts/verify_repunit_storage_dominance.py` | regression |
+
+---
+
+## 6. Side branch closed (2026-08-03) — macro-step Lundberg programme
+
+`docs/no-go/macro_step_lundberg.md` is **not** part of the live spine and does
+not feed the 267-family grind. It is recorded here only so the closure is not
+re-attempted.
+
+- **Proved and kept:** MAC1–MAC3 (exact renewal structure), LUN1A
+  (\(\mathbb E[x_{\text{out}}/x_{\text{in}}]=1\) exactly — the map is a
+  martingale in value), LUN1 (\(\theta^*=\ln2\)), LUN2 (\(\mu(E_a)\le2^{-a}\),
+  an "almost all" theorem), ANC1 + capacity corollary.
+- **Refuted:** DISC1 (equidistribution of \(E_a\)) and the white-noise reading
+  of WALSH1, both by FUEL1: \(\tau(x)\ge\lceil a/\alpha\rceil+1\Rightarrow
+  x\in E_a\), so \(E_a\) contains a full residue class. WALSH1 *as literally
+  written* was vacuous — implied by LUN2 with \(C=1\).
+- **Now closure 6** in `docs/no-go/obstruction_map.md` §2.
+
+**Do next only if the spine stalls,** in this order:
+
+1. Literature check on LUN1A — cheap, settles whether the note has anything
+   citable. `BIBLIOGRAPHY_PASS.md` does not cover it.
+2. Test ANC1-CAP against ancestry-amortization (`obstruction_map.md` §4.3).
+   Modest odds; the only bridge from this note to a live open item.
+
+### Anti-patterns (this branch)
+
+- No counting, equidistribution, or spectral argument over \(E_a\). The
+  property those need is false, not unproven.
+- No fuel-level decomposition of \(E_a\); considered and rejected, reasons in
+  `macro_step_lundberg.md` §8.
