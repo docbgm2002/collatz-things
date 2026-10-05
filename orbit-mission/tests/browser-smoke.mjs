@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { PULL_REQUEST_SNAPSHOT } from "../pull-request-snapshot.mjs";
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const baseURL = process.env.BASE_URL || "http://127.0.0.1:8767";
@@ -14,6 +15,15 @@ const context = await browser.newContext({
   acceptDownloads: true,
   reducedMotion: "no-preference",
 });
+await context.route(
+  "https://api.github.com/repos/docbgm2002/collatz-things/pulls?*",
+  (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(PULL_REQUEST_SNAPSHOT.items),
+    }),
+);
 const page = await context.newPage();
 const errors = [];
 const checks = [];

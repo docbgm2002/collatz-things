@@ -342,8 +342,8 @@
             <p class="eyebrow">RESEARCH → CONTRIBUTION → PLAY</p>
             <h2>See where each idea came from.</h2>
             <p>
-              Real repository commits, with a plain-language explanation of
-              their role.
+              Recent pull requests from GitHub, followed by the research
+              milestones that shaped this project.
             </p>
           </div>
           <a
@@ -354,6 +354,28 @@
             >View repository ↗</a
           >
         </div>
+        <section
+          class="pull-request-feed"
+          aria-labelledby="pull-requests-title"
+        >
+          <div class="activity-heading">
+            <div>
+              <h3 id="pull-requests-title">Recent pull requests</h3>
+              <p id="pull-request-status" role="status">
+                Showing a saved snapshot.
+              </p>
+            </div>
+            <button id="refresh-history" class="secondary-button">
+              Refresh from GitHub ↻
+            </button>
+          </div>
+          <div id="pull-request-list"></div>
+          <p class="history-note">
+            The 10 most recently updated PRs. Open or draft work has not been
+            merged; GitHub status does not verify its mathematics.
+          </p>
+        </section>
+        <h3 class="milestones-title">Research milestones</h3>
         <div class="history-intro">
           <div>
             <span class="small-label">WHY THIS GAME EXISTS</span>
@@ -383,9 +405,10 @@
         </div>
         <div id="history-list"></div>
         <p class="history-note">
-          Authors below are recorded Git authors. Model names in commit titles
-          are repository labels, not independently verified model attribution.
-          This is a selected snapshot; GitHub contains the full history.
+          Milestone authors are recorded Git authors. Model names in commit
+          titles are repository labels, not independently verified model
+          attribution. These milestones are a selected snapshot; the PR list
+          above refreshes from GitHub when you open this tab or press Refresh.
         </p>
         <p class="build-note" id="build-note"></p>
       </section>

@@ -35,7 +35,7 @@ python3 -m http.server 8767 --bind 127.0.0.1 --directory orbit-mission
 Serve the files over HTTP; opening the HTML directly as a `file:` URL can prevent
 JavaScript modules from loading.
 
-Run the arithmetic checks with a recent Node.js version:
+Run the arithmetic and history checks with a recent Node.js version:
 
 ```sh
 node --test orbit-mission/tests/*.test.mjs
@@ -46,6 +46,7 @@ installed in your development environment. With the local server running:
 
 ```sh
 node orbit-mission/tests/browser-smoke.mjs
+node orbit-mission/tests/history-browser-smoke.mjs
 ```
 
 Set `PLAYWRIGHT_MODULE` to an installed Playwright module path if it is not on
@@ -125,9 +126,23 @@ published to GitHub, or shared across devices. Clearing browser data can remove
 them. Replay uses a recorded rule and starting number; comparison concerns those
 recorded runs, not model rankings or universal performance.
 
-The checked-in contribution timeline in `provenance.mjs` is a curated snapshot
-of actual repository commits. It is not a live GitHub feed. Each entry links to
-the source commit or pull request. Author names and titles preserve git metadata.
+**Project history** lists the 10 most recently updated pull requests from the
+public GitHub API. Opening the tab checks for updates, at most once per minute;
+**Refresh from GitHub** checks immediately. Each entry links to its PR and labels
+it as open, draft, merged, or closed. An open, non-draft PR is ready for review;
+that label does not mean a reviewer has been assigned or has approved it.
+
+The list shows when it last checked successfully. While loading, or if GitHub is
+unreachable or rate-limited, it retains the last successful result or the dated
+checked-in fallback in `pull-request-snapshot.mjs`. A failed refresh is shown
+explicitly; fallback data is not presented as current. The request sends no
+credentials or saved flight data and needs no API key. The game and local flight
+log do not depend on GitHub being available. Browser regression tests mock the
+API so they remain deterministic and do not consume GitHub's request allowance.
+
+The separate research milestones in `provenance.mjs` remain a curated snapshot
+of actual repository commits. Each entry links to the source commit or pull
+request. Author names and titles preserve git metadata.
 A model name in that metadata records attribution supplied by the repository;
 it does not establish which model produced every line, or independently validate
 a research claim. Consult the root [`CLAIM_LEDGER.md`](../CLAIM_LEDGER.md) for
@@ -136,7 +151,7 @@ the repository's current claim statuses.
 `PROVENANCE.sourceRevision` identifies the research baseline
 `fee9b8e613c05d5a35aebab757abc5c9e1d80a16`, which merged correction PR #4.
 It is deliberately separate from the app release identifier,
-`PROVENANCE.appVersion` (`0.1.0`). The research baseline is not a claim that the
+`PROVENANCE.appVersion` (`0.1.1`). The research baseline is not a claim that the
 app's source code existed at that commit.
 
 The preferred server's `build.json` reports the checkout's actual Git HEAD and

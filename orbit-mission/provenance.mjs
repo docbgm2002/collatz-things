@@ -1,13 +1,22 @@
 /**
- * Curated repository history, checked against git at sourceRevision.
+ * Curated research milestones; each entry links to its source.
  * Authors and titles are literal git metadata; descriptions explain scope.
  * This baseline identifies the research source, not the app's build commit.
  */
 export const PROVENANCE = Object.freeze({
-  appVersion: "0.1.0",
+  appVersion: "0.1.1",
   sourceRevision: "fee9b8e613c05d5a35aebab757abc5c9e1d80a16",
   repository: "https://github.com/docbgm2002/collatz-things",
   changes: [
+    {
+      hash: "8b5d7698a08755ed906c1bde4cceebc02d94d9d8",
+      author: "drbrym",
+      date: "2026-10-05",
+      title: "Merge pull request #5 from NiyiOke/Niyi/orbit-mission",
+      url: "https://github.com/docbgm2002/collatz-things/pull/5",
+      meaning:
+        "Merged Orbit Mission: a playable recurrence explorer with exact integer steps, guided experiments, and replayable flight evidence.",
+    },
     {
       hash: "fee9b8e613c05d5a35aebab757abc5c9e1d80a16",
       author: "drbrym",

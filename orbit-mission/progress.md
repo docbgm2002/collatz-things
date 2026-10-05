@@ -26,5 +26,15 @@ Original prompt: Build a more usable game simulation for Collatz: click Play, un
 ## Next steps
 
 - Gather feedback on whether first-time players can explain the even/odd rule and distinguish home, cycle, and unresolved outcomes.
-- Shared experiment storage, authenticated contribution attribution, and research-grade certificates remain future work. Current histories are local browser records and a curated Git snapshot.
+- Shared experiment storage, authenticated contribution attribution, and research-grade certificates remain future work. Flight histories remain local browser records; research milestones are curated Git snapshots.
 - Local preview is served with `python3 orbit-mission/serve.py --port 8767`; this is not a deployed public service.
+
+## Project history follow-up
+
+- User reported that Project history did not show the latest PR. The original list was a fixed selection of commits.
+- Pulled upstream main at 8b5d769 (merged Orbit Mission PR #5) before creating Niyi/live-project-history.
+- Added a public GitHub PR feed with status labels, a manual refresh, and one-minute throttling for automatic tab-open checks. No credentials or saved flight data are sent.
+- Kept research milestones separate; added the actual UI merge and retained the mathematical baseline. App release is now 0.1.1.
+- Bundled a timestamped fallback containing PR #6; unsuccessful refreshes retain data with an explicit error and source timestamp.
+- Verification: 25 unit checks, 21 gameplay browser checks, and 10 focused history browser checks pass. The game client still plays correctly; desktop and 320/375px history screenshots were inspected.
+- Confirmed an actual successful public GitHub refresh in the local in-app browser: PR #6 open and PR #5 merged. An independent integration review found no actionable issues.

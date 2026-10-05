@@ -5,6 +5,11 @@ import {
   verifyEvidence,
 } from "./engine.mjs";
 import { PROVENANCE, RULES } from "./provenance.mjs";
+import {
+  fetchPullRequests,
+  normalizePullRequests,
+} from "./pull-request-history.mjs";
+import { PULL_REQUEST_SNAPSHOT } from "./pull-request-snapshot.mjs";
 
 const $ = (id) => document.getElementById(id);
 const canvas = $("universe");
@@ -43,6 +48,11 @@ let guesses = new Map(),
 let view = "mission",
   flights = [],
   selectedFlights = new Set();
+let pullRequests = normalizePullRequests(PULL_REQUEST_SNAPSHOT.items),
+  historyCheckedAt = null,
+  historyError = "",
+  historyLoading = false,
+  historyAttemptedAt = 0;
 let build = {
   revision: null,
   dirty: null,
@@ -599,6 +609,7 @@ function showTab(name) {
     button.setAttribute("aria-selected", String(button.dataset.tab === name));
   });
   if (name === "log") renderLog();
+  if (name === "history") loadPullRequests();
   if (name === "mission") {
     resize();
     renderInfo();
@@ -738,6 +749,82 @@ function renderComparison() {
   );
 }
 
+const historyDate = (value) =>
+  new Date(value).toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+
+function renderPullRequests() {
+  const list = $("pull-request-list");
+  list.replaceChildren();
+  list.setAttribute("aria-busy", String(historyLoading));
+  const labels = {
+    merged: "Merged",
+    open: "Open · ready for review",
+    draft: "Draft",
+    closed: "Closed",
+  };
+  for (const request of pullRequests) {
+    const article = el("article", "pull-request-item");
+    const content = el("div");
+    const heading = el("h4");
+    const link = el("a", "", `#${request.number} ${request.title} ↗`);
+    link.href = request.url;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    heading.append(link);
+    content.append(
+      heading,
+      el(
+        "p",
+        "",
+        `@${request.author} · Updated ${historyDate(request.updatedAt)}`,
+      ),
+    );
+    article.append(
+      content,
+      el("span", `pr-status pr-${request.status}`, labels[request.status]),
+    );
+    list.append(article);
+  }
+  if (!pullRequests.length)
+    list.append(
+      el("p", "history-note", "No pull requests returned by GitHub."),
+    );
+  const source = historyCheckedAt
+    ? `Live GitHub data · Last successful check ${historyDate(historyCheckedAt)}.`
+    : `Saved snapshot · Captured ${historyDate(PULL_REQUEST_SNAPSHOT.capturedAt)}.`;
+  $("pull-request-status").textContent =
+    `${source} ${historyLoading ? "Checking GitHub…" : historyError ? `Refresh unavailable: ${historyError}` : historyCheckedAt ? "" : "Open this tab or refresh to check for newer PRs."}`.trim();
+  $("refresh-history").disabled = historyLoading;
+  $("refresh-history").textContent = historyLoading
+    ? "Checking GitHub…"
+    : "Refresh from GitHub ↻";
+}
+
+async function loadPullRequests(force = false) {
+  if (historyLoading || (!force && Date.now() - historyAttemptedAt < 60000))
+    return;
+  historyAttemptedAt = Date.now();
+  historyLoading = true;
+  historyError = "";
+  renderPullRequests();
+  try {
+    pullRequests = await fetchPullRequests();
+    historyCheckedAt = new Date().toISOString();
+  } catch (error) {
+    historyError = error.message;
+  } finally {
+    historyLoading = false;
+    renderPullRequests();
+  }
+}
+
 function renderHistory() {
   $("history-list").replaceChildren();
   for (const change of PROVENANCE.changes) {
@@ -807,6 +894,7 @@ document
     button.addEventListener("click", () => showTab(button.dataset.tab)),
   );
 $("go-mission").addEventListener("click", () => showTab("mission"));
+$("refresh-history").addEventListener("click", () => loadPullRequests(true));
 $("rule-select").addEventListener("change", () => {
   $("custom-rule").hidden = $("rule-select").value !== "custom";
 });
@@ -962,5 +1050,6 @@ function loop(now) {
 loadFlights();
 launch({ ...missions.home, mode: "standard" }, missions.home.label, "home");
 renderHistory();
+renderPullRequests();
 loadBuild();
 requestAnimationFrame(loop);
