@@ -11,6 +11,22 @@ Python verification and exploration programs live here.
 - `scripts/capstone_data.py` is a small data-generation helper for the repunit
   equidistribution notes.
 
+Run the verifier regression tests from the repository root:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+These cover malformed ledger tables, empty synchronization-tree reports, and
+solver-result handling. The tests that exercise a real Z3 solver require
+`z3-solver` in the Python environment; otherwise they are explicitly skipped.
+`verify_machine_synthesis.py` preserves `sat`, `unsat`, `unknown` (with the
+solver's reason), and `unavailable` as distinct outcomes. It exits 2 with
+`INCOMPLETE` when an SMT cross-check cannot conclude, exits 1 for a failed
+check, and reports `PASS` only when all required checks complete successfully.
+Independent exact-integer certificate checks still run when SMT is unavailable
+or inconclusive.
+
 Run scripts from the repository root, for example:
 
 ```bash

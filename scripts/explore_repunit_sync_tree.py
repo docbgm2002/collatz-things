@@ -197,7 +197,7 @@ def print_report(gap, through_step, max_total, common_depth):
         cumulative |= hits
         ratio = (
             "n/a"
-            if previous_mass is None
+            if previous_mass in (None, 0)
             else f"{len(hits) / previous_mass:.6f}"
         )
         print(

@@ -10,8 +10,8 @@ on a finite window" is, after the substitution h_c = 2^{g_c} > 0,
 
     for every observed transition x -> y = f(x):     y * h_{C(y)}  <=  x * h_{C(x)}
 
-a linear system with INTEGER coefficients.  z3 decides it exactly over the
-rationals, and infeasibility is equivalent to a coordinate cycle with
+a linear system with INTEGER coefficients.  z3 solves it over the rationals
+(a timed-out run is inconclusive), and infeasibility is equivalent to a cycle with
 prod(y) > prod(x) -- a certificate in the sense of SH1/WITN1.  So the SMT
 question and the certificate question are the same question, and we solve
 both and cross-check.
@@ -38,7 +38,9 @@ from __future__ import annotations
 
 import argparse
 import math
+from dataclasses import dataclass
 from fractions import Fraction
+from typing import Literal
 
 try:
     import z3
@@ -47,12 +49,18 @@ except ImportError:                                  # pragma: no cover
     HAVE_Z3 = False
 
 FAILURES: list[str] = []
+INCOMPLETE: list[str] = []
 
 
 def check(label: str, ok: bool) -> None:
     if not ok:
         FAILURES.append(label)
     print(f"  [{'PASS' if ok else 'FAIL'}] {label}")
+
+
+def incomplete(label: str) -> None:
+    INCOMPLETE.append(label)
+    print(f"  [INCOMPLETE] {label}")
 
 
 def v2(x: int) -> int:
@@ -123,13 +131,20 @@ def gain_cycle(edges: list[tuple[object, object, int, int]]):
     return (cyc, px, py) if py > px else None       # exact integer decision
 
 
-def smt_feasible(edges: list[tuple[object, object, int, int]]):
-    """Decide, exactly, whether some g makes log_2 x + g(C(x)) nonincreasing.
+@dataclass(frozen=True)
+class SMTResult:
+    status: Literal["sat", "unsat", "unknown", "unavailable"]
+    reason: str = ""
+
+
+def smt_feasible(edges: list[tuple[object, object, int, int]]) -> SMTResult:
+    """Ask whether some g makes log_2 x + g(C(x)) nonincreasing.
 
     h_c = 2^{g_c} > 0 and  y*h_{C(y)} <= x*h_{C(x)}  -- linear over Q.
+    Preserve inconclusive solver outcomes; a timeout is not infeasibility.
     """
     if not HAVE_Z3:
-        return None
+        return SMTResult("unavailable", "z3-solver is not installed")
     hs: dict[object, z3.ArithRef] = {}
 
     def var(c):
@@ -142,7 +157,12 @@ def smt_feasible(edges: list[tuple[object, object, int, int]]):
     for cx, cy, x, y in edges:
         s.add(var(cx) > 0, var(cy) > 0)
         s.add(y * var(cy) <= x * var(cx))
-    return s.check() == z3.sat
+    result = s.check()
+    if result == z3.sat:
+        return SMTResult("sat")
+    if result == z3.unsat:
+        return SMTResult("unsat")
+    return SMTResult("unknown", s.reason_unknown())
 
 
 # ---------------------------------------------------------------------------
@@ -179,16 +199,19 @@ def part_a() -> None:
     print("     subsumed by SUFF1 + CONN1.  Only the TWO-VARIABLE branch")
     print("     (V(x,n) on state-exponent pairs) is genuinely unsearched.")
 
-    if HAVE_Z3:
-        edges = []
-        for x in range(3, 4000, 2):
-            y = f_odd(x)
-            cx = (qlog(x, 1), tau(x), x % 256)
-            cy = (qlog(y, 1), tau(y), y % 256)
-            edges.append((cx, cy, x, y))
-        feas = smt_feasible(edges)
+    edges = []
+    for x in range(3, 4000, 2):
+        y = f_odd(x)
+        cx = (qlog(x, 1), tau(x), x % 256)
+        cy = (qlog(y, 1), tau(y), y % 256)
+        edges.append((cx, cy, x, y))
+    feas = smt_feasible(edges)
+    if feas.status in ("sat", "unsat"):
         check("z3 cross-check: the same system is UNSAT (no potential exists)",
-              feas is False)
+              feas.status == "unsat")
+    else:
+        incomplete(f"z3 cross-check: {feas.status} ({feas.reason}); "
+                   "the independent integer certificates remain available")
 
 
 # ---------------------------------------------------------------------------
@@ -279,35 +302,51 @@ def part_c(nmax: int) -> None:
     print("  alphabet is injective, every g is free, and SAT is VACUOUS.")
     print("\n   m    j   (x,n) pairs  coords   compression   certificate?  z3      verdict")
     ok = True
+    complete = True
     found_any = False
     first_cert = None
     vacuous_from = None
+    all_sat_vacuous = True
     for m, j in ((4, 1), (6, 1), (8, 2), (12, 2), (16, 3), (24, 3), (32, 4)):
         edges, pairs = build(m, j)
         res = gain_cycle(edges)
         ncoord = len({e[0] for e in edges} | {e[1] for e in edges})
         nstate = len(pairs)
         comp = 1 - ncoord / nstate            # 0 = injective alphabet
-        feas = smt_feasible(edges) if HAVE_Z3 else None
+        feas = smt_feasible(edges)
         found_any = found_any or bool(res)
         if res and first_cert is None:
             first_cert = (m, j, res)
-        if not res and comp < 0.02 and vacuous_from is None:
+        if (not res and feas.status == "sat" and comp < 0.02
+                and vacuous_from is None):
             vacuous_from = (m, j)
-        verdict = ("no-go" if res
-                   else ("VACUOUS sat" if comp < 0.02 else "genuine sat"))
+        if feas.status == "sat" and comp >= 0.02:
+            all_sat_vacuous = False
+        if res:
+            verdict = "no-go (exact certificate)"
+        elif feas.status == "sat":
+            verdict = "VACUOUS sat" if comp < 0.02 else "genuine sat"
+        else:
+            verdict = "unresolved"
         print(f"   {m:<4d} {j}   {nstate:<12d} {ncoord:<8d} {comp:<13.4f} "
               f"{'yes' if res else 'no':<14s} "
-              f"{'-' if feas is None else ('sat' if feas else 'unsat'):<7s} "
+              f"{feas.status:<7s} "
               f"{verdict}")
-        if res and feas is True:
+        if feas.status in ("unknown", "unavailable"):
+            complete = False
+            print(f"       z3 {feas.status}: {feas.reason}")
+        if res and feas.status == "sat":
             ok = False                          # the two answers must agree
-        if (not res) and feas is False:
+        if (not res) and feas.status == "unsat":
             ok = False
-    check("the certificate search and the SMT decision agree on every "
-          "coordinate tested", ok)
+    if complete or not ok:
+        check("the certificate search and the SMT decision agree on every "
+              "coordinate tested", ok)
+    if not complete:
+        incomplete("certificate/SMT agreement is unresolved: "
+                   "one or more solver results are unknown or unavailable")
     if found_any:
-        print("  => UNSAT in the compressing regime: a certificate exists even")
+        print("  => Exact gain certificates rule out potentials even")
         print("     in the two-variable coordinate, from ACTUAL repunit")
         print("     orbits.  A new finite no-go extending SH1 to V(x,n).")
     if vacuous_from:
@@ -317,7 +356,7 @@ def part_c(nmax: int) -> None:
         print("     Enlarging the solver will not help; only enlarging the")
         print("     window (more states, hence more coordinate returns) will.")
         check("no SAT answer on this window is claimed as a candidate "
-              "potential: every SAT here is diagnosed vacuous", True)
+              "potential: every SAT here is diagnosed vacuous", all_sat_vacuous)
 
     if first_cert:
         m, j, (cyc, px, py) = first_cert
@@ -356,6 +395,8 @@ def part_c(nmax: int) -> None:
 
 
 def main() -> None:
+    FAILURES.clear()
+    INCOMPLETE.clear()
     ap = argparse.ArgumentParser()
     ap.add_argument("--nmax", type=int, default=101,
                     help="larger windows are the natural next step but the "
@@ -372,6 +413,9 @@ def main() -> None:
         for f in FAILURES:
             print(f"  - {f}")
         raise SystemExit(1)
+    if INCOMPLETE:
+        print(f"MACHINE-SYNTHESIS: INCOMPLETE ({len(INCOMPLETE)} unresolved checks)")
+        raise SystemExit(2)
     print("MACHINE-SYNTHESIS: PASS")
 
 
