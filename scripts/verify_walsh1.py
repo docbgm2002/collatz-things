@@ -1,6 +1,6 @@
 # scripts/verify_walsh1.py
 
-"""Spectral and residue structure of the escape set E_a.
+"""Spectral and residue structure of a finite actual-orbit escape set.
 
 Reproduces section 6 of docs/no-go/macro_step_lundberg.md.
 
@@ -8,28 +8,26 @@ Definitions used throughout (these fix the ambiguity in earlier drafts of
 the note, where two tables reported different values for mu(E_a) under
 unstated conventions):
 
-  Domain      D = { 2j + 1 : 0 <= j < 2^14 }, indexed by j.
-  Escape set  E_a = { x0 in D : the accelerated odd orbit of x0 ever
-                      reaches a value >= 2^a * x0 }.
-  Measure     mu(E_a) = |E_a| / |D|.
-  Transform   Ahat(eta) = (1/|D|) * sum_j 1_{E_a}(2j+1) * (-1)^{<eta, j>},
+  Domain      D_B = { 2j + 1 : 0 <= j < 2^B }, indexed by j, B = 14.
+  Escape set  E_{a,B,T} = { x0 in D_B : some iterate at time 0 <= k <= T
+                           reaches a value >= 2^a * x0 }, T = STEP_CAP.
+  Measure     mu_D = |E_{a,B,T}| / |D_B|.
+  Transform   Ahat(eta) = (1/|D_B|) * sum_j 1_{E_{a,B,T}}(2j+1)
+                          * (-1)^{<eta, j>},
               the Walsh-Hadamard transform in the j coordinate, so that
-              Ahat(0) = mu(E_a).
+              Ahat(0) = mu_D.
 
-Two consequences of this normalization are worth stating because the note
-previously leaned on the second without noticing the first:
-
-  (i)  |Ahat(eta)| <= Ahat(0) = mu(E_a) for every eta, trivially.
-  (ii) By LUN2, mu(E_a) <= 2^-a.  Hence |Ahat(eta)| <= 2^-a holds for all
-       eta with no work at all.  Any spectral claim of the form
-       |Ahat(eta)| <= C * 2^-a is therefore vacuous unless C is small
-       enough to beat mu(E_a)/2^-a, which is ~0.74-0.87 here.
+The normalization gives |Ahat(eta)| <= Ahat(0) = mu_D for every eta.
+LUN2 concerns homogeneous multipliers and does not prove mu_D <= 2^-a
+for this actual-orbit event. The number 2^-a is reported only as a
+reference, not as a probability or spectral bound.
 
 The script reports max |Ahat(eta)| over eta != 0 against three yardsticks:
-the Haar bound 2^-a, the observed measure mu(E_a), and the size expected of
-a uniformly random subset of D of the same density.  It also reports the
-distribution of E_a across residue classes mod 2^(a+2), normalized by the
-observed measure rather than by 2^-a.
+the reference 2^-a, the observed measure mu_D, and a heuristic scale for
+a random subset of D_B of the same density. It also reports residue-class
+densities and checks the FUEL1 containment and resulting finite Walsh
+lower bound exactly. These finite observations do not establish an
+unconditional asymptotic spectral or equidistribution claim.
 """
 
 import math
@@ -45,7 +43,7 @@ def f(x):
 
 
 def escapes(x0, a, cap=STEP_CAP):
-    """1 if the orbit of x0 ever reaches 2^a * x0, else 0."""
+    """1 if an iterate at time 0 <= k <= cap reaches 2^a * x0, else 0."""
     x = x0
     threshold = x0 << a
     for _ in range(cap):
@@ -73,11 +71,11 @@ def fwht(vec):
 
 
 def random_subset_baseline(mu, n):
-    """Expected max |Ahat(eta)| for a uniformly random subset of density mu.
+    """Heuristic max |Ahat(eta)| scale for a random subset of density mu.
 
-    Each coefficient is a mean of n centered Bernoulli(mu) terms, so has
-    standard deviation sqrt(mu(1-mu)/n); the max over n-1 of them sits near
-    sqrt(2 ln n) standard deviations.
+    A nonzero coefficient for independent Bernoulli(mu) membership has
+    standard deviation sqrt(mu(1-mu)/n). The Gaussian extreme-value
+    heuristic multiplies this by sqrt(2 ln n); this is not a bound.
     """
     return math.sqrt(mu * (1 - mu) / n) * math.sqrt(2 * math.log(n))
 
@@ -88,7 +86,7 @@ def report(a, n_bits=DOMAIN_BITS):
     coef = fwht(ind)
 
     mu = coef[0] / n
-    haar = 2.0 ** -a
+    reference = 2.0 ** -a
     peak_eta = max(range(1, n), key=lambda k: abs(coef[k]))
     peak = abs(coef[peak_eta]) / n
     baseline = random_subset_baseline(mu, n)
@@ -100,8 +98,8 @@ def report(a, n_bits=DOMAIN_BITS):
         r = (2 * j + 1) % modulus
         total[r] += 1
         hits[r] += ind[j]
-    # relative density of E_a in each odd residue class, normalized so that
-    # a perfectly equidistributed E_a would give 1.0 in every class
+    # Relative finite escape density in each odd residue class, normalized
+    # so that perfect equidistribution would give 1.0 in every class.
     rel = [(r, hits[r] / total[r] / mu) for r in range(1, modulus, 2)]
     rel.sort(key=lambda t: -t[1])
     empty = sum(1 for _, d in rel if d == 0.0)
@@ -109,10 +107,10 @@ def report(a, n_bits=DOMAIN_BITS):
     return {
         "a": a,
         "mu": mu,
-        "mu_over_haar": mu / haar,
+        "mu_over_reference": mu / reference,
         "peak": peak,
         "peak_eta": peak_eta,
-        "peak_over_haar": peak / haar,
+        "peak_over_reference": peak / reference,
         "peak_over_mu": peak / mu,
         "baseline": baseline,
         "peak_over_baseline": peak / baseline,
@@ -122,32 +120,45 @@ def report(a, n_bits=DOMAIN_BITS):
     }
 
 
-def check_FUEL1(amax=5, n_bits=DOMAIN_BITS):
-    """tau(x) >= ceil(a/alpha)+1 forces x into E_a, with no exceptions.
+def check_FUEL1(amax=5, n_bits=DOMAIN_BITS, cap=STEP_CAP):
+    """Check fuel-cylinder containment and the finite Walsh lower bound.
 
-    Also prints the Walsh lower bound this containment forces, against the
-    random-subset baseline.  The forced bound is independent of the domain
-    size while the baseline decays like N^{-1/2}, so for each fixed a the
-    forced bound dominates once N is large enough.
+    For integer a, certify the burn length s by 3^s >= 2^(s+a) in exact
+    arithmetic. The forced cylinder has t=s+1 bits in x but only s free
+    bits in j=(x-1)/2. Require B >= s and cap >= s so the finite domain
+    resolves the cylinder and the escape window includes the forced burn.
     """
-    alpha = math.log2(3) - 1
     n = 1 << n_bits
-    print("FUEL1: tau(x) >= t_a  ==>  x in E_a")
+    print("FUEL1: tau(x) >= t_a  ==>  x in E_{a,B,T}")
     for a in range(1, amax + 1):
-        t = math.ceil(a / alpha) + 1
+        s = 0
+        while 3 ** s < 2 ** (s + a):
+            s += 1
+        assert 3 ** s >= 2 ** (s + a)
+        assert 3 ** (s - 1) < 2 ** (s - 1 + a)
+        if n_bits < s or cap < s:
+            raise ValueError(f"FUEL1 at a={a} requires n_bits >= {s} "
+                             f"and cap >= {s}")
+        t = s + 1
         modulus = 1 << t
-        members = [2 * j + 1 for j in range(n)
+        ind = [escapes(2 * j + 1, a, cap) for j in range(n)]
+        members = [j for j in range(n)
                    if (2 * j + 1) % modulus == modulus - 1]
-        bad = [x for x in members if not escapes(x, a)]
+        assert len(members) == n // (1 << s)
+        bad = [2 * j + 1 for j in members if not ind[j]]
         if bad:
             raise AssertionError(f"FUEL1 violated at a={a}: {bad[:5]}")
-        mu = sum(escapes(2 * j + 1, a) for j in range(n)) / n
-        forced = (1 - mu) / (modulus - 1)
+        coef = fwht(ind)
+        # The fixed parity bit contributes no free Walsh coordinate.
+        denominator = (1 << (t - 1)) - 1
+        assert max(abs(c) for c in coef[1:]) * denominator >= n - coef[0]
+        mu = coef[0] / n
+        forced = (1 - mu) / denominator
         baseline = random_subset_baseline(mu, n)
         print(f"  a={a} t_a={t:>2}: {len(members):>5} members checked, "
               f"0 counterexamples | forced max|A| >= {forced:.5f}, "
-              f"random baseline {baseline:.5f}")
-    print("  FUEL1 PASS\n")
+              f"heuristic random baseline {baseline:.5f}")
+    print("  FUEL1 containment and finite Walsh inequality PASS (exact arithmetic)\n")
 
 
 def main(amax=5):
@@ -157,41 +168,43 @@ def main(amax=5):
     print(f"Domain: {1 << DOMAIN_BITS} odd integers 2j+1, j < 2^{DOMAIN_BITS};"
           f" step cap {STEP_CAP}\n")
 
-    print("Measure and spectrum")
-    print(f"{'a':>2} {'mu(E_a)':>9} {'2^-a':>8} {'mu/2^-a':>9} "
+    print("Finite measure and spectrum (2^-a is a reference, not a proved bound)")
+    print(f"{'a':>2} {'mu_D':>9} {'2^-a':>8} {'mu/2^-a':>9} "
           f"{'max|A|':>9} {'/2^-a':>7} {'/mu':>7}")
     for r in rows:
         print(f"{r['a']:>2} {r['mu']:>9.4f} {2.0 ** -r['a']:>8.4f} "
-              f"{r['mu_over_haar']:>9.3f} {r['peak']:>9.4f} "
-              f"{r['peak_over_haar']:>7.3f} {r['peak_over_mu']:>7.3f}")
+              f"{r['mu_over_reference']:>9.3f} {r['peak']:>9.4f} "
+              f"{r['peak_over_reference']:>7.3f} {r['peak_over_mu']:>7.3f}")
 
-    print("\nComparison against a random subset of the same density")
+    print("\nComparison against a heuristic random-subset scale at the same density")
     print(f"{'a':>2} {'max|A|':>9} {'random':>9} {'ratio':>7} {'argmax eta':>11}")
     for r in rows:
         print(f"{r['a']:>2} {r['peak']:>9.4f} {r['baseline']:>9.5f} "
               f"{r['peak_over_baseline']:>7.2f} {r['peak_eta']:>11d}")
 
-    print("\nResidue structure mod 2^(a+2), normalized by observed mu(E_a)")
+    print("\nFinite residue structure mod 2^(a+2), normalized by observed mu_D")
     print(f"{'a':>2} {'richest classes (residue, rel. density)':>46} "
           f"{'empty':>12}")
     for r in rows:
         rich = ", ".join(f"({res}, {d:.2f})" for res, d in r["richest"])
         print(f"{r['a']:>2} {rich:>46} {r['empty']:>5}/{r['classes']:<6}")
 
-    print("\nFindings:")
-    print("  * max |Ahat(eta)| tracks mu(E_a) at ratio ~0.50-0.56, and the")
-    print("    ratio does NOT decay with a.  A white-noise set would instead")
-    print("    scale like sqrt(mu/|D|); the observed peak exceeds that")
-    print("    baseline by a factor of 2.5-13.")
-    print("  * The argmax sits at the lowest frequencies (eta in {1, 3, 4}),")
-    print("    i.e. at the bottom bits of x0 -- macroscopic structure, not")
-    print("    high-frequency noise.")
-    print("  * E_a concentrates on the residue 2^(a+2) - 1, the maximal")
-    print("    trailing-one (fuel-rich) class, at ~12x the mean density by")
-    print("    a = 5, while 15 of 64 odd classes are empty.")
-    print("  * This is the residue-freezing of docs/no-go/no_local_potential.md")
-    print("    reappearing in the escape set.  DISC1 as originally stated is")
-    print("    contradicted by this data, not merely unproven.")
+    print("\nFinite observations:")
+    print(f"  * max |Ahat(eta)| / mu_D ranges from "
+          f"{min(r['peak_over_mu'] for r in rows):.2f} to "
+          f"{max(r['peak_over_mu'] for r in rows):.2f} in this sample.")
+    print(f"    Observed peaks exceed the heuristic random-subset scale by "
+          f"{min(r['peak_over_baseline'] for r in rows):.2f}-"
+          f"{max(r['peak_over_baseline'] for r in rows):.2f} times.")
+    print(f"  * Observed maximizing frequencies: "
+          f"{sorted({r['peak_eta'] for r in rows})}.")
+    last = rows[-1]
+    residue, density = last['richest'][0]
+    print(f"  * At a={last['a']}, residue {residue} is richest at "
+          f"{density:.2f}x the mean; {last['empty']} of {last['classes']} "
+          "odd classes have no observed escape.")
+    print("  * These finite data exhibit residue structure. They do not prove")
+    print("    an unconditional asymptotic refutation of DISC1 or WALSH1.")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ Status: **live spine cut = Gap SD-K-block-8-17 remainder**
 Date stamp: 2026-07-21 (SD-K-e7-param-267).
 Do not reopen residual-atlas L5 / E_mix unless user explicitly asks.
 Do not ledger-promote SD1/EC1/SD-L1 until a full human proof closes the gate.
-Do not reopen the macro-step counting route (see §6 below).
+The macro-step counting route has no established escape-density bridge (see §6).
 
 ---
 
@@ -78,32 +78,38 @@ Thm SD-K-block-8-17-267mod512-sevenblock on \(779,3339,4875,7435\bmod{8192}\)).
 
 ---
 
-## 6. Side branch closed (2026-08-03) — macro-step Lundberg programme
+## 6. Side branch corrected — macro-step Lundberg programme
 
 `docs/no-go/macro_step_lundberg.md` is **not** part of the live spine and does
-not feed the 267-family grind. It is recorded here only so the closure is not
-re-attempted.
+not feed the 267-family grind. Its former closure claim relied on identifying
+a homogeneous multiplier with the true affine orbit ratio; that inference is
+withdrawn.
 
-- **Proved and kept:** MAC1–MAC3 (exact renewal structure), LUN1A
-  (\(\mathbb E[x_{\text{out}}/x_{\text{in}}]=1\) exactly — the map is a
-  martingale in value), LUN1 (\(\theta^*=\ln2\)), LUN2 (\(\mu(E_a)\le2^{-a}\),
-  an "almost all" theorem), ANC1 + capacity corollary.
-- **Refuted:** DISC1 (equidistribution of \(E_a\)) and the white-noise reading
-  of WALSH1, both by FUEL1: \(\tau(x)\ge\lceil a/\alpha\rceil+1\Rightarrow
-  x\in E_a\), so \(E_a\) contains a full residue class. WALSH1 *as literally
-  written* was vacuous — implied by LUN2 with \(C=1\).
-- **Now closure 6** in `docs/no-go/obstruction_map.md` §2.
+- **Proved and kept:** MAC1–MAC3 (fuel partition, Haar renewal law, and exact
+  affine macro-step), LUN1A (mean homogeneous multiplier equals one), LUN1
+  (homogeneous log-multiplier exponent \(\theta^*=\ln2\)), LUN2 (a maximal
+  bound for products of those multipliers, with a Haar start in Class B),
+  ANC1 + capacity corollary, and FUEL1 (sufficient initial fuel forces escape
+  for positive odd integers).
+- **Not established:** a Haar or integer-density bound for true orbit
+  escape, the earlier all-modulus refutation of DISC1, and WALSH1's claimed
+  \(C=1\) bound. FUEL1 yields a finite-domain Walsh lower bound; its
+  asymptotic white-noise obstruction requires densities bounded away from
+  one. Escape-frequency computations are finite integer-domain evidence.
+- **Recorded as unsupported route 6** in `docs/no-go/obstruction_map.md` §2.
 
-**Do next only if the spine stalls,** in this order:
+**Possible follow-ups if the spine stalls:**
 
-1. Literature check on LUN1A — cheap, settles whether the note has anything
-   citable. `BIBLIOGRAPHY_PASS.md` does not cover it.
+1. Literature check on LUN1A's homogeneous-multiplier identity.
+   `BIBLIOGRAPHY_PASS.md` does not cover it; this is not a value-martingale
+   identity for the true orbit.
 2. Test ANC1-CAP against ancestry-amortization (`obstruction_map.md` §4.3).
-   Modest odds; the only bridge from this note to a live open item.
+   Modest odds; the only identified bridge from this note to a live open item.
 
 ### Anti-patterns (this branch)
 
-- No counting, equidistribution, or spectral argument over \(E_a\). The
-  property those need is false, not unproven.
-- No fuel-level decomposition of \(E_a\); considered and rejected, reasons in
-  `macro_step_lundberg.md` §8.
+- Do not use LUN2 as a bound on \(E_a\), or promote finite escape experiments
+  to an infinite-domain density theorem.
+- Do not treat FUEL1 alone as a refutation of every counting or spectral
+  route. Any such proposal needs its own precise density and counting
+  arguments; the present note does not supply them.

@@ -39,15 +39,17 @@ plans later completed, retired, or narrowed. The current working position is:
    for a related shortcut-map `6n` target. Its parity-neutrality interpretation
    is strategic and conjectural, not a substitute for the accelerated-map
    target;
-8. **the macro-step counting route is closed** (2026-08-03). The Lundberg /
-   escape-set programme in `docs/no-go/macro_step_lundberg.md` reduced a
-   universal descent statement to equidistribution of the escape set \(E_a\);
-   FUEL1 refutes that hypothesis outright, and it is now closure 6 in
-   `docs/no-go/obstruction_map.md`. Do not reopen any counting,
-   equidistribution, or spectral-flatness argument over \(E_a\). Two cheap
-   follow-ups survive and are listed in that note's §10: a literature check on
-   the value-martingale identity LUN1A, and testing the reverse-tree capacity
-   bound ANC1-CAP against ancestry-amortization
+8. **the macro-step counting route is unsupported.** The correction in
+   `docs/no-go/macro_step_lundberg.md` separates exact affine orbit growth
+   from its homogeneous multiplier. LUN1A–LUN2 control the latter under a
+   Haar start in Class B; they do not bound the true escape set \(E_a\).
+   FUEL1 still places a full positive-integer residue class in \(E_a\), but
+   the earlier all-modulus refutation of DISC1 and unconditional dismissal
+   of WALSH1 depended on an unproved density bound. Item 6 of
+   `docs/no-go/obstruction_map.md` records this limitation. Follow-ups in
+   that note's §10 include controlling affine corrections in actual-orbit
+   estimates and testing the reverse-tree capacity bound
+   ANC1-CAP against ancestry-amortization
    (`docs/no-go/obstruction_map.md` §4.3).
 
 The first simplifications of item 4 are now proved as REPANC1–REPANC3. In the
