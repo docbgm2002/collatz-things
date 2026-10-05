@@ -173,8 +173,9 @@ the cycle whose \(2\)-adic fixed point solves \(x+1=3((3x+1)/4+1)/2\), i.e.
 **not** repair it (the minimum moves to \(-68\), then \(-88\)): deep-landing
 self-loops are dense in the state space, and \(-7\) is one bad cycle of many.
 
-**Consequence.** The eight proved `Thm SD-K-block-8-17-*` rows and the
-density-\(9/1024\) corollary are genuine; the *scheme* does not extend to a
+**Consequence.** The `Thm SD-K-block-8-17-*` rows prove prefix inequalities
+only; their gap conclusions and the density-\(9/1024\) corollary are withdrawn
+(Correction SD-K-prefix in the parent note). The *scheme* does not extend to a
 cover. This is the Avenue A instance of SH1: \(\Delta\) is a potential in
 local coordinates, and SH1 says no such potential is nonincreasing.
 

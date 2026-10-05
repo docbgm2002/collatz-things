@@ -39,7 +39,9 @@ so; the 267-family correction is a concrete instance of it.
 - **Kept and now proved for all \(t\):** Lemma SD-K-e6-affine-267,
   \(3x_6+1=L_t+R_t\) with \(v_2(R_t)\ge14\) (Mahler-expansion proof).
 - The four early theorems (\(3,171\bmod256\), \(323\bmod512\),
-  \(579\bmod1024\)) are proved by expansion and pass the falsifier.
+  \(579\bmod1024\)) prove only prefix inequalities. Their conclusion "Gap
+  SD-K-block-8-17 holds" is withdrawn (Correction SD-K-prefix): later blocks
+  can be negative, so no residue class of \(k\) is proved to satisfy the gap.
 
 ---
 

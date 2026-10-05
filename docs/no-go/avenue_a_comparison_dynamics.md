@@ -1188,14 +1188,15 @@ yields \(v_2(243m+13)=6\) and \(v_2(243m+77)=7\) constantly for
 \(k=256s+3\) (both leading sums are \(\equiv64\) and \(\equiv128\pmod{256}\)
 respectively). Thus \(e_4=2\), \(h_4=1\). \(\square\)
 
-**Theorem SD-K-block-8-17-3mod256.** If \(n=64k+17\) with
+**Theorem SD-K-block-8-17-3mod256.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* If \(n=64k+17\) with
 \(k\equiv3\pmod{256}\), then Gap SD-K-block-8-17 holds.
 
 Proof. Lemmas SD-K-h1-parity, h2-3mod8, e3-stable, and e4-3mod256 give
 \[
 \Delta_2+\Delta_3+\Delta_4=2+13+2=17\ge16=9h_1-11.
 \]
-(The remaining blocks only increase the surplus.) \(\square\)
+(The original proof continued: "The remaining blocks only increase the
+surplus." That step is false; see Correction SD-K-prefix.) \(\square\)
 
 In particular this closes the gap on the infinite arithmetic progression
 \(n=16384s+209\) (including the former EB-worst \(n=209\)).
@@ -1210,7 +1211,7 @@ valuation \(\ge8\) yields \(v_2(243m+5)=6\) and \(v_2(243m+69)=7\)
 constantly on \(k=256s+171\) (leading sums \(\equiv64\) and
 \(\equiv128\pmod{256}\)). \(\square\)
 
-**Theorem SD-K-block-8-17-171mod256.** If \(n=64k+17\) with
+**Theorem SD-K-block-8-17-171mod256.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* If \(n=64k+17\) with
 \(k\equiv171\pmod{256}\), then Gap SD-K-block-8-17 holds.
 
 Proof. \(\Delta_2+\Delta_3+\Delta_4=2+2+13=17\ge16\). \(\square\)
@@ -1234,19 +1235,19 @@ exactly \(8\), and after dividing by \(256\) each is \(\equiv3\pmod4\); their
 sum is therefore \(\equiv2\pmod4\), forcing total valuation exactly \(9\).
 Higher binomial terms have valuation \(\ge16\). \(\square\)
 
-**Theorem SD-K-block-8-17-323mod512.** If \(n=64k+17\) with
+**Theorem SD-K-block-8-17-323mod512.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* If \(n=64k+17\) with
 \(k\equiv323\pmod{512}\), then Gap SD-K-block-8-17 holds.
 
 Proof. \(\Delta_2+\Delta_3+\Delta_4=2+13+13=28\ge16\). \(\square\)
 (Progression \(n=32768t+20689\).)
 
-**Theorem SD-K-block-8-17-579mod1024.** If \(n=64k+17\) with
+**Theorem SD-K-block-8-17-579mod1024.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* If \(n=64k+17\) with
 \(k\equiv579\pmod{1024}\), then Gap SD-K-block-8-17 holds.
 
 Proof. \(\Delta_2+\Delta_3+\Delta_4=2+13+4=19\ge16\). \(\square\)
 (Progression \(n=65536u+37073\).)
 
-**Corollary SD-K-block-8-17-early.** Gap SD-K-block-8-17 is proved for
+**Corollary SD-K-block-8-17-early.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* Gap SD-K-block-8-17 is proved for
 every \(n=64k+17\) with
 \[
 k\equiv3\pmod{256}
@@ -1260,6 +1261,22 @@ k\equiv579\pmod{1024},
 and also at \(n=81\). These are four infinite arithmetic classes, of
 combined natural density
 \(1/256+1/256+1/512+1/1024=9/1024\) among exponents \(k\). \(\square\)
+
+**Correction SD-K-prefix (2026-10-05).** Gap SD-K-block-8-17 is a statement
+about \(\mathrm{rest}=\sum_{j\ge2}\Delta_j\), summed over *every* block in the
+length-\(6n\) window. The closure theorems in this section prove only a prefix
+inequality \(\Delta_2+\cdots+\Delta_B\ge16\) for a fixed small \(B\). They then
+conclude the gap with the remark "the remaining blocks only increase the
+surplus". That is false: blocks score \(-7\), \(-16\), \(-25,\ldots\) whenever
+the landing height is at least \(2\), and such blocks occur throughout every
+window. So the prefix statements are proved (their class content is
+certified by `scripts/prove_block8_17_classes.py`), but **no residue class of
+\(k\) is proved to satisfy Gap SD-K-block-8-17**. The density-\(9/1024\)
+corollary and Lemma SD-K-81-clear's "hence" are withdrawn in the same way.
+(The gap itself still holds on the finite range checked, \(n\le5001\).)
+A prefix bound could be upgraded only by a lower bound on the remaining
+suffix \(\sum_{j>B}\Delta_j\ge0\), which is Gap SD-K-block-8-17 again for the
+shifted orbit.
 
 **Remark (the \(k\equiv11\pmod{64}\) slice).** This is the next
 \(1/16\) density class after Cor early. Blocks \(2\) and \(3\) are already
@@ -1669,7 +1686,7 @@ dictionary of Cor SD-K-block6-mod8192-k267slice. In particular
 \(e_6=v_2(1440-492t)\) takes values \(5,2,3,2,4,2,3,2,6,2,3,2,4,2,3,2\) for
 \(t=0,\ldots,15\). \(\square\)
 
-**Theorem SD-K-block-8-17-267mod512 (six-block closure).** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If
+**Theorem SD-K-block-8-17-267mod512 (six-block closure).** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If
 \(k\equiv267\pmod{512}\) and \(\Delta_2+\cdots+\Delta_6\ge16\), then Gap
 SD-K-block-8-17 holds at \(n=64k+17\).
 
@@ -1772,7 +1789,7 @@ Proof. As in Lemma SD-K-h2-3mod8 one has \(m\equiv4+7k\pmod8\), so
 \(x_2=18m-1\equiv2m-1\equiv2(4+7k)-1\equiv6k+7\pmod8\). For odd \(k\)
 this is \(5\) or \(1\) according as \(k\equiv1\) or \(3\pmod4\). \(\square\)
 
-**Lemma SD-K-81-clear.** For \(n=81\) one has \(e(x_2)=5\), \(h_2=3\), and
+**Lemma SD-K-81-clear.** *(Conclusion withdrawn 2026-10-05: only the prefix inequality is proved; see Correction SD-K-prefix.)* For \(n=81\) one has \(e(x_2)=5\), \(h_2=3\), and
 \(\Delta_2=17\ge16\). Hence Gap SD-K-block-8-17 holds at \(n=81\).
 
 Proof. Here \(k=1\), so \(m=B+3^{19}u\) with \(B=(3^{19}+37)/256\) and
@@ -3082,18 +3099,18 @@ by \(8\) for odd \(n\).) \(\square\)
 | Thm SD-K-block-8-17-267mod8192 | five mod-\(8192\) classes close at block \(6\) | **proved here** |
 | Thm SD-K-block-8-17-779mod8192 | four mod-\(8192\) classes close at block \(7\) | **proved here** |
 | Thm SD-K-block-8-17-3851mod8192 | one mod-\(8192\) class closes at block \(8\) | **proved here** |
-| Thm SD-K-block-8-17-3mod256 | \(k\equiv3\pmod{256}\Rightarrow\mathrm{rest}\ge17\) | **proved here** |
-| Thm SD-K-block-8-17-171mod256 | \(k\equiv171\pmod{256}\Rightarrow\mathrm{rest}\ge17\) | **proved here** |
-| Thm SD-K-block-8-17-323mod512 | \(k\equiv323\pmod{512}\Rightarrow\mathrm{rest}\ge28\) | **proved here** |
-| Thm SD-K-block-8-17-579mod1024 | \(k\equiv579\pmod{1024}\Rightarrow\mathrm{rest}\ge19\) | **proved here** |
-| Cor SD-K-block-8-17-early | four APs, density \(9/1024\) among \(k\), plus \(n=81\) | **proved here** |
+| Thm SD-K-block-8-17-3mod256 | \(k\equiv3\pmod{256}\Rightarrow\Delta_2+\Delta_3+\Delta_4=17\) | prefix proved; gap conclusion withdrawn |
+| Thm SD-K-block-8-17-171mod256 | \(k\equiv171\pmod{256}\Rightarrow\Delta_2+\Delta_3+\Delta_4=17\) | prefix proved; gap conclusion withdrawn |
+| Thm SD-K-block-8-17-323mod512 | \(k\equiv323\pmod{512}\Rightarrow\Delta_2+\Delta_3+\Delta_4=28\) | prefix proved; gap conclusion withdrawn |
+| Thm SD-K-block-8-17-579mod1024 | \(k\equiv579\pmod{1024}\Rightarrow\Delta_2+\Delta_3+\Delta_4=19\) | prefix proved; gap conclusion withdrawn |
+| Cor SD-K-block-8-17-early | four APs, density \(9/1024\) among \(k\), plus \(n=81\) | **withdrawn** (Correction SD-K-prefix) |
 | SD-K-x2-mod8 | odd \(k\Rightarrow x_2\equiv5\) or \(1\pmod8\) by \(k\bmod4\) | proved here |
 | SD-K-81-clear | \(n=81\Rightarrow\Delta_2=17\ge16\) | proved here (finite) |
 | SD-K-res-dens-suff | \(O/L\le0.54\Rightarrow\mathrm{rest}\ge16\) on odd \(k\), \(n\ge81\) | proved here (sufficient) |
 | SD-K-EB-suff | \(\mathrm{Extra}\ge\tfrac9{10}B\) and \(O\le\tfrac{21}{10}B\Rightarrow\mathrm{rest}\ge2B\) | proved here (sufficient) |
 | Gap SD-K-EB-17 | those EB bounds for remaining \(n=64k+17\ge145\) | open; finite through \(8001\) |
 | Gap SD-K-res-dens-17 | residual \(O/L\le0.54\) for \(n=64k+17\), \(k\ge1\) | open; sufficient for block-8-17 |
-| Gap SD-K-block-8-17 | \(\mathrm{rest}\ge9h_1-11\) for \(n=64k+17\) | open; eq only at \(n=17\); **closed on density \(9/1024\) of \(k\)** (Cor early) |
+| Gap SD-K-block-8-17 | \(\mathrm{rest}\ge9h_1-11\) for \(n=64k+17\) | open; eq only at \(n=17\); no residue class proved (Correction SD-K-prefix) |
 | SD-K-linear-6 | \(K_\downarrow\le6n\) from survivor-6 | conditional; finite through \(5001\) |
 | SD-K-linear | \(K_\downarrow\le6n\) for all odd \(n\ge3\) | conditional on either \(5n-2\) or \(6n\) gap; finite through \(5001\) |
 | SD-Mersenne-image / SD-j0 / SD-length-distinct | distinct-residue half of \(K_\downarrow\le T\) | proved here |
@@ -3146,8 +3163,8 @@ by \(8\) for odd \(n\).) \(\square\)
 >   \(\bmod\,2^m\): it is negative and *independent of \(m\)*. Conditioning on
 >   \(k\bmod2^{j}\) pins only the first \(\Theta(j)\) blocks (PCD9), so the
 >   bash controls a constant-length prefix while the bad cycles live in the
->   \(\Theta(n)\) tail. The eight proved `Thm SD-K-block-8-17-*` rows and
->   Cor SD-K-block-8-17-early stand; the *scheme* does not extend to a cover.
+>   \(\Theta(n)\) tail. The `Thm SD-K-block-8-17-*` rows prove prefix inequalities only
+>   (Correction SD-K-prefix); the *scheme* does not extend to a cover.
 > - **Gap SD-K-nc-6 is exactly "mean valuation \(\ge20/11\)"** (§2 there),
 >   whose two window forms reproduce both exception lists recorded here
 >   (\(\{5,11\}\) at \(6n\); \(\{5,17,23\}\) at \(5n-2\)).
@@ -3157,8 +3174,8 @@ by \(8\) for odd \(n\).) \(\square\)
 >   window \(t=cn\) is usable only for \(4.56<c\lesssim7.6\), so \(6n\) is
 >   well-chosen and should not be widened.
 
-1. Extend **Cor SD-K-block-8-17-early** (density \(9/1024\) of \(k\)
-   closed). On \(k\equiv11\pmod{64}\): block-\(4\) mod-\(256\) dictionary
+1. ~~Extend **Cor SD-K-block-8-17-early**~~ (withdrawn 2026-10-05: prefix
+   inequalities only; see Correction SD-K-prefix and the method no-go). On \(k\equiv11\pmod{64}\): block-\(4\) mod-\(256\) dictionary
    is Lemmas SD-K-block4-local / SD-K-b4start-mod256 and Cor
    SD-K-blocks24-k11mod64; mod-\(512\) refinements are Lemma
    SD-K-b4start-mod512 and Cor SD-K-block5-mod512-k11slice; mod-\(8192\)

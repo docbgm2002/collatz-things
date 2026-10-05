@@ -649,8 +649,8 @@ Open Avenue A only (current cut):
 1. SD1 and the finite certificate are already written in
    `avenue_a_comparison_dynamics.md`; residual atlas IEF work is closed
    locally (demote-1 + IEF22--IEF24).
-2. Live cut: **Gap SD-K-block-8-17 remainder.** Cor early closes
-   density \(9/1024\) of \(k\) (progressions \(3,171\bmod256\),
+2. Live cut: **Gap SD-K-block-8-17 remainder.** Cor early (withdrawn 2026-10-05; prefix only, see Correction
+   SD-K-prefix) had claimed density \(9/1024\) of \(k\) (progressions \(3,171\bmod256\),
    \(323\bmod512\), \(579\bmod1024\)) plus \(n=81\). Next:
    \(k\equiv11\pmod{64}\); remaining \(67\bmod256\) slices. Finite:
    equality only at \(n=17\). Parallel residual: SD-L1 growing height /
