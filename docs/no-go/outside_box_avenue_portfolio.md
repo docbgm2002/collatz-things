@@ -684,11 +684,13 @@ $M(x) \in [1,2)$ the mantissa of $x$.
 Using the Class A / Class B naming of `macro_step_lundberg.md` MAC1:
 
 1. **Class A (fuel-burning: $\tau \geq 2$, $v = 1$).**
-   $\Delta \log_2 x \approx \log_2(3/2) \approx 0.585$ and
-   $\Delta\tau = -1$, so $\Delta P \approx 0.585 - 0.6 = -0.015 < 0$.
+   $\Delta\log_2 x=\log_2(3/2+1/(2x))$ and $\Delta\tau=-1$.
+   Ignoring the unanalyzed mantissa term, the large-$x$ approximation is
+   $\Delta P\approx0.585-0.6=-0.015$; this is not an exact sign bound.
 
-2. **Class B payout ($v \geq 2$).** $\Delta \log_2 x = \log_2 3 - v \leq
-   -0.415$.
+2. **Class B payout ($v \geq 2$).** For positive odd $x$,
+   $\Delta \log_2 x = \log_2(3+1/x) - v \leq 0$, with a strict decrease
+   when $x>1$. The term $\log_2 3-v$ alone is only the homogeneous drift.
 
 3. **The recharge event ($\tau = 1 \to \tau(f(x)) = K$).** The penalty term
    jumps by $c(K-1)$. Under the Haar law $\Pr(K = i) = 2^{-i}$ of MAC2,
@@ -715,24 +717,25 @@ exactly that under "not covered (open)". The draft never analyzes $h$ — it
 only asserts that the Class B drop "absorbs any minor $\Delta h$" — so the
 one term doing real work is the one with no argument attached to it.
 
-**(b) $c$ does no work.** Over a complete macro-step $\tau$ returns to $1$, so
-$c \cdot \tau$ telescopes to zero and
-$$\mathbb{E}[\Delta P_{\text{macro}}] = \mathbb{E}[\Delta] = 2\log_2 3 - 4
-\approx -0.830$$
-*independently of $c$*. The §2 accounting confirms this rather than
-contradicting it: $(\log_2 3 - 3 + c) + \mathbb{E}[K-1](\alpha - c)
-= -0.815 - 0.015 = -0.830$ at $c = 0.6$, and the two terms move against each
-other exactly so as to cancel the $c$-dependence. FPMP is therefore MAC3 with
-the accounting redistributed *inside* the macro-step — a change of
-bookkeeping, not a new mechanism.
+**(b) $c$ cancels over the macro-step.** Over a complete macro-step $\tau$
+returns to $1$, so $c\cdot\tau$ telescopes to zero:
+$$\Delta P_{\text{macro}} = \log_2(x_{\text{out}}/x_{\text{in}})
++ h(M(x_{\text{out}})) - h(M(x_{\text{in}})).$$
+The homogeneous part of the log-ratio has Haar mean
+$2\log_2 3-4\approx-0.830$, independently of $c$, but MAC3 includes an
+additional positive affine correction to the true log-ratio. The old
+expectation equality omitted both that correction and the unanalyzed
+mantissa term. Redistributing the $c\tau$ accounting inside a macro-step
+does not change its total increment or establish a new drift bound.
 
 **(c) The quantifiers do not support the conclusion.** §2.3 bounds the
-*expected* spike and §3 asks for a supermartingale. But a supermartingale is
-what LUN2 (`macro_step_lundberg.md` §4) already delivers, unconditionally and
-with the sharp exponent $\theta^* = \ln 2$ — and it still yields only an
-"almost all" theorem. Expected-value control cannot produce the pointwise
-descent that would close Collatz; that is precisely gap EC1. Establishing
-FPMP as stated would not improve on what is already proved.
+*expected* fuel spike under a Haar law and §3 asks for a supermartingale.
+LUN2 (`macro_step_lundberg.md` §4) establishes a martingale for homogeneous
+multiplier products under a Haar start in Class B; it does not establish a
+true-value supermartingale or an "almost all" descent theorem. FPMP's actual
+increment, including its affine and mantissa terms, remains unanalyzed.
+Expected-value control alone would also leave the pointwise descent needed
+for Collatz unproved.
 
 **What would be worth doing.** Drop $c\tau$ and study $h$ alone: is there a
 mantissa correction $h(M(x))$, or a mixed low–high window term, that is
@@ -744,28 +747,30 @@ equidistributes only under an irrationality/Baker input — see
 
 ## Avenue A Extension: The Macro-Step Supermartingale
 
-**Status:** Superseded. This material is proved in full, with the
-independence and drift arguments spelled out, in
-`macro_step_lundberg.md` §§1–4 (MAC1–MAC3, LUN1–LUN2). See that note rather
-than this summary.
+**Status:** Corrected and superseded by `macro_step_lundberg.md` §§1–4
+(MAC1–MAC3, LUN1A–LUN2). Its exact affine orbit identities must be
+separated from the homogeneous multiplier martingale.
 
 The short version retained here for the portfolio index:
 
-- At $\tau(x) = 1$ the payout $v = v_2(3x+1)$ and the new fuel
-  $K = \tau(f(x))$ are independent, with $\Pr(v=j) = 2^{-(j-1)}$ for
-  $j \geq 2$ and $\Pr(K=i) = 2^{-i}$ for $i \geq 1$; so $\mathbb{E}[v] = 3$,
-  $\mathbb{E}[K] = 2$ (MAC2).
-- A macro-step is one Class B step (payout $v$, new fuel $K$) followed by
-  $K-1$ Class A steps, with
-  $\mathbb{E}[\Delta_{\text{macro}}] = 2\log_2 3 - 4 \approx -0.830$ (MAC3).
-- The Lundberg exponent is exactly $\theta^* = \ln 2$, giving
-  $\mu(E_a) \leq 2^{-a}$ (LUN1–LUN2).
+- Under a Haar start at $\tau(x)=1$, the payout $v=v_2(3x+1)$ and the new
+  fuel $K=\tau(f(x))$ are independent, with $\Pr(v=j)=2^{-(j-1)}$ for
+  $j\geq2$ and $\Pr(K=i)=2^{-i}$ for $i\geq1$; so $\mathbb E[v]=3$ and
+  $\mathbb E[K]=2$ (MAC2).
+- A macro-step is one Class B step followed by $K-1$ Class A steps. Its
+  homogeneous multiplier is $A=3^K/2^{v+K-1}$, whose log has mean
+  $2\log_2 3-4\approx-0.830$. The true endpoint is $Ax+b$ with $b>0$,
+  so $A$ is not the true value ratio (MAC3).
+- The homogeneous log-multiplier has Lundberg exponent $\theta^*=\ln2$.
+  LUN1A–LUN2 give probability at most $2^{-a}$ that the multiplier product
+  ever reaches $2^a$, starting Haar-uniformly in Class B. This is not a
+  bound on the true orbit's escape set $E_a$.
 
-**Do not reuse the framing of the original draft**, which described the
-remaining obstacle as bounding the maximum excursion of this Bernoulli shift
-via large deviations. `macro_step_lundberg.md` §6 shows the escape set is
-*not* generic in the sense such an argument needs: it contains the full
-residue class $\tau(x) \geq \lceil a/\alpha\rceil + 1$ outright (FUEL1), so it
-is concentrated on frozen low-bit classes rather than spread across them. A
-large-deviations bound on this shift is therefore not the live question; see
-`macro_step_lundberg.md` §10 for what replaced it.
+**Do not reuse the true-orbit claims of the original draft.** FUEL1 still
+shows that every positive odd integer with
+$\tau(x)\geq\lceil a/\alpha\rceil+1$ belongs to $E_a$. The resulting
+finite-domain Walsh lower bound constrains spectral claims, but an
+asymptotic white-noise obstruction also needs escape fractions bounded away
+from one. The earlier all-modulus refutation of DISC1 and automatic $C=1$
+bound for WALSH1 are not established. The proposed counting route is
+unsupported; see `macro_step_lundberg.md` §10 for possible follow-ups.

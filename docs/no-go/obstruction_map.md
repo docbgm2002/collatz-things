@@ -16,21 +16,21 @@ The residual after the proved reduction (MER1, MER2, SPN1) is:
 > below \(2^n-1\) within \(\sigma(a_n)\le Cn\) odd-steps.
 
 `RESEARCH_ROADMAP.md` sets \(C=3\) as Priority 1. Nothing below refutes **T**.
-What follows is the record of which *routes to* **T** have been closed, and by
-what.
+What follows records five closed *routes to* **T** and one unsupported
+counting route, with their precise limitations.
 
 ---
 
-## 2. The five closures
+## 2. Five closures and one unsupported route
 
-| # | Route | Closed by | Where |
+| # | Route | Obstruction / status | Where |
 |---|---|---|---|
 | 1 | Fixed local block floor (256-Block Floor) | Explicit exponent class with 256-block weight 257, no prior descent, no equal-diagonal collision | `docs/repunit/repunit_low_prefix_obstruction.md` §§3-4, 9 |
 | 2 | Variable-window recovery depending only on the observed finite deficit | Corollary 5: the low run extends past any prescribed finite horizon | `docs/repunit/repunit_low_prefix_obstruction.md` §7 |
 | 3 | Kolmogorov / description-complexity argument | A residue mod an enormous power of two can have a very short description ("the discrete-log residue associated with \((2,1^{K-1})\)") | `docs/repunit/repunit_low_prefix_obstruction.md` §10 |
 | 4 | Generic Baker / \(p\)-adic logarithmic forms | The height gate: the fixed-\(d=7\) cancellation is special; generic \(d_K\) has bit-length comparable to \(E_K\), so a variable-\(d\) bound feeds the unknown valuation mass back into its own upper bound | `docs/repunit/repunit_baker_nonshadowing.md` §6 |
 | 5 | Any argument local to a valuation-one run | EXR1: the storage/accumulation exchange rate is exactly one, so \(D_K-\log_2Z_K\) is conserved | `docs/no-go/storage_exchange_rate.md` |
-| 6 | Any argument requiring the escape set \(E_a\) to be equidistributed or spectrally generic mod \(2^k\) | FUEL1: \(\tau(x)\ge\lceil a/\alpha\rceil+1\Rightarrow x\in E_a\), so \(E_a\) contains a full residue class in which its relative density is \(\ge2^a\) | `docs/no-go/macro_step_lundberg.md` §6 |
+| 6 | The proposed escape-set counting route | Unsupported: FUEL1 puts a full positive-integer residue class in \(E_a\), but LUN2 bounds only homogeneous multiplier products and supplies no global density bound for \(E_a\) | `docs/no-go/macro_step_lundberg.md` §6 |
 
 Closures 1-3 all descend from a single object: the nested exponent classes
 converging \(2\)-adically to the ghost solution of \(3^{\alpha+1}=-7\).
@@ -38,25 +38,23 @@ Closure 5 explains *why* that object is so hard to charge against — it
 generates long valuation-one runs, and by EXR1 nothing local can be charged
 against them.
 
-Closure 6 is the same residue-freezing that drives closures 1-3 and
-`no_local_potential.md` §1, seen one level up. Escape is driven by
-trailing-one fuel; fuel is a low-bit congruence; so the set of escaping
-starting points is *concentrated* on frozen classes rather than spread across
-them. Concretely, \(E_a\) contains the class \(x\equiv-1\pmod{2^{t_a}}\)
-outright, and the forced Walsh coefficient
-\(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert\ge(1-\mu)/(2^{t_a}-1)\) does not
-decay with sampling-domain size, so \(E_a\) is provably less generic than a
-random set of the same density at every scale. Any counting, equidistribution,
-or spectral-flatness route to a universal descent statement is attacking the
-one property \(E_a\) demonstrably lacks.
+Item 6 involves the same residue-freezing that drives closures 1-3 and
+`no_local_potential.md` §1. Sufficient trailing-one fuel forces escape, and
+fuel is a low-bit congruence. Thus \(E_a\) contains every positive odd integer
+in the class \(x\equiv-1\pmod{2^{t_a}}\), where
+\(t_a=\lceil a/\alpha\rceil+1\) and \(\alpha=\log_2(3/2)\). This gives a
+finite-domain Walsh lower bound in terms of the observed escape fraction. An asymptotic
+white-noise obstruction follows only if those fractions stay bounded away
+from one. The cylinder inclusion alone does not establish the formerly
+claimed \(2^a\) overrepresentation or refute all counting routes.
 
-> **Historical note.** Closure 6 was originally recorded the other way round:
-> `macro_step_lundberg.md` claimed computational *evidence for* equidistribution
-> (DISC1) and a white-noise spectrum (WALSH1), and named the analytic proof of
-> WALSH1 as its remaining gap. The evidence was an artifact of normalizing
-> against the Haar bound \(2^{-a}\) rather than the observed \(\mu(E_a)\).
-> Both claims are now ledgered as refuted; see the correction history in
-> `CLAIM_LEDGER.md`.
+> **Correction history.** `macro_step_lundberg.md` first reported finite
+> computational evidence for DISC1/WALSH1, then declared both refuted using
+> the purported true-orbit escape bound \(\mu(E_a)\le2^{-a}\). That bound
+> does not follow from LUN2: the multiplier product omits the positive affine
+> corrections. The finite computations remain observations, while the
+> all-modulus refutation and WALSH1's claimed \(C=1\) consequence are
+> withdrawn. See `CLAIM_LEDGER.md` for the corrected statuses.
 
 ---
 
@@ -127,8 +125,9 @@ because it is expected to work.
 
 ## 5. Assessment
 
-The programme has produced one theorem (BAKER1-3), six closures, and no
-unconditional progress on **T**. The closures are the more valuable output:
+The programme has produced one theorem (BAKER1-3), five closures, an
+unsupported counting route, and no unconditional progress on **T**. The
+closures are the more valuable output:
 they are permanent, they are cheap to state, and they redirect effort. But
 they also mean the repunit-tail route is not a short path to **T**, and the
 no-go / manuscript track should not be held for it.

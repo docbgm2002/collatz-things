@@ -1,16 +1,23 @@
 # Macro-Step Lundberg Programme
 
-**Status:** Exact proved structure (MAC1–MAC3, LUN1–LUN2, ANC1). Not a proof
-of the Collatz conjecture. **The counting route to SD1 is closed as a dead
-end:** its equidistribution hypothesis DISC1 is not merely unproven but
-*false*, and the spectral repair WALSH1 is either vacuous or false depending
-on how it is read (§6). An earlier draft of this note reported computational
-evidence *for* DISC1/WALSH1; that evidence was a normalization artifact and is
-retracted here.
+**Status:** Exact macro-step identities (MAC1–MAC3), a homogeneous-multiplier
+martingale (LUN1A–LUN2), and ancestry capacity (ANC1). The claimed
+identification of the multiplier with actual orbit growth is withdrawn.
+The counting route to SD1 is unsupported by these results. Its finite
+escape-set diagnostics remain evidence, with the qualifications in §6.
+This is not a proof of the Collatz conjecture.
 
-**Building on:** `../fuse/fuse_burn_attack.md`,
-`avenue_a_comparison_dynamics.md`, `no_local_potential.md`,
-`../repunit/next_generation_attack_program.md`.
+**Correction (2026-10-05).** The macro-step starting at 9 follows
+$9\to7\to11\to17$. Its actual ratio is $17/9$, whereas its homogeneous
+multiplier is $27/16$. Earlier versions omitted the affine terms and used
+the multiplier martingale to claim an actual-orbit escape bound. This note
+now separates those objects and revises the dependent DISC1/WALSH1 claims.
+The example refutes the identification, not the proposed density bound itself.
+
+**Building on:** [fuse burn](../fuse/fuse_burn_attack.md),
+[comparison dynamics](avenue_a_comparison_dynamics.md),
+[local potential obstruction](no_local_potential.md), and the
+[attack programme](../repunit/next_generation_attack_program.md).
 
 **License:** CC-BY 4.0
 
@@ -18,36 +25,29 @@ retracted here.
 
 ## Abstract
 
-We decompose the accelerated odd Collatz map into exact **macro-steps**
-(renewal cycles between fuel-exhausted states) and prove that the macro-step
-log-drift has a **closed-form Lundberg exponent** $\theta^* = \ln 2$. This
-yields a Haar-measure escape bound $\mu(E_a) \leq 2^{-a}$ via Ville's
-inequality, and a fully proved **ancestry capacity lemma** (ANC1): the reverse
-map has at most one preimage per bit-length.
+We decompose the accelerated odd Collatz map into macro-steps between
+fuel-exhausted states. Each macro-step is an exact affine map $x\mapsto Ax+b$.
+Its homogeneous multiplier $A$ has mean one under Haar measure conditioned
+on a fuel-exhausted start, and $\log_2 A$ has Lundberg exponent $\ln 2$.
+Ville's inequality bounds the maximum of products of these multipliers.
+It does not, without additional affine control, bound the maximum of an
+actual positive-integer orbit. We retain the elementary ancestry capacity
+lemma and finite escape-set diagnostics, with their probability spaces stated
+separately.
 
-A counting argument would reduce the universal SD1 statement to an
-equidistribution lemma (DISC1) for the escape set $E_a$. We show in §6 that
-**DISC1 is false**: the burn identity forces $E_a$ to contain the entire
-residue class $x \equiv -1 \pmod{2^{t_a}}$, $t_a = \lceil a/\alpha\rceil + 1$,
-inside which its relative density is $1/\mu(E_a) \geq 2^a$. The proposed
-spectral repair (WALSH1) does not survive either: read literally its bound is
-a trivial corollary of LUN2, and read as a white-noise claim it is
-contradicted by the same cylinder containment, which forces
-$\max_{\eta \neq 0}|\hat{1}_{E_a}(\eta)| \geq (1-\mu)/(2^{t_a}-1)$, a bound
-independent of the sampling domain.
+## 0. Notation and probability spaces
 
-The proved core (MAC1–MAC3, LUN1–LUN2, ANC1) is unaffected: it is a sharp
-"almost all" theorem, and the obstruction to promoting it to "all" is the
-same fuel-concentration phenomenon identified in `no_local_potential.md`.
+As in [NOTATION.md](../../NOTATION.md),
+$f(x)=(3x+1)/2^{v_2(3x+1)}$ for positive odd $x$ (including the fixed point 1),
+$\tau(x)=v_2(x+1)$, and $\alpha=\log_2 3-1$.
+Write $\mathcal B=\{x\in\mathbb Z_2:x\equiv1\pmod4\}$.
 
----
-
-## 0. Notation
-
-As in `../../NOTATION.md`: $f(x) = (3x+1)/2^{v_2(3x+1)}$ for odd $x > 1$;
-$\tau(x) = v_2(x+1)$ (trailing-one fuel);
-$\operatorname{bitlen}(x) = \lfloor \log_2 x \rfloor + 1$.
-Write $\alpha = \log_2 3 - 1 \approx 0.584963$.
+Statements about real size and logarithms of values concern positive
+integers. MAC2 and LUN1A–LUN2 use normalized Haar measure on $\mathcal B$,
+and their real-valued random variables depend on finite valuation words.
+Haar-null exceptional states with infinite valuations are excluded.
+There is no ordered real size for a general $2$-adic point. The finite
+integer-domain escape frequencies of §6 are not this Haar probability.
 
 ---
 
@@ -55,28 +55,25 @@ Write $\alpha = \log_2 3 - 1 \approx 0.584963$.
 
 ### MAC1 (Fuel partition). — **proved**
 
-Every odd $x$ is in exactly one of two classes:
+Every positive odd $x$ is in exactly one of two classes:
 
-- **Class A (fuel-burning):** $\tau(x) \geq 2$. Then $x = 2^L m - 1$ with
-  $L \geq 2$, $v_2(3x+1) = 1$, $f(x) = 3 \cdot 2^{L-1} m - 1$, and
-  $\tau(f(x)) = L - 1$. Log-drift: $\Delta_A = \log_2 3 - 1 = \alpha > 0$.
+- **Class A (fuel-burning):** $\tau(x)=L\ge2$. Write $x=2^L m-1$ with
+  $m$ odd. Then $v_2(3x+1)=1$, $f(x)=3\cdot2^{L-1}m-1$, and
+  $\tau(f(x))=L-1$. The homogeneous log-multiplier is $\alpha$; the
+  actual log-ratio is $\alpha+\log_2(1+1/(3x))$.
+- **Class B (fuel-exhausted):** $\tau(x)=1$, equivalently $x\equiv1\pmod4$.
+  Then $v_2(3x+1)\ge2$.
 
-- **Class B (fuel-exhausted):** $\tau(x) = 1$, i.e. $x \equiv 1 \pmod{4}$.
-  Then $v_2(3x+1) \geq 2$.
+A macro-step starts at Class B, takes one payout step with valuation $v$
+and new fuel $K=\tau(f(x))$, then takes exactly $K-1$ Class A steps,
+returning to Class B. The fixed point 1 has $v=2,K=1$.
 
-A **macro-step** starts at a Class B state, takes one Class B step (payout
-$v$, new fuel $K = \tau(f(x))$), then exactly $K-1$ Class A steps, returning
-to Class B.
-
-*Proof.* Class A is the suffix-burn identity of `../fuse/fuse_burn_attack.md`
-§1. For Class B: $x = 4k+1 \Rightarrow 3x+1 = 4(3k+1)$, so $v \geq 2$.
+*Proof.* The Class A identity is the suffix-burn identity. For Class B,
+$3(4k+1)+1=4(3k+1)$. Iterating the fuel decrement gives the return.
 $\blacksquare$
 
-> **Naming.** "Class A / fuel-burning" is the $\tau \geq 2$, $v = 1$ step;
-> "Class B / fuel-exhausted" is the $\tau = 1$ step that pays out and
-> recharges. Earlier drafts elsewhere in the repository called the Class A
-> steps "recharge steps"; that usage is retired — a *recharge* is the Class B
-> event that creates new fuel, and a *burn* consumes it.
+Here "recharge" means the Class B event that creates new fuel; "burn"
+means a Class A step that consumes it.
 
 ---
 
@@ -84,155 +81,129 @@ $\blacksquare$
 
 ### MAC2 (Independence of payout and new fuel). — **proved**
 
-Let $x$ be Haar-uniform in $\mathbb{Z}_2^{\mathrm{odd}}$ conditioned on
-$\tau(x) = 1$. Let $v = v_2(3x+1)$ and $K = \tau(f(x))$. Then $v$ and $K$
-are independent, with
+For Haar-uniform $x$ conditioned on $\mathcal B$, $v=v_2(3x+1)$ and
+$K=\tau(f(x))$ are independent, with
 
-$$\Pr(v = j) = 2^{-(j-1)} \ (j \geq 2), \qquad \Pr(K = i) = 2^{-i} \ (i \geq 1).$$
+$$\Pr(v=j)=2^{-(j-1)}\quad(j\ge2),\qquad
+\Pr(K=i)=2^{-i}\quad(i\ge1).$$
 
-In particular $\mathbb{E}[v] = 3$ and $\mathbb{E}[K] = 2$.
+Thus $\mathbb E[v]=3$ and $\mathbb E[K]=2$.
 
-*Proof.* Write $x = 4k+1$, $u = v - 2 = v_2(3k+1) \geq 0$, and
-$3k+1 = 2^u m$ with $m$ odd. Since $3$ is a $2$-adic unit, the map
-$k \mapsto m = (3k+1)/2^u$ is a measure-preserving bijection from the affine
-subspace $\{k : v_2(3k+1) = u\}$ onto $\mathbb{Z}_2^\times$. Now
-$K = v_2(m+1)$, and for Haar-uniform odd $m$,
-$\Pr(v_2(m+1) = i) = 2^{-i}$, independent of $u$. Hence $K \perp v$.
-The marginal for $v$ is immediate from $v = 2 + v_2(3k+1)$. $\blacksquare$
+*Proof.* Write $x=4k+1$, $u=v-2=v_2(3k+1)$, and $3k+1=2^u m$.
+Conditional on $u$, division by $2^u$ after the affine bijection gives
+normalized Haar measure on odd $m$. Hence $K=v_2(m+1)$ is geometric
+and independent of $u$. $\blacksquare$
 
 ---
 
-## 3. Macro-step drift
+## 3. Exact affine endpoint and multiplier drift
 
-### MAC3 (Exact drift). — **proved**
+### MAC3 (Affine endpoint and homogeneous drift). — **proved**
 
-The log-drift of one macro-step is
+For a macro-step starting at a positive Class B integer $x$, put
 
-$$\Delta = (\log_2 3 - v) + (K-1)(\log_2 3 - 1) = K\alpha + 1 - v,$$
+$$A=\frac{3^K}{2^{v+K-1}},\qquad
+b=\frac{3^{K-1}(1+2^v)-2^{v+K-1}}{2^{v+K-1}}.$$
 
-and
+Then
 
-$$\mathbb{E}[\Delta] = \mathbb{E}[K]\alpha + 1 - \mathbb{E}[v]
-= 2\alpha - 2 = 2\log_2 3 - 4 \approx -0.830075.$$
+$$x_{\rm out}=Ax+b,\qquad
+\Delta:=\log_2 A=K\alpha+1-v.$$
 
-*Proof.* Linearity of expectation and MAC2. $\blacksquare$
+The additive term is positive: $b=(3/2)^{K-1}(1+2^{-v})-1>0$.
+Consequently the actual log-ratio is, writing $x_i=f^i(x)$,
+
+$$\log_2\frac{x_{\rm out}}x
+=\Delta+\log_2\left(1+\frac{b}{Ax}\right)
+=\Delta+\sum_{i=0}^{K-1}\log_2\left(1+\frac1{3x_i}\right).$$
+
+*Proof.* Set $y=(3x+1)/2^v$. The $K-1$ burn steps give
+$x_{\rm out}=(3/2)^{K-1}(y+1)-1$; expansion gives the endpoint formula.
+Multiplication of the exact odd-step ratios gives the logarithmic identity.
+$\blacksquare$
+
+Only the homogeneous drift has the expectation computed from MAC2:
+
+$$\mathbb E[\Delta]=2\alpha+1-3=2\log_2 3-4\approx-0.830075.$$
+
+**Counterexample to the former identity.** At $x=9$,
+$v=2,K=3,A=27/16,b=29/16$, and $x_{\rm out}=17$.
+Thus $x_{\rm out}/x=17/9\ne27/16=A$. The affine correction cannot be
+discarded in an exact statement.
 
 ---
 
-## 4. Lundberg exponent and escape bound
+## 4. Lundberg exponent and multiplier escape bound
 
-The substance of this section is an exact identity, stated first; the
-Lundberg exponent is its restatement.
+### LUN1A (Mean-one homogeneous multiplier). — **proved**
 
-### LUN1A (Macro-steps are value-neutral). — **proved**
+Under the MAC2 law, $\mathbb E[A]=1$.
 
-Over one macro-step, the *value ratio itself* has expectation exactly one:
+*Proof.* Independence gives
+$$\mathbb E[(3/2)^K]=\sum_{i\ge1}(3/4)^i=3,\qquad
+\mathbb E[2^{1-v}]=4\sum_{j\ge2}4^{-j}=\tfrac13.$$
+Their product is one. $\blacksquare$
 
-$$\mathbb{E}\!\left[\frac{x_{\text{out}}}{x_{\text{in}}}\right] = 1.$$
-
-*Proof.* By MAC3 the ratio is $2^{\Delta} = 2^{K\alpha + 1 - v}
-= (3/2)^K \cdot 2^{1-v}$. By MAC2 the two factors are independent, and both
-series converge:
-
-$$\mathbb{E}\big[(3/2)^K\big] = \sum_{i \geq 1} 2^{-i} (3/2)^i
-= \sum_{i \geq 1} (3/4)^i = 3,$$
-
-$$\mathbb{E}\big[2^{1-v}\big] = 2 \sum_{j \geq 2} 2^{-(j-1)} 2^{-j}
-= 4 \sum_{j \geq 2} 4^{-j} = \tfrac13 .$$
-
-Their product is $3 \cdot \tfrac13 = 1$. $\blacksquare$
-
-> **Reading.** The accelerated odd map is a martingale **in value**, not
-> merely a negative-drift walk in log-value. The two coexist because
-> $\mathbb{E}[\log_2(\cdot)] = 2\log_2 3 - 4 < 0 = \log_2 \mathbb{E}[\cdot]$,
-> a strict Jensen gap of $\approx 0.83$ bits per macro-step: the mean is
-> carried entirely by rare high-$K$ excursions while the typical trajectory
-> descends. This is the exact form of the classical heuristic that Collatz
-> "should" descend, and it identifies precisely where the heuristic's
-> expectation and its typical behaviour part company.
+This calculation concerns $A$, not $x_{\rm out}/x=A+b/x$.
+It does not make actual Collatz values a martingale. The Jensen gap
+$\log_2\mathbb E[A]-\mathbb E[\log_2 A]\approx0.83$ bits is a statement
+about the multiplier law.
 
 ### LUN1 (Closed-form Lundberg exponent). — **proved**
 
-The moment generating function of $\Delta$ is
+The moment generating function of $\Delta=\log_2 A$ is
 
-$$M(\theta) = \mathbb{E}[e^{\theta \Delta}]
-= \frac{e^{\theta(\alpha-1)}}{(2 - e^{\theta\alpha})(2 - e^{-\theta})},
-\qquad \theta < \frac{\ln 2}{\alpha} \approx 1.1850,$$
+$$M(\theta)=\frac{e^{\theta(\alpha-1)}}
+{(2-e^{\theta\alpha})(2-e^{-\theta})},
+\qquad -\ln2<\theta<\frac{\ln2}{\alpha}.$$
 
-and the unique positive solution of $M(\theta) = 1$ is
+Both restrictions are required for the two geometric series to converge.
+The unique positive root of $M(\theta)=1$ is $\theta^*=\ln2$.
 
-$$\theta^* = \ln 2.$$
-
-*Proof.* Geometric-series evaluation of $\mathbb{E}[e^{\theta K \alpha}]$ and
-$\mathbb{E}[e^{-\theta v}]$ gives the displayed formula. That $\theta^*=\ln 2$
-is a root is LUN1A verbatim, since $e^{(\ln 2)\Delta} = 2^{\Delta}$ is the
-value ratio; directly, at $\theta = \ln 2$ one has
-$e^{\theta\alpha} = 3/2$, $e^{-\theta} = 1/2$, $e^{\theta(\alpha-1)} = 3/4$,
-so $M(\ln 2) = \frac{3/4}{(1/2)(3/2)} = 1$. Uniqueness follows from strict
-convexity of $\log M$ and $M(0) = 1$, $M'(0) = \mathbb{E}[\Delta] < 0$.
+*Proof.* Evaluate the independent geometric sums from MAC2.
+LUN1A gives $M(\ln2)=\mathbb E[A]=1$; explicitly it is
+$(3/4)/((1/2)(3/2))=1$.
+Strict convexity of $\log M$, $M(0)=1$, and $M'(0)<0$ give uniqueness.
 $\blacksquare$
 
-> **Why the exponent is clean.** $\theta^* = \ln 2$ is not a numerical root
-> that happens to land on a familiar constant: it is forced by LUN1A, because
-> $e^{\theta \Delta}$ at $\theta = \ln 2$ *is* $x_{\text{out}}/x_{\text{in}}$.
-> Any accelerated map whose one-step value ratio has mean $1$ has Lundberg
-> exponent $\ln 2$ in base-$2$ log-drift coordinates.
+### LUN2 (Haar multiplier bound via Ville). — **proved**
 
-**Novelty: unchecked.** The negative log-drift is classical
-(Terras 1976, Everett 1977). The exact value-martingale identity LUN1A is not
-something the repository's bibliography pass covers, and
-`BIBLIOGRAPHY_PASS.md` has not been extended to it. Do not claim priority for
-LUN1A without a literature check.
+Start with normalized Haar measure on $\mathcal B$. Let
+$S_N=\sum_{i=1}^N\Delta_i$ over consecutive macro-steps.
+Then $W_N=2^{S_N}=\prod_{i=1}^N A_i$ is a nonnegative martingale and
 
-### LUN2 (Haar escape bound via Ville). — **proved**
+$$\Pr_{\mathcal B}\left(\sup_{N\ge0}S_N\ge a\right)\le2^{-a},
+\qquad a>0.$$
 
-For Haar-random odd $x_0 \in \mathbb{Z}_2$, let $S_N = \sum_{i=1}^N \Delta_i$
-be the cumulative macro-step log-drift. Then $e^{(\ln 2) S_N}$ is a
-non-negative martingale, and by Ville's inequality,
+*Proof.* We first check the return law directly. Conditional on a fixed
+$(v,K)$, write the post-payout state as $m=2^K q-1$ with $q$ Haar-uniform
+odd. The endpoint after burning is $2\cdot3^{K-1}q-1$. Since multiplication
+by $3^{K-1}$ preserves Haar measure on odd $q$, this endpoint is
+Haar-uniform on $\mathcal B$, independently of $(v,K)$. Induction gives
+independent, identically distributed macro-step pairs. By LUN1A,
+$\mathbb E[A_{i+1}\mid A_1,\ldots,A_i]=1$, so $W_N$ is a martingale
+with $W_0=1$. Ville's inequality gives the displayed bound. $\blacksquare$
 
-$$\Pr\left(\sup_{N \geq 0} S_N \geq a\right) \leq 2^{-a} \qquad (a > 0).$$
+**Scope.** This is a bound on multiplier products starting in Class B.
+An initial Class A burn is not included in that probability space.
+Actual endpoint ratios contain the positive affine corrections of MAC3;
+$W_N$ is not the orbit ratio.
 
-Equivalently: the Haar measure of starting points whose orbit ever reaches
-$2^a$ times its initial value is at most $2^{-a}$.
+The distinction changes the escape event. The full orbit
+$9\to7\to11\to17\to13\to5\to1$ has peak ratio $17/9>7/4$,
+whereas the maximum cumulative homogeneous multiplier is $27/16<7/4$.
+Continuing at the fixed point cannot increase either maximum.
+Thus the two threshold events are not equivalent even for a Class B start.
 
-*Proof.* Three steps; the first is the only substantive one and was elided in
-an earlier draft.
+Within a macro-step a positive Class B step decreases the value unless
+$x=1$, and the subsequent burn steps increase it. The maximum is therefore
+at one of its two endpoints. This observation does not remove the affine
+terms. No actual-orbit density bound, or new derivation of a
+Terras/Everett theorem, follows here from LUN2 alone.
 
-**(i) The $\Delta_i$ are i.i.d.** MAC2 gives independence of $(v, K)$ at a
-*single* step, for a Haar-uniform point conditioned on $\tau = 1$. The
-martingale property needs more: that the state entering macro-step $i+1$ is
-again Haar-uniform on $\{\tau = 1\}$ and independent of
-$\mathcal{F}_i = \sigma(\Delta_1, \ldots, \Delta_i)$. This is supplied by the
-standard $2$-adic conjugacy: the accelerated odd map extends to a
-measure-preserving, ergodic map of $\mathbb{Z}_2$ that is topologically
-conjugate to the one-sided shift, with the conjugacy $Q_\infty$ carrying Haar
-measure to Haar measure (Lagarias 1985 §3; Bernstein–Lagarias 1996). Under
-that conjugacy the macro-step decomposition of MAC1 cuts the digit stream into
-consecutive disjoint blocks whose lengths are determined by the block contents
-themselves, i.e. it is a renewal partition of an i.i.d. digit sequence. Hence
-$\Delta_1, \Delta_2, \ldots$ are i.i.d. with the law of MAC3.
-
-**(ii) The martingale.** By (i) and $M(\ln 2) = 1$ from LUN1,
-$\mathbb{E}[e^{(\ln 2)\Delta_{i+1}} \mid \mathcal{F}_i] = 1$, so
-$W_N := e^{(\ln 2) S_N}$ is a non-negative martingale with $W_0 = 1$.
-
-**(iii) Ville.** $\Pr(\sup_N W_N \geq 2^a) \leq \mathbb{E}[W_0] \cdot 2^{-a}
-= 2^{-a}$, and $W_N \geq 2^a \iff S_N \geq a$. $\blacksquare$
-
-**Remark (the supremum really is the orbit maximum).** $S_N$ records the
-log-ratio only at macro-step *endpoints*, but the stated corollary is about
-the orbit ever reaching $2^a x_0$. These agree: within one macro-step the
-Class B step multiplies by $3 \cdot 2^{-v}$ with $v \geq 2 > \log_2 3$, hence
-strictly decreases the value, and the following $K-1$ Class A steps each
-multiply by more than $3/2$, hence increase monotonically. So the maximum over
-a macro-step is attained at its endpoint, and
-$\sup_N S_N$ is the log of the true orbit maximum.
-
-> **Reading.** LUN2 is an "almost-all" descent theorem: a Haar-random
-> $2$-adic starting point descends with probability $1$. This recovers the
-> Terras/Everett-type density results by a strictly sharper mechanism (exact
-> exponent $\ln 2$, exact renewal structure). It is **not** a statement about
-> any specific integer; bridging that gap is §5–§7.
+**Novelty:** unchecked for this packaging of the multiplier law. The
+earlier claimed value-martingale identity is withdrawn, not a literature
+priority claim.
 
 ---
 
@@ -280,129 +251,112 @@ bits.
 
 ---
 
-## 6. The counting route to SD1 is a dead end
+## 6. Finite escape-set diagnostics and the unsupported counting route
 
-This section replaces the earlier §6, which reported computational evidence
-*supporting* the equidistribution hypothesis DISC1. That evidence was an
-artifact of normalizing against the Haar bound $2^{-a}$ instead of against the
-observed measure $\mu(E_a)$; corrected, the same computation points the other
-way. The hypothesis is refuted below by an exact argument, with the
-computation serving only as illustration.
+Earlier versions used LUN2 to bound actual escape frequencies and then
+declared DISC1/WALSH1 settled. That transfer is not justified. The
+normalization errors identified in the earlier tables remain errors, but
+their correction does not supply the missing probability argument.
 
-Throughout, fix the escape set
+Define the actual positive-integer event
 
-$$E_a = \{x \text{ odd} : \text{the orbit of } x \text{ ever reaches } \geq 2^a x\},$$
+$$E_a^+=\{x\in\mathbb Z_{>0}\text{ odd}:\exists j\ge0,\ f^j(x)\ge2^a x\}.$$
 
-so that LUN2 reads $\mu(E_a) \leq 2^{-a}$.
+For the numerical tables use $D_B=\{2j+1:0\le j<2^B\}$ and the bounded event
+$E_{a,B,T}$ where the threshold must be reached within $T$ odd steps.
+Write $\mu_D=|E_{a,B,T}|/2^B$. In the tables $B=14,T=4000$.
+This is a finite uniform frequency. LUN2 does not prove $\mu_D\le2^{-a}$
+or give a Haar measure for $E_a^+$.
 
-### 6.1 The original obstruction (retained)
+### 6.1 The counting obstruction
 
-The counting skeleton assumed that equidistribution of $E_a$ follows from
-cylinder depth. This is incorrect: the escape cylinders have depth
-$L \approx 3.6a$ (expected total payout over the escape window), exceeding the
-$b = a$ needed for the counting step, and the argument fails when $L > b$. So
-DISC1 was left as an independent claim. §6.2 shows the independent claim is
-false.
+Cylinder depth alone does not establish equidistribution across a coarser
+modulus. Any revived counting argument must state its domain, the actual
+escape event, and a proved estimate connecting them. Multiplier-only
+large deviations do not provide that connection.
 
-### 6.2 DISC1 is false — the burn family is entirely inside $E_a$
+### 6.2 FUEL1 (Deterministic integer escape from fuel). — **proved**
 
-### FUEL1 (Deterministic escape from fuel). — **proved**
+Let $t_a=\lceil a/\alpha\rceil+1$. Every positive odd $x$ with
+$\tau(x)\ge t_a$ belongs to $E_a^+$, and reaches the threshold within
+$t_a-1$ steps.
 
-Let $t_a := \lceil a/\alpha \rceil + 1$, where $\alpha = \log_2 3 - 1$. Then
+*Proof.* The first $t_a-1$ steps are Class A. Each has ratio
+$3/2+1/(2x_i)>3/2$, so their product exceeds
+$(3/2)^{t_a-1}\ge2^a$. $\blacksquare$
 
-$$\tau(x) \geq t_a \implies x \in E_a,$$
+For $B\ge t_a-1$ and $T\ge t_a-1$, $E_{a,B,T}$ therefore contains
+the entire class $x\equiv-1\pmod{2^{t_a}}$ within $D_B$.
+Its density inside that class is one, and its relative density compared
+with the whole sample is $1/\mu_D$. The further lower bound $2^a$
+previously asserted for this ratio is not proved here.
 
-equivalently $E_a \supseteq \{x : x \equiv -1 \pmod{2^{t_a}}\}$: a *full
-residue class*, with no exceptions and no probabilistic content.
+**DISC1 status.** The finite sample is not equidistributed modulo
+$2^{a+2}$ (see §6.4). FUEL1 alone does not refute an asymptotic claim at
+that specific modulus: $t_a$ can exceed $a+2$, and fine-class containment
+does not determine all coarse-class densities. A universal
+equidistribution claim needs a precise formulation and separate analysis.
 
-*Proof.* Let $\tau(x) = L \geq t_a$. By MAC1, the first $L-1$ steps are all
-Class A, and each satisfies $f(y)/y = 3/2 + 1/(2y) > 3/2$
-(`no_local_potential.md` Lemma 1). Composing, the value after $L-1$ steps
-exceeds $x \cdot (3/2)^{L-1} = x \cdot 2^{\alpha(L-1)}$. Since
-$L - 1 \geq t_a - 1 = \lceil a/\alpha \rceil \geq a/\alpha$, we get
-$\alpha(L-1) \geq a$, so the orbit reaches at least $2^a x$. $\blacksquare$
+### 6.3 WALSH1: finite identities and conditional consequences
 
-**Consequence (DISC1 is false).** Within the class $x \equiv -1 \pmod{2^{t_a}}$
-the relative density of $E_a$ is exactly $1$, while its global density is
-$\mu(E_a) \leq 2^{-a}$. The relative density of $E_a$ in that one class is
-therefore at least $2^a$ — it is overrepresented by a factor growing
-exponentially in $a$. No equidistribution statement of the form assumed by the
-counting argument can hold.
+Normalize the Walsh transform in $j=(x-1)/2$ coordinates as in
+[scripts/verify_walsh1.py](../../scripts/verify_walsh1.py), with indicator
+$A(j)=1_{E_{a,B,T}}(2j+1)$. Then $\widehat A(0)=\mu_D$ and
 
-The mechanism is not new to this note: it is the *residue-freezing* of
-`no_local_potential.md` §1, where the burn family $3^j 2^t - 1$ was shown to
-sit in the single residue $-1$ however large its members grow. FUEL1 says that
-this same frozen family is a subset of every escape set.
+$$|\widehat A(\eta)|\le\mu_D.$$
 
-### 6.3 WALSH1 does not repair it
+**Literal bound.** A bound $|\widehat A(\eta)|\le C2^{-a}$ with $C=1$
+would follow from $\mu_D\le2^{-a}$, but this premise is not supplied by
+LUN2. The earlier unconditional WALSH1 claim is withdrawn.
 
-The spectral proposal was to replace DISC1 by a bound on the Walsh
-coefficients of $1_{E_a}$. Normalize as in `scripts/verify_walsh1.py`, so that
-$\hat A(0) = \mu(E_a)$. Then the proposal fails on both available readings.
+**Cylinder lower bound.** Under the FUEL1 conditions on $B,T$, the forced
+class fixes $t_a-1$ low bits of $j$. Let $V$ be its
+$2^{t_a-1}$ supported Walsh frequencies. Expanding the cylinder indicator
+in characters and using containment gives
+$\sum_{\eta\in V}\chi_\eta(c)\widehat A(\eta)=1$.
+Subtracting the zero-frequency term and applying the triangle inequality
+yields
 
-**Reading 1 — literal. The stated bound is vacuous.** WALSH1-Analytic asked
-for $|\hat A(\eta)| \leq C \cdot 2^{-a}$ for all $\eta \neq 0$. But for any
-indicator function and any $\eta$,
+$$\max_{\eta\ne0}|\widehat A(\eta)|
+\ge\frac{1-\mu_D}{2^{t_a-1}-1}.$$
 
-$$|\hat A(\eta)| \;\leq\; \hat A(0) \;=\; \mu(E_a) \;\leq\; 2^{-a},$$
+The $t_a-1$ exponent accounts for the odd domain: its parity bit is already
+fixed. This finite inequality is checked using integer Walsh coefficients
+in the script.
 
-the last inequality being LUN2. So the bound holds with $C = 1$ as an
-immediate corollary of a result already proved in §4, and cannot be "the
-single remaining open problem." Any nonvacuous version must specify a $C$
-strictly smaller than the observed ratio $\mu(E_a)/2^{-a} \approx 0.74$–$0.87$,
-and the counting argument must be shown to close for that specific $C$ — which
-it was never checked to do.
-
-**Reading 2 — as intended. The white-noise claim is false.** The substantive
-reading is that $E_a$ has no macroscopic structure, i.e.
-$\max_{\eta \neq 0} |\hat A(\eta)| = o(\mu(E_a))$ as the sampling domain
-grows. FUEL1 refutes this. Let $C \subseteq E_a$ be the cylinder of
-codimension $t_a$ from FUEL1 and let $V$ be the $2^{t_a}$-element group of
-Walsh frequencies supported on those $t_a$ coordinates. Expanding $1_C$ in
-characters and using $C \subseteq E_a$,
-
-$$2^{-t_a} = \mathbb{E}[1_{E_a} 1_C]
-= 2^{-t_a} \sum_{\eta \in V} \chi_\eta(c)\, \hat A(\eta),$$
-
-so $\sum_{\eta \in V} \chi_\eta(c) \hat A(\eta) = 1$. Splitting off
-$\eta = 0$ and bounding the remaining $2^{t_a} - 1$ terms by their maximum,
-
-$$\boxed{\;\max_{\eta \neq 0} |\hat A(\eta)| \;\geq\; \frac{1 - \mu(E_a)}{2^{t_a} - 1}\;}$$
-
-The right-hand side depends only on $a$. It does **not** decay as the sampling
-domain grows, whereas a genuinely random subset of density $\mu$ in a domain
-of $N$ points has $\max_{\eta \neq 0}|\hat A| \approx
-\sqrt{\mu(1-\mu)/N}\cdot\sqrt{2\ln N} \to 0$. So for every fixed $a$, taking
-$N$ large enough makes the escape set provably *more* spectrally concentrated
-than noise, by an unbounded factor. $E_a$ is not white noise at any scale.
+**White-noise status.** For fixed $a$, the lower bound obstructs
+$\max_{\eta\ne0}|\widehat A(\eta)|=o(\mu_D)$ along any growing-domain
+sequence with $\mu_D$ bounded away from one. That density condition is
+not proved here. The unconditional asymptotic refutation is therefore
+replaced by this conditional statement and the finite observations below.
 
 ### 6.4 Why the original computation looked supportive
 
 Reproduced by `scripts/verify_walsh1.py` on the domain
 $D = \{2j+1 : j < 2^{14}\}$ with a $4000$-step cap:
 
-| $a$ | $\mu(E_a)$ | $\mu/2^{-a}$ | $\max_{\eta\neq0}\|\hat A\|$ | ratio to $2^{-a}$ | ratio to $\mu$ | random baseline | observed / random |
+| $a$ | $\mu_D$ | $\mu/2^{-a}$ | $\max_{\eta\neq0}\|\hat A\|$ | ratio to $2^{-a}$ | ratio to $\mu$ | random baseline | observed / random |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | 1 | 0.4323 | 0.865 | 0.2210 | 0.442 | 0.511 | 0.01705 | 12.96 |
 | 2 | 0.2065 | 0.826 | 0.1022 | 0.409 | 0.495 | 0.01393 | 7.34 |
 | 3 | 0.1045 | 0.836 | 0.0529 | 0.423 | 0.506 | 0.01053 | 5.02 |
-| 4 | 0.0507 | 0.811 | 0.0279 | 0.446 | 0.550 | 0.00755 | 3.69 |
+| 4 | 0.0507 | 0.812 | 0.0279 | 0.446 | 0.550 | 0.00755 | 3.69 |
 | 5 | 0.0231 | 0.740 | 0.0130 | 0.416 | 0.562 | 0.00517 | 2.51 |
 
 Three corrections to the earlier reading:
 
 1. **The old §6.2 table is superseded.** It used a different, unstated domain
-   ($b = a+12$ bit integers) and disagreed with the old §6.3 table about
-   $\mu(E_a)$, which is the same quantity. Its $a = 5$ row was also internally
-   impossible: a *maximum* over residue classes cannot fall below the mean,
+   ($b = a+12$ bit integers), so its frequencies cannot be compared with
+   the old §6.3 table without matching domains and step caps.
+   Its $a = 5$ row was also internally impossible: a *maximum* over residue classes cannot fall below the mean,
    which under its own normalization was $\mu/2^{-a} - 1 = -0.251$, yet it
    reported $-0.430$.
 
-2. **"Max excess" was normalized against $2^{-a}$, not $\mu(E_a)$.** Since
-   $\mu(E_a)$ is only $0.74$–$0.87$ of $2^{-a}$ and that ratio *falls* with
+2. **"Max excess" was normalized against $2^{-a}$, not $\mu_D$.** Since
+   $\mu_D$ is only $0.74$–$0.87$ of $2^{-a}$ and that ratio *falls* with
    $a$, a uniformly deficient set reads as increasingly equidistributed. The
    apparent improvement, and the sign change at $a = 4$, were entirely this
-   artifact. Renormalized against $\mu(E_a)$, the residue distribution mod
+   artifact. Renormalized against $\mu_D$, the residue distribution mod
    $2^{a+2}$ is grossly non-uniform and gets worse with $a$:
 
    | $a$ | richest class | its relative density | empty classes |
@@ -411,11 +365,11 @@ Three corrections to the earlier reading:
    | 3 | $31 = 2^5-1$ | 4.82 | 0 / 16 |
    | 5 | $127 = 2^7-1$ | 11.99 | 15 / 64 |
 
-   The richest class is $2^{a+2}-1$ at every scale — the maximal trailing-one
-   class, exactly as FUEL1 predicts — and by $a = 5$ nearly a quarter of odd
-   residue classes contain no escaping element at all.
+   The richest class is $2^{a+2}-1$ at every tested threshold — the maximal trailing-one
+   class, consistent with the fuel mechanism — and at $a = 5$ nearly a quarter of the odd residue classes have no
+   observed escape within this finite domain and step cap.
 
-3. **The flat ratio was the tell.** $\max|\hat A|$ tracks $\mu(E_a)$ at a
+3. **The flat ratio was the tell.** $\max|\hat A|$ tracks $\mu_D$ at a
    ratio of $0.50$–$0.56$ that does not decay with $a$ (and if anything
    rises). White noise would scale like $\sqrt{\mu/N}$, not like $\mu$.
    Reading the ratio against $2^{-a}$ instead produced the flat $\approx 0.44$
@@ -426,81 +380,48 @@ Three corrections to the earlier reading:
 
 ---
 
-## 7. What this does and does not do
+## 7. Scope of the results
 
-**Does:**
+The retained results give exact affine endpoints, a mean-one homogeneous
+multiplier and its maximal inequality on the Class B Haar space, elementary
+reverse-tree capacity, deterministic high-fuel escape, and finite
+Walsh/residue diagnostics. They do not prove a bound for the actual
+integer escape set from the multiplier bound, establish SD1, or prove the
+Collatz conjecture. The live storage-dominance programme is unchanged.
 
-1. Gives the exact renewal structure of the map (MAC1–MAC3).
-2. Gives the exact Lundberg exponent $\theta^* = \ln 2$ and the sharp Haar
-   escape bound $2^{-a}$ (LUN1–LUN2), with the i.i.d. step supplied by the
-   $2$-adic conjugacy.
-3. Proves the single-preimage ancestry capacity (ANC1).
-4. Proves that fuel alone forces escape (FUEL1), and thereby **refutes** the
-   equidistribution hypothesis DISC1 and the white-noise reading of WALSH1.
+## 8. What remains for the counting route
 
-**Does not:**
+The actual and homogeneous escape events require separate treatment.
+High trailing-one fuel forces actual growth and produces explicit finite
+residue structure, but the claimed universal equidistribution and spectral
+closures used an unproved actual-growth density bound.
+The corresponding entry in [obstruction_map.md](obstruction_map.md) is
+therefore a limitation of this argument, not a universal impossibility
+theorem for counting methods.
 
-1. Prove SD1. The counting route is closed, not merely unfinished.
-2. Prove the Collatz conjecture. LUN2 is an "almost all" theorem and the gap
-   to "all" is untouched.
-3. Supersede the live spine (Avenue A storage-dominance / 267-family). It is
-   a parallel route; the two share the same bottleneck in different language.
-
-**Novelty caveat.** LUN2 recovers Terras/Everett-type density results. The new
-content is the exact exponent $\theta^* = \ln 2$ and the exact renewal
-structure, not the "almost all" conclusion itself.
-
----
-
-## 8. Where the obstruction actually sits
-
-The counting route died for a reason worth recording, because it is the same
-reason `no_local_potential.md` gives:
-
-> Escape is driven by trailing-one fuel, fuel is a low-bit residue condition,
-> and therefore the escape set is concentrated on frozen residue classes
-> rather than spread across them. Any argument that needs $E_a$ to look
-> generic mod $2^k$ is attacking the one property it demonstrably lacks.
-
-This is recorded as **closure 6** in `obstruction_map.md` §2, which is the
-intended point of reuse: it is cheap to state, permanent, and it redirects
-effort away from a whole family of arguments.
-
-**A decomposition of $E_a$ by fuel level was considered and is not
-recommended.** One could ask whether $\mu(E_a \setminus \{\tau \geq t_a\})$ is
-bounded by $c \cdot 2^{-a}$ with $c < 1$ and recurses on lower-$\tau$
-cylinders. The residual set is escape by *accumulated* rather than initial
-fuel — which is the large-deviations problem LUN2 already handles in
-aggregate, and the recursion has no evident base case. Recorded here so the
-question is not re-derived and re-attempted from scratch.
-
----
+A fuel-level decomposition would still need an actual-orbit estimate for
+the residual event and a valid recursion or stopping rule. LUN2 does not
+already solve that residual problem.
 
 ## 9. Verification
 
-`scripts/verify_macro_step_lundberg.py` checks MAC2, MAC3, LUN1, LUN1A, ANC1
-and prints an evidence-only escape-frequency probe.
+[scripts/verify_macro_step_lundberg.py](../../scripts/verify_macro_step_lundberg.py)
+compares directly iterated macro-step endpoints with MAC3 in exact integer
+arithmetic, checks the $x=9$ counterexample and distinct threshold events,
+checks the multiplier moments numerically, verifies ANC1 on its stated
+finite domain, and prints a separately labelled finite orbit probe.
 
-`scripts/verify_walsh1.py` reproduces all tables of §6, checks FUEL1 by
-exhaustive search over the relevant residue class, and prints the forced Walsh
-lower bound of §6.3 against the random-subset baseline.
-
----
+[scripts/verify_walsh1.py](../../scripts/verify_walsh1.py) reproduces the
+finite tables, checks FUEL1 on the sampled residue classes, and verifies
+the finite Walsh lower bound with integer coefficients. Neither script
+promotes finite observations to universal actual-orbit probability bounds.
 
 ## 10. Next targets
 
-Ranked, with honest expectations.
-
-1. **Literature check on LUN1A** (§4). The value-martingale identity
-   $\mathbb{E}[x_{\text{out}}/x_{\text{in}}] = 1$ is exact and clean, and the
-   repository's bibliography pass does not cover it. Cheap; settles whether
-   this note contains anything citable.
-2. **Test ANC1 against ancestry-amortization** (`obstruction_map.md` §4 item
-   3, §4.3). The reverse-tree capacity corollary in §5 is the only bridge from
-   this note to a live open item. Modest odds, cheap to test.
-3. **Retire the WALSH1 line.** No further effort on spectral properties of
-   $E_a$; they are false, not unproven. This is an instruction to stop, not a
-   task.
-
-**Not** a next target: the fuel-level decomposition (§8), or anything
-requiring $E_a$ to be generic mod $2^k$.
+1. Establish an explicitly stated actual-orbit estimate controlling the
+   affine corrections before using this programme in a counting proof.
+2. Assess ANC1 in the ancestry-amortization programme, independently of
+   the withdrawn escape-set inference.
+3. If pursuing spectral or equidistribution claims, specify the finite
+   domains or limiting density and the hypotheses needed for the
+   conditional statements of §6.

@@ -299,20 +299,37 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
-| MAC1 | Every odd \(x\) is Class A (\(\tau\ge2\), then \(v=1\), \(f(x)=3\cdot2^{L-1}m-1\), \(\tau\) drops by 1, log-drift \(\alpha\)) or Class B (\(\tau=1\), then \(v\ge2\)); a macro-step is one Class B step followed by exactly \(K-1\) Class A steps | Proved here | `docs/no-go/macro_step_lundberg.md` §1 | Suffix-burn identity of `docs/fuse/fuse_burn_attack.md` §1; `scripts/verify_macro_step_lundberg.py` |
+| MAC1 | Every positive odd \(x\) is Class A (\(\tau\ge2\), \(v=1\), fuel drops by one) or Class B (\(\tau=1\), \(v\ge2\)); a macro-step is one Class B step followed by \(K-1\) Class A steps. Class A has homogeneous log-multiplier \(\alpha\), actual log-ratio \(\alpha+\log_2(1+1/(3x))\) | Proved here | `docs/no-go/macro_step_lundberg.md` §1 | Suffix-burn identity; `scripts/verify_macro_step_lundberg.py` |
 | MAC2 | For Haar-uniform \(x\) with \(\tau(x)=1\), the payout \(v=v_2(3x+1)\) and new fuel \(K=\tau(f(x))\) are independent, with \(\Pr(v=j)=2^{-(j-1)}\ (j\ge2)\), \(\Pr(K=i)=2^{-i}\ (i\ge1)\); \(\mathbb E[v]=3\), \(\mathbb E[K]=2\) | Proved here | `docs/no-go/macro_step_lundberg.md` §2 | \(k\mapsto(3k+1)/2^u\) is a measure-preserving bijection onto \(\mathbb Z_2^\times\); `scripts/verify_macro_step_lundberg.py` |
-| MAC3 | The macro-step log-drift is \(\Delta=K\alpha+1-v\) with \(\mathbb E[\Delta]=2\log_23-4\approx-0.830075\) | Proved here | `docs/no-go/macro_step_lundberg.md` §3 | Linearity and MAC2; `scripts/verify_macro_step_lundberg.py` |
-| LUN1A | Over one macro-step the value ratio has expectation exactly one: \(\mathbb E[x_{\text{out}}/x_{\text{in}}]=1\), since \(2^\Delta=(3/2)^K2^{1-v}\) with \(\mathbb E[(3/2)^K]=3\) and \(\mathbb E[2^{1-v}]=1/3\). The map is a martingale in *value*; the Jensen gap to \(\mathbb E[\log_2]=2\log_23-4\) is \(\approx0.83\) bits | Proved here; **novelty unchecked** — `BIBLIOGRAPHY_PASS.md` not extended to it | `docs/no-go/macro_step_lundberg.md` §4 | Exact rational summation; `scripts/verify_macro_step_lundberg.py` |
-| LUN1 | \(M(\theta)=e^{\theta(\alpha-1)}/((2-e^{\theta\alpha})(2-e^{-\theta}))\) for \(\theta<\ln2/\alpha\), and the unique positive root of \(M(\theta)=1\) is exactly \(\theta^*=\ln2\). The clean exponent is forced by LUN1A: \(e^{(\ln2)\Delta}\) *is* the value ratio | Proved here | `docs/no-go/macro_step_lundberg.md` §4 | Closed-form geometric sums; strict convexity of \(\log M\); `scripts/verify_macro_step_lundberg.py` |
-| LUN2 | \(e^{(\ln2)S_N}\) is a non-negative martingale, so \(\Pr(\sup_N S_N\ge a)\le2^{-a}\); equivalently \(\mu(E_a)\le2^{-a}\). Recovers Terras/Everett-type density results with an exact exponent | Proved here; **i.i.d. step is a known theorem applied** (2-adic conjugacy, Lagarias 1985; Bernstein–Lagarias 1996), not reproved | `docs/no-go/macro_step_lundberg.md` §4 | Ville's inequality; intra-macro-step maximum shown to be attained at the endpoint |
+| MAC3 | A macro-step has exact endpoint \(x_{\rm out}=Ax+b\), with \(A=3^K/2^{v+K-1}\) and \(b=(3/2)^{K-1}(1+2^{-v})-1>0\). Only the homogeneous drift \(\Delta=\log_2 A=K\alpha+1-v\) has the MAC2 mean \(2\log_2 3-4\) | Proved here; former actual-log-ratio identity corrected | `docs/no-go/macro_step_lundberg.md` §3 | Direct affine expansion; `scripts/verify_macro_step_lundberg.py` checks 5000 Class B starts and the exact \(9\to7\to11\to17\) counterexample |
+| LUN1A | The homogeneous multiplier \(A=(3/2)^K2^{1-v}\) has \(\mathbb E[A]=1\) under the MAC2 law; this is not an expectation-one statement for the actual ratio \(A+b/x\) | Proved here; actual-value martingale interpretation withdrawn; novelty unchecked | `docs/no-go/macro_step_lundberg.md` §4 | Independent geometric sums; exact rational sums and tails in `scripts/verify_macro_step_lundberg.py` |
+| LUN1 | The MGF of \(\Delta=\log_2 A\) is \(e^{\theta(\alpha-1)}/((2-e^{\theta\alpha})(2-e^{-\theta}))\), for \(-\ln2<\theta<\ln2/\alpha\); the unique positive root of \(M(\theta)=1\) is \(\ln2\) | Proved here; homogeneous multiplier only | `docs/no-go/macro_step_lundberg.md` §4 | Geometric sums, strict convexity, and LUN1A; numerical checks in `scripts/verify_macro_step_lundberg.py` |
+| LUN2 | Starting from normalized Haar measure on \(\mathcal B=\{x\equiv1\bmod4\}\), \(W_N=\prod_{i=1}^N A_i=2^{S_N}\) is a nonnegative martingale and \(\Pr_{\mathcal B}(\sup_N S_N\ge a)\le2^{-a}\). This does not bound actual orbit growth without affine control | Proved here; former actual-escape equivalence withdrawn | `docs/no-go/macro_step_lundberg.md` §4 | Direct conditional branch-reset proof of iid multipliers and Ville; \(x=9\) separates the two threshold events |
 | ANC1 | For odd \(z\) with \(3\nmid z\), consecutive odd preimages satisfy \(x_{v+2}/x_v=4+3/(2^vz-1)>4\), so at most one odd preimage of \(z\) per bit-length | Proved here | `docs/no-go/macro_step_lundberg.md` §5 | `scripts/verify_macro_step_lundberg.py`, exhaustive for \(z\le20000\), \(v\le60\) |
-| FUEL1 | With \(t_a=\lceil a/\alpha\rceil+1\): \(\tau(x)\ge t_a\Rightarrow x\in E_a\). So \(E_a\) contains the full residue class \(x\equiv-1\pmod{2^{t_a}}\), in which its relative density is \(1/\mu(E_a)\ge2^a\) | Proved here | `docs/no-go/macro_step_lundberg.md` §6.2 | Composition of \(L-1\) Class A steps each of ratio \(>3/2\); `scripts/verify_walsh1.py` |
-| DISC1 | The escape set \(E_a\) is equidistributed across residue classes mod \(2^{a+2}\) | **Refuted** (by FUEL1) | `docs/no-go/macro_step_lundberg.md` §6.2 | Overrepresentation factor \(\ge2^a\) on one class; empirically \(11.99\times\) at \(a=5\) with 15 of 64 odd classes empty; `scripts/verify_walsh1.py` |
-| WALSH1 | \(\max_{\eta\ne0}\lvert\widehat{1_{E_a}}(\eta)\rvert\le C\cdot2^{-a}\) | Proved (trivial corollary of LUN2, \(C=1\), since \(\lvert\hat A(\eta)\rvert\le\hat A(0)=\mu(E_a)\)); **vacuous as a target** — was wrongly named this note's open problem | `docs/no-go/macro_step_lundberg.md` §6.3 | `scripts/verify_walsh1.py` |
-| WALSH1-WN | The white-noise reading: \(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert=o(\mu(E_a))\) as the sampling domain grows | **Refuted** (by FUEL1) | `docs/no-go/macro_step_lundberg.md` §6.3 | Cylinder containment forces \(\max_{\eta\ne0}\lvert\hat A(\eta)\rvert\ge(1-\mu)/(2^{t_a}-1)\), independent of domain size, while the random baseline decays as \(N^{-1/2}\); `scripts/verify_walsh1.py` |
+| FUEL1 | For positive odd \(x\), \(\tau(x)\ge t_a=\lceil a/\alpha\rceil+1\) forces \(f^j(x)\ge2^a x\) for some \(j\le t_a-1\). Finite domains resolving this cylinder and time window contain its full residue class | Proved here; no actual-escape density upper bound claimed | `docs/no-go/macro_step_lundberg.md` §6.2 | Composition of \(t_a-1\) Class A steps; `scripts/verify_walsh1.py` |
+| DISC1 | On \(D_{14}=\{2j+1:j<2^{14}\}\) with a 4000-step cap, actual escape frequencies are nonuniform mod \(2^{a+2}\); at \(a=5\), the richest class is approximately \(11.99\) times the mean and 15 of 64 odd classes are empty | Finite diagnostic; former universal refutation withdrawn, since FUEL1 alone does not settle that coarser modulus | `docs/no-go/macro_step_lundberg.md` §6.2–6.4 | `scripts/verify_walsh1.py`; finite frequencies are not Haar probabilities |
+| WALSH1 | On a finite integer domain, \(\lvert\widehat A(\eta)\rvert\le\mu_D\). A bound \(\lvert\widehat A(\eta)\rvert\le2^{-a}\) would follow if \(\mu_D\le2^{-a}\), but LUN2 does not supply that actual-escape premise | Conditional result; previous unconditional \(C=1\) claim withdrawn | `docs/no-go/macro_step_lundberg.md` §6.3 | Triangle inequality; finite diagnostics in `scripts/verify_walsh1.py` |
+| WALSH1-WN | For \(B,T\ge t_a-1\), FUEL1 forces \(\max_{\eta\ne0}\lvert\widehat A(\eta)\rvert\ge(1-\mu_D)/(2^{t_a-1}-1)\) in the odd-domain coordinate \(j=(x-1)/2\). At fixed \(a\), this excludes \(o(\mu_D)\) along growing domains if \(\mu_D\) stays bounded away from one | Proved finite inequality; conditional asymptotic consequence, replacing the unconditional refutation | `docs/no-go/macro_step_lundberg.md` §6.3 | Cylinder character expansion; exact integer Walsh check in `scripts/verify_walsh1.py` |
 | ANC1-CAP | For odd \(z\) with \(3\nmid z\), at most \(\lceil n/2\rceil\) odd preimages of \(z\) have bit-length \(\le n\) | Proved here (corollary of ANC1) | `docs/no-go/macro_step_lundberg.md` §5 | Immediate from the \(>4\) ratio; **novelty doubtful** — preimage family and reverse-tree growth are standard (Applegate–Lagarias), no bibliography pass run |
 
 ### Correction history for this branch
+
+### Affine-drift correction (2026-10-05)
+
+The macro-step \(9\to7\to11\to17\) has actual ratio \(17/9\), not the
+homogeneous multiplier \(27/16\). MAC3 now includes its positive additive
+term; LUN1A–LUN2 retain only the multiplier expectation, MGF, and maximal
+inequality on the Class B conditioned Haar space. Actual-orbit threshold
+events differ, so their density bound is not established by this argument.
+This corrects the inference without disproving the proposed bound itself.
+
+The dependent escape-set claims now use explicit finite integer domains.
+FUEL1 remains a deterministic statement, but its claimed exponential
+overrepresentation factor used the unsupported density bound. DISC1 retains
+finite nonuniformity evidence; WALSH1 is conditional; WALSH1-WN records a
+finite cylinder inequality with an explicit density condition for its
+asymptotic consequence. The following August entry records the previous
+interpretation and is superseded on these points.
 
 ### Macro-step programme correction (2026-08-03)
 
@@ -321,17 +338,18 @@ misspelling `macro_step_lindberg.md`) recorded DISC1 and WALSH1 as supported by
 computational evidence, and named the analytic proof of WALSH1 as the single
 remaining gap. Both readings were wrong, and in opposite directions:
 
-- The supporting evidence measured residue-class excess against the Haar bound
+- The supporting evidence measured residue-class excess against the claimed bound
   \(2^{-a}\) rather than against the observed \(\mu(E_a)\), which is only
   \(0.74\)–\(0.87\) of it and falling. A uniformly *deficient* set therefore
   read as increasingly equidistributed, and the reported sign change at
   \(a=4\) was entirely this artifact. The \(a=5\) row was additionally
   impossible on its own terms: a maximum over classes cannot fall below the
   mean, \(-0.251\), yet \(-0.430\) was reported.
-- WALSH1 as written is implied by LUN2 with \(C=1\), so it could not have been
-  an open problem at all.
-- FUEL1 then refutes both the equidistribution claim and the white-noise
-  reading outright. The mechanism is the residue-freezing already proved in
+- That pass claimed WALSH1 followed from LUN2 with \(C=1\). The October
+  correction withdraws this transfer from multipliers to actual orbit values.
+- That pass claimed FUEL1 refuted equidistribution and white noise outright.
+  The October correction retains the finite structure and states the missing
+  hypotheses. The mechanism is the residue-freezing already proved in
   `docs/no-go/no_local_potential.md` §1: escape is driven by trailing-one
   fuel, fuel is a low-bit congruence, so \(E_a\) is concentrated on frozen
   classes rather than spread across them.
