@@ -48,9 +48,10 @@ so; the 267-family correction is a concrete instance of it.
 1. Human proof read of DISJ (§4) and the two-sided window bound (§5.3) in
    `avenue_a_mean_valuation_route.md`. These are the items there that
    satisfy the admission rule's form.
-2. Re-audit the other rows certified only by one representative per class
-   (`--check-block8-k11-mod*`). Rows that pass the falsifier still need an
-   expansion proof like Lemma SD-K-e4-3mod256.
+2. ~~Re-audit the one-representative rows.~~ **Done (2026-10-05):**
+   `scripts/prove_block8_17_classes.py` decides each class row exactly
+   (Lemma SD-K-class-determinacy): \(43\) proved, \(29\) refuted, \(0\)
+   undecided. New class rows must go through this prover.
 3. Attack the open core (Gap SD-K-nc-6), which needs an arithmetic input
    bounding the odd-step density away from \(11/20\). Residue information
    alone cannot supply it.
@@ -79,7 +80,8 @@ so; the 267-family correction is a concrete instance of it.
 | `docs/no-go/avenue_a_comparison_dynamics.md` | e6/e7 params, seven-block thm |
 | `scripts/explore_block8_e6_expand.py` | block \(6\) cert |
 | `scripts/explore_block7_deferred.py` | block \(7\) deferred cert (built on refuted periodicity) |
-| `scripts/verify_block8_17_class_stability.py` | class-stability falsifier |
+| `scripts/verify_block8_17_class_stability.py` | class-stability falsifier (sampling) |
+| `scripts/prove_block8_17_classes.py` | exact class prover (Lemma SD-K-class-determinacy) |
 | `scripts/verify_repunit_storage_dominance.py` | regression |
 
 ---

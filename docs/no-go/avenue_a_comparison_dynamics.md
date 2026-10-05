@@ -1413,7 +1413,8 @@ Rows \(1291,5387,6411\) of Thm SD-K-block-8-17-267mod8192, the four
 early theorems (\(3,171\bmod256\), \(323\bmod512\), \(579\bmod1024\)), Lemma
 SD-K-blocks25-267mod512, Lemma SD-K-b4start-mod512, the \(3531\) row, the other
 three rows of Cor SD-K-block5-mod8192-1035, and the stable block-\(5\) slices
-pass on all \(1024\) members tested (finite evidence only).
+pass on all \(1024\) members tested. They are now proved for the whole
+class; see Lemma SD-K-class-determinacy and the audit below.
 
 *Root cause.* The affine identity of Lemma SD-K-e6-param-267 is correct for
 every \(t\) (proof below). The error was in Cor SD-K-d6-param-267 and its
@@ -1426,6 +1427,55 @@ SD-K-h6-z6-267, Lemma SD-K-e7-param-267, Cor SD-K-d7-param-267, the
 seven-block theorem) inherits the error. The fitted block-\(7\) progressions
 "\(t\equiv3\pmod{11}\)", "\(t\equiv4\pmod7\)" were fits to at most two points
 in \(0\le t\le15\).
+
+**Lemma SD-K-class-determinacy (proved).** For \(n=64k+17\), the residue
+\(x_1\bmod2^P\) depends only on \(k\bmod2^{P-5}\). Consequently, if the block
+computation for \((h_1,\Delta_2,\ldots,\Delta_B)\) on the class
+\(k\equiv r\pmod{2^j}\) completes when \(x_1\) is known only modulo
+\(2^{j+5}\), its output is the same for every \(k\) in the class.
+
+Proof. The order of \(3\) modulo \(2^{P+3}\) is \(2^{P+1}\), so
+\(3^{64k+18}\bmod2^{P+3}\) depends on \(64k\bmod2^{P+1}\), i.e. on
+\(k\bmod2^{P-5}\); and \(x_1=(3^{64k+18}-1)/8\). An odd step
+\(x\mapsto(3x+1)/2^e\) with \(x\) known mod \(2^p\) determines \(e\) exactly
+when \(3x+1\not\equiv0\pmod{2^p}\), and leaves the image known mod \(2^{p-e}\).
+A height \(v_2(x+1)\) is determined when \(x+1\not\equiv0\pmod{2^p}\). If
+every step of the computation meets these conditions, no unknown bit is read.
+\(\square\)
+
+This turns each class-level row of this section into a finite exhaustive
+computation: run the class, and if it needs more bits, split it into its two
+children modulo \(2^{j+1}\) and recurse. A row is **proved** when every leaf
+satisfies it and **refuted** when some leaf violates it; the leaf residue is
+then an integer counterexample. Prover:
+`scripts/prove_block8_17_classes.py` (soundness cross-checked against direct
+orbits on \(12{,}369\) class members, no mismatch).
+
+**Audit (2026-10-05) of the class-level rows in this section.** \(43\) of
+\(72\) rows are proved for their whole class and \(29\) are refuted. None is
+left undecided.
+
+| status | rows |
+|---|---|
+| **proved** | Lemma SD-K-h1-parity (both cases); SD-K-h2-3mod8; SD-K-e3-stable (\(3,11,43,59\bmod64\)); SD-K-e4-3mod256; SD-K-e4-171mod256; SD-K-e4-67family (\(323\bmod512\), \(579\bmod1024\)); the four early Thms (\(3,171\bmod256\), \(323\bmod512\), \(579\bmod1024\)); SD-K-b4start-mod256 (\(11,75,139\)); SD-K-b4start-mod512 (\(203\); also \(459\bmod2048\Rightarrow\Delta_4=-34\)); SD-K-b4start-mod8192 row \(3531\); SD-K-blocks25-267mod512; Cor SD-K-block5 (\(523\bmod1024\), \(779\bmod1024\), \(11\bmod2048\)); Cor SD-K-block5-mod8192-1035 rows \(3083,5131,7179\); Cor SD-K-block6-mod8192-k267slice rows \(779,1291,1803,2827,3339,3851,4875,5387,6411,6923,7947\); Cor SD-K-block7 row \(2827\); Thm SD-K-block-8-17-267mod8192 rows \(1291,5387,6411\) |
+| **refuted** | SD-K-b4start-mod8192 row \(7627\); Cor SD-K-block5-mod8192-1035 row \(1035\); Cor SD-K-block6 rows \(267,2315,4363,5899,7435\); Cor SD-K-block7 all rows except \(2827\); Thm SD-K-block-8-17-267mod8192 rows \(267,4363\); Thm SD-K-block-8-17-779mod8192 (all four rows); Thm SD-K-block-8-17-3851mod8192 |
+
+The early theorems therefore no longer rest on the hand expansions alone.
+For the theorems, the refuted share of each class is: \(267\): \(1/16\);
+\(4363\): \(\approx0.021\); \(779\): \(1/2\); \(3339\): \(\approx0.58\);
+\(4875\): \(\approx0.083\); \(7435\) and \(3851\): \(\approx0.78\).
+
+**Proposition SD-K-block-closure-measure (exact, by exhaustive computation).**
+Among odd \(k\) (where \(h_1=3\) and the need is \(16\)), the Haar measure of
+\(k\) whose running sum \(\Delta_2+\cdots+\Delta_b\) is *proved* to reach
+\(16\) within \(10\) blocks, using only \(k\bmod2^{J}\), is \(0.58881\ldots\)
+at \(J=18\) and \(0.65228\ldots\) at \(J=22\). The rest is undetermined at
+that modulus (\(0.411\) and \(0.347\) respectively), and the provably open
+part is below \(10^{-4}\) at \(b=10\). Each extra four bits closes about
+\(6\%\) more. This measures the modulus no-go of
+`avenue_a_mean_valuation_route.md` §3 directly: the undetermined mass shrinks
+slowly with \(J\), and it contains \(2\)-adic points (the depth-\(40\)
+undecided leaves of every refuted row) that never resolve.
 
 **Lemma SD-K-e6-affine-267 (proved; replaces Cor SD-K-d6-param-267).** On
 \(k=267+512t\), \(t\ge0\), with \(L_t=1440-492t\) and \(x_6\) as in Lemma
