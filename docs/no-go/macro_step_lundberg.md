@@ -175,14 +175,36 @@ Then $W_N=2^{S_N}=\prod_{i=1}^N A_i$ is a nonnegative martingale and
 $$\Pr_{\mathcal B}\left(\sup_{N\ge0}S_N\ge a\right)\le2^{-a},
 \qquad a>0.$$
 
-*Proof.* We first check the return law directly. Conditional on a fixed
-$(v,K)$, write the post-payout state as $m=2^K q-1$ with $q$ Haar-uniform
-odd. The endpoint after burning is $2\cdot3^{K-1}q-1$. Since multiplication
-by $3^{K-1}$ preserves Haar measure on odd $q$, this endpoint is
-Haar-uniform on $\mathcal B$, independently of $(v,K)$. Induction gives
-independent, identically distributed macro-step pairs. By LUN1A,
-$\mathbb E[A_{i+1}\mid A_1,\ldots,A_i]=1$, so $W_N$ is a martingale
-with $W_0=1$. Ville's inequality gives the displayed bound. $\blacksquare$
+*Proof.* Let $\mu_{\rm odd}$ and $\mu_{\mathcal B}$ denote normalized
+Haar measure on odd $2$-adics and on $\mathcal B$, respectively. Continue
+the MAC2 decomposition by writing the post-payout state as $m=2^Kq-1$.
+Conditional on $v=j$, $m$ has law $\mu_{\rm odd}$. Conditioning further
+on $K=i$, the affine bijection $m\mapsto(m+1)/2^i$ sends the normalized
+restriction to that valuation class to $\mu_{\rm odd}$. Thus, for every
+measurable set $E$ of odd $2$-adics and $j\ge2$, $i\ge1$,
+
+$$\Pr_{\mathcal B}(v=j,K=i,q\in E)
+=2^{-(j-1)}2^{-i}\mu_{\rm odd}(E).$$
+
+In particular, $q$ is independent of the pair $(v,K)$, not just
+Haar-uniform marginally. The endpoint after burning is
+$R(x)=2\cdot3^{K-1}q-1$. For each fixed $i$, multiplication by
+$3^{i-1}$ preserves $\mu_{\rm odd}$, and $q\mapsto2q-1$ sends
+$\mu_{\rm odd}$ to $\mu_{\mathcal B}$. Therefore, for every measurable
+$C\subseteq\mathcal B$,
+
+$$\Pr_{\mathcal B}(v=j,K=i,R(x)\in C)
+=2^{-(j-1)}2^{-i}\mu_{\mathcal B}(C).$$
+
+Although the return formula depends on $K$, its conditional law does not:
+the return state is Haar on $\mathcal B$ and independent of $(v,K)$.
+Iterating this identity shows that after each macro-step the return state
+is Haar and independent of the entire preceding pair history. Hence the
+macro-step pairs are independent and identically distributed. With
+$\mathcal F_N=\sigma((v_i,K_i):1\le i\le N)$, LUN1A gives
+$\mathbb E[A_{N+1}\mid\mathcal F_N]=1$, so $W_N$ is a nonnegative
+martingale with respect to $(\mathcal F_N)$, with $W_0=1$. Ville's
+inequality gives the displayed bound. $\blacksquare$
 
 **Scope.** This is a bound on multiplier products starting in Class B.
 An initial Class A burn is not included in that probability space.

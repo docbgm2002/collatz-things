@@ -27,33 +27,55 @@ STATUS_PREFIXES = (
 
 
 HEADER_RE = re.compile(
-    r"\|\s*ID\s*\|\s*Claim\s*\|\s*Status\s*\|\s*Source\s*\|\s*[A-Za-z /]+\|\Z"
+    r"\|\s*ID\s*\|\s*Claim\s*\|\s*Status\s*\|\s*Source\s*\|"
+    r"\s*Verification(?:\s*/\s*dependency)?\s*\|\Z"
 )
+SEPARATOR_RE = re.compile(r":?-{3,}:?\Z")
 
 
 def claim_rows(lines: list[str]) -> list[tuple[int, list[str]]]:
     """Return parsed rows from every five-column claim table in the ledger.
 
-    The ledger carries more than one such table (the main index, the general
-    track, and the macro-step programme), whose final column is headed either
-    'Verification' or 'Verification / dependency'.  Earlier versions of this
-    script located only the first table by exact string match and stopped at
-    its end, so rows in the later tables were silently unchecked.
+    Every pipe table in this claim ledger must have a recognized five-column
+    header and separator. Validate those before collecting rows, so a damaged
+    header cannot hide an entire table and a missing separator cannot hide its
+    first claim. Both supported verification-column headings remain accepted.
     """
-    header_indices = [
-        index for index, line in enumerate(lines) if HEADER_RE.fullmatch(line)
-    ]
-    if not header_indices:
-        raise ValueError("no five-column claim table header found")
-
     rows: list[tuple[int, list[str]]] = []
-    for header_index in header_indices:
-        for index in range(header_index + 2, len(lines)):
-            line = lines[index]
-            if not line.startswith("|"):
-                break
+    index = 0
+    table_count = 0
+    while index < len(lines):
+        line = lines[index].strip()
+        if not line.startswith("|"):
+            first_cell = line.partition("|")[0].strip()
+            if "|" in line and (CLAIM_ID_RE.fullmatch(first_cell) or line.count("|") >= 4):
+                raise ValueError(f"line {index + 1}: claim table line is missing its opening pipe")
+            index += 1
+            continue
+        if not HEADER_RE.fullmatch(line):
+            raise ValueError(f"line {index + 1}: unrecognized claim table header")
+        header_line = index + 1
+        table_count += 1
+        index += 1
+        separator = lines[index].strip() if index < len(lines) else ""
+        cells = [cell.strip() for cell in separator[1:-1].split("|")]
+        if (not separator.startswith("|") or not separator.endswith("|")
+                or len(cells) != 5
+                or not all(SEPARATOR_RE.fullmatch(cell) for cell in cells)):
+            raise ValueError(f"line {index + 1}: missing or malformed claim table separator")
+        index += 1
+        row_start = len(rows)
+        while index < len(lines) and lines[index].strip().startswith("|"):
+            line = lines[index].strip()
+            if not line.endswith("|"):
+                raise ValueError(f"line {index + 1}: claim row is missing its closing pipe")
             cells = [cell.strip() for cell in line[1:-1].split("|")]
             rows.append((index + 1, cells))
+            index += 1
+        if len(rows) == row_start:
+            raise ValueError(f"line {header_line}: claim table contains no rows")
+    if not table_count:
+        raise ValueError("no five-column claim table header found")
     return rows
 
 
@@ -63,8 +85,8 @@ def validate() -> tuple[list[str], int]:
 
     try:
         rows = claim_rows(lines)
-    except StopIteration:
-        return ["claim table header is missing"], 0
+    except ValueError as error:
+        return [str(error)], 0
 
     seen_ids: dict[str, int] = {}
     for line_number, cells in rows:

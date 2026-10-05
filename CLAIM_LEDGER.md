@@ -30,7 +30,9 @@ Verification artifacts have two roles:
 Run `python scripts/verify_claim_ledger.py` to check table structure, unique
 IDs, status classes, and referenced repository paths. It covers **all**
 five-column claim tables in this file — the main index, the general track, and
-the macro-step programme. Until 2026-08-03 it located only the first table by
+the macro-step programme. Every pipe table must have a recognized claim-table
+header and a five-column Markdown separator; malformed structure is a
+validation error, not a reason to omit rows. Until 2026-08-03 it located only the first table by
 exact header match and stopped at its end, so the later tables' rows were
 silently unchecked; extending it raised the checked-row count from 134 to 160
 with no row edits required beyond two accepted shapes (emphasised status

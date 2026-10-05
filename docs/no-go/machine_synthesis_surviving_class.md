@@ -270,9 +270,13 @@ python3 scripts/verify_machine_synthesis.py              # n <= 101, ~9 s
 python3 scripts/verify_machine_synthesis.py --nmax 201   # ~1 min
 ```
 
-Prints `MACHINE-SYNTHESIS: PASS`. Requires `z3-solver` for the SMT
-cross-checks; without it the script still runs and reports the exact
-certificate search alone.
+Prints `MACHINE-SYNTHESIS: PASS` only when all checks complete successfully
+(exit 0). The SMT cross-checks require `z3-solver`; a missing solver or an
+`unknown` result, including a timeout, is reported explicitly and makes the
+overall run `INCOMPLETE` (exit 2), unless another check fails (exit 1).
+The exact-integer certificate search still runs in either case. Only an
+explicit solver `unsat` result is reported as SMT infeasibility, and the
+absence of a found cycle is not by itself reported as `sat`.
 
 ---
 
