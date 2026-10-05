@@ -597,6 +597,38 @@ still a single-orbit lower-deviation bound on the mean valuation, and §3 says
 worst-case tooling cannot supply it. What changes is **which** instance to
 attack and how much margin it carries.
 
+**Proposition SD-K-nc6-barrier (proved; 2026-10-05).** Gap SD-K-nc-6
+implies Conjecture G of `../repunit/mersenne_repunit_reduction.md` for odd
+indices, in the explicit form
+\[
+\operatorname{epoch}(2^n-1)\le7n\qquad\text{for every odd }n\ge3 .
+\]
+Proof. Gap SD-K-nc-6 gives Gap SD-K-survivor-6 for \(n\ne11\) (Lemma
+SD-K-nc6-implies); \(H(11)=46\le66\) directly. Lemma SD-K-linear-6 then gives
+\(K_\downarrow(n)\le6n\) for every odd \(n\ge3\). By definition
+\(K_\downarrow(n)=\sigma(a_n)\), the first accelerated step at which the
+\(a_n\) orbit falls below \(2^n-1\). Corollary R3 gives
+\(\operatorname{epoch}(2^n-1)=n+\sigma(a_n)\le7n\). \(\square\)
+
+*Reading.* The reduction note already records (Observation R4) that the
+descent from \(a_n\) is statistically generic and that Conjecture G is "the
+general Collatz difficulty in disguise". We know of no proof in the
+literature of a finite stopping time for \(2^n-1\) uniformly in \(n\), let
+alone a linear one. Gap SD-K-nc-6 is a quantitative strengthening of that
+problem, so it should be filed with the open conjecture, not treated as a
+working lemma. The same applies to every gap in this family: SD-K-survivor-6,
+SD-K-911-6-strong, SD-K-block-8, SD-K-block-8-17 and DISJ's universal form all
+imply \(\sigma(a_n)<\infty\) on their domains.
+
+*What would still count as progress.* Arguments that use the arithmetic of
+\(3^n\) itself rather than residue or size information (§3 and its second
+reason rule both out). A statement about the binary digits of \(3^n\) of the
+required strength is beyond current results on digits of powers. Only
+finitely many digits of \(3^n\) are controlled by \(n\bmod2^j\), and the known
+unconditional lower bounds on nonzero binary digits of \(3^n\) are of order
+\(\log n/\log\log n\) (Stewart). So we do not recommend scheduling sessions
+on a proof of Gap SD-K-nc-6.
+
 **Task list.**
 
 1. ~~Check BAKEX2's constant.~~ **Done (§5.1): it transfers, crossover

@@ -21,7 +21,7 @@ so; the 267-family correction is a concrete instance of it.
 
 - Master: `docs/no-go/avenue_a_comparison_dynamics.md`
 - Open core: Gap SD-K-nc-6, a single-orbit lower-deviation bound on the mean
-  valuation (`avenue_a_mean_valuation_route.md` §7).
+  valuation. It implies Conjecture G (Proposition SD-K-nc6-barrier).
 - Class-stability falsifier: `scripts/verify_block8_17_class_stability.py`
   (run it on any new mod-\(2^j\) row before stating it for the class).
 
@@ -52,9 +52,12 @@ so; the 267-family correction is a concrete instance of it.
    `scripts/prove_block8_17_classes.py` decides each class row exactly
    (Lemma SD-K-class-determinacy): \(43\) proved, \(29\) refuted, \(0\)
    undecided. New class rows must go through this prover.
-3. Attack the open core (Gap SD-K-nc-6), which needs an arithmetic input
-   bounding the odd-step density away from \(11/20\). Residue information
-   alone cannot supply it.
+3. ~~Attack the open core (Gap SD-K-nc-6).~~ **Assessed (2026-10-05):**
+   Proposition SD-K-nc6-barrier (`avenue_a_mean_valuation_route.md` §7)
+   shows it implies \(\operatorname{epoch}(2^n-1)\le7n\) for every odd
+   \(n\), i.e. Conjecture G, which `mersenne_repunit_reduction.md`
+   identifies as the general Collatz difficulty. Treat it as an open
+   conjecture, not a next step.
 
 ### Anti-patterns
 - Do not state a mod-\(2^j\) row for its whole class on the strength of one
