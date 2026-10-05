@@ -58,6 +58,8 @@ python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k
 python scripts/verify_block8_17_class_stability.py --members 1024
 # exact class prover: every class-level row decided (43 proved, 29 refuted)
 python scripts/prove_block8_17_classes.py
+# manuscript Theorem E: shadow index k*, B(J)=floor((J+2)/3), exact closure measures
+python scripts/verify_residue_certificate_nogo.py --measure
 python scripts/explore_block8_mod17.py --limit 2001
 python scripts/explore_block8_k11_mod64.py --limit-k 8001
 python scripts/explore_block8_e6_expand.py --limit-k 8001

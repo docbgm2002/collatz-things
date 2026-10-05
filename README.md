@@ -22,7 +22,8 @@ Start with:
   to integer rules, with step-by-step journeys and reproducible experiments.
 - [`mersenne_obstructions.tex`](mersenne_obstructions.tex) — the
   consolidated manuscript *No-Go Theorems for One-Step Lyapunov Potentials
-  for the 3x+1 Map* (Theorems A–D below), with compiled PDF.
+  for the 3x+1 Map* (Theorems A–D below, plus Theorem E: no finite
+  residue-class certificate on the Mersenne spine), with compiled PDF.
 
 ## Current research status
 
@@ -424,6 +425,10 @@ standard library; every assertion is exact integer or rational arithmetic.
 ```bash
 # ledger governance
 python scripts/verify_claim_ledger.py
+
+# manuscript Section 8 (Theorem E, residue-class certificates)
+python scripts/verify_residue_certificate_nogo.py --measure
+python scripts/prove_block8_17_classes.py
 
 # Avenue A finite check
 python scripts/verify_repunit_storage_dominance.py --limit 5001

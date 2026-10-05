@@ -17,6 +17,7 @@
 \newtheorem*{thmB}{Theorem B}
 \newtheorem*{thmC}{Theorem C}
 \newtheorem*{thmD}{Theorem D}
+\newtheorem*{thmE}{Theorem E}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
@@ -29,7 +30,7 @@
 \author{[author]\thanks{Repository: \texttt{github.com/docbgm2002/collatz-things}.
 Every numbered claim is machine-verified in exact integer or rational
 arithmetic; see Section~\ref{sec:verification}.}}
-\date{Draft of July 2, 2026}
+\date{Draft of October 5, 2026}
 
 \begin{document}
 \maketitle
@@ -60,7 +61,11 @@ $w_d(M)=\bigl(2^{M+2d}-2^{2d+1}+3^{d}\bigr)/3^{d}$ with
 $f^{d}(w_d(M))=2^{M}-1$, supported on $M\equiv1\pmod{2\cdot3^{d-1}}$
 with a carry-free periodic binary normal form (Theorem~D). The
 surviving one-step class reads the quantized full logarithm, where
-further no-go progress becomes conjecture-adjacent.
+further no-go progress becomes conjecture-adjacent. The same cycle also
+blocks a second method: on the Mersenne spine $2^{n}-1\mapsto(3^{n}-1)/2$,
+no finite set of residue-class certificates on $n$ can force a positive
+block score, because a $2$-adic index $n^{*}$ with $3^{n^{*}+3}=-367$
+sends the orbit into $-5\mapsto-7$ (Theorem~E).
 \end{abstract}
 
 \section{Introduction}
@@ -149,6 +154,21 @@ numbers --- the slowest exact approach to maximal fuel --- and
 $\lambda_d$ detects membership in its level-$d$ suffix pattern. The
 congruence domain is the order of $2$ modulo $3^d$, and the carry-free
 normal form is an instance of the lifting-the-exponent lemma.
+
+Section~\ref{sec:spine} turns from potentials to congruence case
+analysis. After the burn, $2^{n}-1$ reaches the repunit $a_n=(3^{n}-1)/2$,
+and a natural attack on its stopping time scores the orbit of $a_n$ block
+by block and splits on residues of $n$. Each such case is an exact finite
+computation (Proposition~\ref{prop:decide}), but the method cannot cover
+all $n$:
+
+\begin{thmE}[Theorem~\ref{thm:E}]
+On $n=64k+17$ with $k$ odd, the $2$-adic index $k^{*}$ defined by
+$3^{64k^{*}+20}=-367$ sends the orbit of $a_n$ into the cycle
+$-7\mapsto-5\mapsto-7$, every block of which has negative score. Integers
+$k\equiv k^{*}\pmod{2^{J}}$ follow it for $\lfloor(J+2)/3\rfloor$ blocks,
+and no finite set of certified residue classes covers all odd $k$.
+\end{thmE}
 
 \subsection*{Method and provenance}
 
@@ -519,6 +539,218 @@ logically independent of every lemma in this paper --- it uses raw
 orbit steps only --- and would have refuted the theorems had a valid
 correction existed on the tested windows.
 
+\section{Congruence certificates on the Mersenne spine}\label{sec:spine}
+
+The preceding sections concern potentials. This one concerns a second
+method, case analysis on residue classes, applied to one explicit family
+of trajectories. By Lemma~\ref{lem:fuse}, $f^{j}(2^{n}-1)=2^{n-j}3^{j}-1$
+for $0\le j<n$. For odd $n\ge3$ the $n$-th step divides
+$2(3^{n}-1)$ by $2^{1+\vv_2(3^n-1)}=4$ (LTE), so
+\[
+f^{n}(2^{n}-1)=a_n:=\frac{3^{n}-1}{2},
+\]
+the base-$3$ repunit, and the orbit stays above $2^{n}-1$ on the way.
+The stopping time of $2^{n}-1$ (first passage below the start) is
+therefore $n+\sigma(a_n)$, where $\sigma(a_n)$ is the first passage of
+the orbit of $a_n$ below $2^{n}-1$. We know of no proof that
+$\sigma(a_n)$ is finite for all odd $n$, let alone $O(n)$. A natural
+route scores the orbit of $a_n$ block by block and case-splits on
+residues of $n$. We show that such case splits are exact decision
+procedures on each residue class (Proposition~\ref{prop:decide}), but
+that no finite collection of them can succeed (Theorem~\ref{thm:E}).
+The obstruction is again the cycle $-5\mapsto-7\mapsto-5$.
+
+\subsection*{Blocks and scores}
+
+Write $T(x)=x/2$ for even $x$ and $T(x)=(3x+1)/2$ for odd $x$, and read
+the orbit of $x\in\Z_2$ under $T$ as a parity word in the letters
+$\mathtt O$ (odd) and $\mathtt E$ (even).
+
+\begin{definition}\label{def:block}
+Let $x$ be odd with $\tau(x)=1$, so $e=\vv_2(3x+1)\ge2$, and let
+$y=f(x)$. The \emph{block} at $x$ consists of the step $x\mapsto y$
+followed by the $\tau(y)-1$ steps of Lemma~\ref{lem:fuse}, which end at
+the next state with $\tau=1$. Its \emph{score} is
+\[
+\Delta=11(e-1)-9\,\tau(y).
+\]
+\end{definition}
+
+In the parity word a block reads
+$\mathtt O\,\mathtt E^{e-1}\,\mathtt O^{\tau(y)-1}$. It has $e-1$ even
+and $\tau(y)$ odd letters, so $\Delta=11\cdot\#\mathtt E-9\cdot\#\mathtt O$.
+A run of blocks with nonnegative total score has at most $11/20$ of its
+letters odd. Since $3^{11}<2^{20}$, such a run contracts.
+Every block begins with the factor $\mathtt{OE}$, and $\mathtt{OE}$
+occurs nowhere else. Hence:
+
+\begin{lemma}\label{lem:blockword}
+The scores $\Delta_1,\dots,\Delta_B$ of the first $B$ blocks from $x$
+are determined by any prefix of the parity word of $x$ that contains
+the first $B+1$ occurrences of $\mathtt{OE}$.
+\end{lemma}
+
+We use the subfamily $n=64k+17$. Here $\vv_2(3^{n+1}-1)=3$ (LTE), so
+$f(a_n)=x_1:=(3^{n+1}-1)/8$. Since $3^{18}\equiv9\pmod{32}$ and
+$3^{64}\equiv1\pmod{256}$, $x_1\equiv1\pmod4$ and $\tau(x_1)=1$. Let
+$\Delta_1,\Delta_2,\dots$ be the scores of the successive blocks from
+$x_1$. For odd $k$ one has $\Delta_1=-16$ (Proposition~\ref{prop:decide}
+applied to the class $k\equiv1\pmod2$). The score programme asks for
+$\Delta_2+\Delta_3+\cdots\ge16$ summed over a window of $6n$ shortcut
+steps. We call a class of $k$ \emph{closed at $B$} if
+$\Delta_2+\cdots+\Delta_B\ge16$ on the whole class. This prefix
+condition does not imply the window condition, since later blocks score
+$-7,-16,\dots$ whenever $\tau(y)\ge2$. Theorem~\ref{thm:E} shows that
+even the prefix condition cannot be certified on all odd $k$.
+
+\subsection*{Exact decision on a residue class}
+
+\begin{lemma}\label{lem:determinacy}
+For $P\ge6$, $x_1\bmod2^{P}$ depends only on $k\bmod2^{P-5}$.
+Moreover, if $x\equiv x'\pmod{2^{p}}$ in $\Z_2$, then the parity words
+of $x$ and $x'$ agree in their first $p$ letters.
+\end{lemma}
+
+\begin{proof}
+The order of $3$ modulo $2^{P+3}$ is $2^{P+1}$, so
+$3^{64k+18}\bmod2^{P+3}$ depends on $64k\bmod2^{P+1}$. The second
+statement is Terras's observation~\cite{Terras1976}: $T^{i}(x)\equiv
+T^{i}(x')\pmod{2^{p-i}}$ for $i\le p$, by induction.
+\end{proof}
+
+\begin{proposition}[exact class decision]\label{prop:decide}
+Fix a class $k\equiv r\pmod{2^{j}}$. The first $j+5$ letters of the
+parity word of $x_1$ are the same for every $k$ in the class, including
+every $2$-adic $k$. If they contain $B+1$ occurrences of $\mathtt{OE}$,
+then $(\Delta_1,\dots,\Delta_B)$ is constant on the class. Otherwise
+split the class into its two children modulo $2^{j+1}$ and repeat. A
+statement about $(\Delta_1,\dots,\Delta_B)$ on a class is proved when it
+holds on every leaf of this tree, and refuted, with an explicit integer
+counterexample, when it fails on some leaf.
+\end{proposition}
+
+\begin{proof}
+Lemmas~\ref{lem:determinacy} and~\ref{lem:blockword}.
+\end{proof}
+
+For example, single class evaluations give
+\[
+\begin{array}{c|c|c}
+k\ \text{class} & (\Delta_2,\Delta_3,\Delta_4) & \text{sum}\\\hline
+3\bmod2^{8} & (2,13,2) & 17\\
+171\bmod2^{8} & (2,2,13) & 17\\
+323\bmod2^{9} & (2,13,13) & 28\\
+579\bmod2^{10} & (2,13,4) & 19
+\end{array}
+\]
+so these four classes are closed at $B=4$.
+
+\begin{remark}\label{rem:onerep}
+A single representative is not a certificate. The integers $k=267$ and
+$k=41227$ lie in the same class modulo $2^{13}$. For $k=267$,
+$\Delta_2+\cdots+\Delta_6=43$. For $k=41227$ the same sum is $7$. The
+class modulo $2^{13}$ does not determine $\Delta_6$.
+Proposition~\ref{prop:decide} refines it, and the leaf containing $41227$
+has modulus $2^{18}$.
+\end{remark}
+
+\subsection*{The cycle defeats every finite certificate}
+
+\begin{lemma}\label{lem:ball}
+The map $k\mapsto x_1(k)$ extends to a homeomorphism from the odd
+$2$-adic integers onto the ball $9+64\Z_2$.
+\end{lemma}
+
+\begin{proof}
+Write $3^{64}=1+2^{8}u$ with $u$ odd. Then $z\mapsto(1+2^{8}u)^{z}$
+is a homeomorphism from $\Z_2$ onto $1+2^{8}\Z_2$ that scales distances
+by exactly $2^{-8}$, and odd $z$ go onto $257+2^{9}\Z_2$. The affine map
+$w\mapsto(3^{18}w-1)/8$ takes $257+2^{9}\Z_2$ onto
+$(3^{18}\cdot257-1)/8+64\Z_2=9+64\Z_2$, using
+$3^{18}\cdot257\equiv73\pmod{512}$.
+\end{proof}
+
+So every point of $9+64\Z_2$ is $x_1$ of some odd $2$-adic $k$. One of
+them falls straight into the expanding cycle of
+Section~\ref{sec:shadow}.
+
+\begin{theorem}[shadow of the $-5$ cycle on the spine]\label{thm:E}
+Let $k^{*}\in\Z_2$ be defined by $3^{64k^{*}+20}=-367$. Then
+\begin{enumerate}
+\item $k^{*}$ is odd, $x_1(k^{*})=-47/9$, and its blocks have
+  $\Delta_1=-16$ and $\Delta_j=-7$ for every $j\ge2$;
+\item for every $J\ge1$ and every integer $k\ge0$ with
+  $k\equiv k^{*}\pmod{2^{J}}$,
+  \[
+  \Delta_2=\Delta_3=\cdots=\Delta_{B}=-7,
+  \qquad B=\Bigl\lfloor\frac{J+2}{3}\Bigr\rfloor;
+  \]
+\item no finite set of residue classes of $k$, each closed at some $B$
+  by Proposition~\ref{prop:decide}, contains every odd integer $k$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) One has $-367\cdot3^{-20}\equiv257\pmod{512}$, so $k^{*}$ exists
+and is odd by the proof of Lemma~\ref{lem:ball}. Then
+$x_1=(3^{64k^{*}+18}-1)/8=(-367/9-1)/8=-47/9$. Next
+$3x_1+1=-44/3$, so $e=2$ and $y_1=-11/3$ with
+$\tau(y_1)=\vv_2(-8/3)=3$, giving $\Delta_1=11-27=-16$. Two steps of
+Lemma~\ref{lem:fuse} give $-11/3\mapsto-5\mapsto-7$. From $-7$ every
+block is $-7\mapsto-5\mapsto-7$ with $e=2$ and $\tau(-5)=2$, so
+$\Delta=11-18=-7$.
+
+(2) The parity word of $-47/9$ is
+$\mathtt{OEOO}(\mathtt{OEO})^{\infty}$. Its $(B+1)$-st occurrence of
+$\mathtt{OE}$ ends at letter $3B+3$. If $k\equiv k^{*}\pmod{2^{J}}$,
+Lemma~\ref{lem:determinacy} gives agreement in the first $J+5$ letters,
+which contain $B+1$ occurrences of $\mathtt{OE}$ when $3B+3\le J+5$.
+Lemma~\ref{lem:blockword} finishes.
+
+(3) Suppose classes $C_1,\dots,C_m$ cover the odd integers. Refine them
+to a common modulus $2^{J}$. Every odd residue modulo $2^{J}$ is then
+covered, including that of $k^{*}$, so some $C_i$ contains $k^{*}$. The
+certificate for $C_i$ uses only letters common to every $2$-adic member
+of $C_i$ (Proposition~\ref{prop:decide}), so it applies to $k^{*}$ and
+gives $\Delta_2+\cdots+\Delta_{B_i}\ge16$. By (1) that sum is
+$-7(B_i-1)<16$, a contradiction.
+\end{proof}
+
+The mechanism is the one behind Theorem~\ref{thm:A}. The cycle block
+$-7\mapsto-5\mapsto-7$ has one even and two odd letters and value ratio
+$3^{2}/2^{3}=\tfrac98>1$. Any linear score whose nonnegativity forces
+contraction must therefore score this block negatively. Residue classes
+of $k$ cannot separate $k$ from $k^{*}$, just as residues of $x$ cannot
+separate $x$ from its shadow. In (2), each extra $3$ bits of modulus
+buy exactly one more block of shadowing. One checks that $B$ is sharp
+for $J\le120$.
+
+\subsection*{How far certificates reach}
+
+Proposition~\ref{prop:decide} also measures the method. Among odd $k$,
+the Haar measure of the classes modulo $2^{J}$ that are closed within
+ten blocks is
+\[
+\frac{1013}{2048}\approx0.495\ (J=14),\qquad
+\frac{77177}{131072}\approx0.589\ (J=18),\qquad
+\frac{10687}{16384}\approx0.652\ (J=22).
+\]
+The rest is undetermined at that modulus, apart from a part of measure
+about $2.5\times10^{-4}$ at $J=22$ that provably does not close within
+ten blocks. Each four extra bits close about $6\%$ more. By
+Theorem~\ref{thm:E}(3) the measure never reaches $1$ at any finite $J$.
+
+\begin{remark}\label{rem:spinebarrier}
+Even a complete cover would yield only prefix inequalities. The window
+condition also needs the later blocks, and a lower bound for them is the
+same problem for the shifted orbit. The full score programme of the
+repository accompanying this paper, if completed, would give
+$\sigma(a_n)\le6n$ and hence a stopping time of at most $7n$ odd steps
+for every $2^{n}-1$ with $n$ odd. That is a linear stopping-time bound for an
+explicit infinite family whose orbits first climb by a factor of about
+$(3/2)^{n}$, and we know of no such result.
+\end{remark}
+
 \section{The boundary}\label{sec:boundary}
 
 What survives Theorem~\ref{thm:B} must see $\log_2x$ to a precision
@@ -547,12 +779,15 @@ is exactly known; note that any $k$-step potential must in particular
 survive $k$ dividing $2a$ along the iterated shadow.
 \end{question}
 
-We also note what the results do \emph{not} say: nothing here bears on
+We also note what the results do \emph{not} say. Apart from the
+negative statements of Section~\ref{sec:spine} about one method on one
+family, nothing here bears on
 individual trajectories, densities of divergent orbits, or cycles. The
 theorems delimit a proof \emph{method}, not the dynamics.
 
 \section{Computational verification}\label{sec:verification}
 
+{\sloppy
 Every numbered claim is verified by scripts using exact integer and
 rational arithmetic (no floating point in any assertion): the shadow
 lemma over wide parameter ranges with detector evaluation at all nodes
@@ -563,10 +798,15 @@ tower in all parts, including both directions of the domain criterion
 and the carry-free normal form
 (\texttt{verify\_tower.py}); the family-method subclasses
 (\texttt{verify\_no\_local\_potential.py}, \texttt{verify\_nlp2.py});
-and the independent certificate miner with exact cycle confirmation
+the independent certificate miner with exact cycle confirmation
 (\texttt{verify\_nogo\_certificate.py},
-\texttt{verify\_fuel\_fraction.py}). The scripts accompany the
-repository.
+\texttt{verify\_fuel\_fraction.py}); and for Section~\ref{sec:spine}, the
+ball lemma, the shadow index $k^{*}$, part~(2) of Theorem~\ref{thm:E} for
+$J\le120$, the four class evaluations, and the exact closure measures
+(\texttt{verify\_residue\_certificate\_nogo.py --measure-22}), with the
+class decision procedure in \texttt{prove\_block8\_17\_classes.py}. The
+scripts accompany the repository.
+\par}
 
 \begin{thebibliography}{99}
 
