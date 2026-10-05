@@ -54,6 +54,8 @@ python scripts/verify_repunit_storage_dominance.py --limit 2001 --check-block8-m
 python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod256
 python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod512
 python scripts/verify_repunit_storage_dominance.py --limit 8001 --check-block8-k11-mod8192
+# class-stability falsifier for the mod-2^j rows above (PASS = the 9 documented refutations reproduce)
+python scripts/verify_block8_17_class_stability.py --members 1024
 python scripts/explore_block8_mod17.py --limit 2001
 python scripts/explore_block8_k11_mod64.py --limit-k 8001
 python scripts/explore_block8_e6_expand.py --limit-k 8001

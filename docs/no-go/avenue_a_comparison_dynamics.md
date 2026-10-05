@@ -1368,7 +1368,7 @@ Further stable slices through \(k\le8001\): \(k\equiv523\pmod{1024}\Rightarrow
 \(6\)–\(8\) depending on the tail (e.g.\ \(k=267\) clears at block \(6\)
 with \(\mathrm{rest}=43\)). \(\square\)
 
-**Corollary SD-K-block5-mod8192-1035.** On the obstruction branch
+**Corollary SD-K-block5-mod8192-1035.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On the obstruction branch
 \(k\equiv11\pmod{512}\subset k\equiv11\pmod{256}\), the slice
 \(k\equiv1035\pmod{2048}\) refines at mod \(8192\):
 
@@ -1381,7 +1381,7 @@ with \(\mathrm{rest}=43\)). \(\square\)
 
 Finite certificate: `--check-block8-k11-mod8192`.
 
-**Lemma SD-K-b4start-mod8192.** On \(k\equiv459\pmod{512}\subset
+**Lemma SD-K-b4start-mod8192.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On \(k\equiv459\pmod{512}\subset
 k\equiv203\pmod{256}\), the companion to Lemma SD-K-b4start-mod512 at mod
 \(8192\) is:
 
@@ -1393,7 +1393,75 @@ k\equiv203\pmod{256}\), the companion to Lemma SD-K-b4start-mod512 at mod
 (Each has block-\(4\) start \(x\equiv9\pmod{32}\) with \(e=2\) and
 \(h^{\mathrm{eff}}\in\{7,11\}\) respectively.)
 
-**Corollary SD-K-block6-mod8192-k267slice.** On \(k\equiv267\pmod{512}\subset
+**Correction SD-K-267-class (2026-10-05).** Several rows below were
+certified by checking one representative \(k\) per residue class modulo
+\(8192\) (or \(t=0,\ldots,15\) on \(k=267+512t\)) and then stated for the whole
+class. Checking \(1024\) members \(k=r+Ms\) of each class
+(`scripts/verify_block8_17_class_stability.py`) refutes the following as
+class-level statements:
+
+| statement | counterexample \(k\) | observed \((\Delta_2,\ldots)\) |
+|---|---|---|
+| Lemma SD-K-b4start-mod8192, row \(7627\) | \(15819\) | \((2,2,-61)\), not \(-88\) |
+| Cor SD-K-block5-mod8192-1035, row \(1035\) | \(9227\) | \(\Delta_5=-79\), not \(-43\) |
+| Thm SD-K-block-8-17-267mod8192, row \(267\) | \(41227\) | \((2,2,2,2,-1)\), sum \(7<16\) |
+| Thm SD-K-block-8-17-267mod8192, row \(4363\) | \(274699\) | \((2,2,2,2,3)\), sum \(11<16\) |
+| Thm SD-K-block-8-17-779mod8192 (all four rows) | \(8971\), \(11531\), \(45835\), \(15627\) | seven-block sums \(5,14,-11,13\) |
+| Thm SD-K-block-8-17-3851mod8192 | \(12043\) | eight-block sum \(-22\) |
+
+Rows \(1291,5387,6411\) of Thm SD-K-block-8-17-267mod8192, the four
+early theorems (\(3,171\bmod256\), \(323\bmod512\), \(579\bmod1024\)), Lemma
+SD-K-blocks25-267mod512, Lemma SD-K-b4start-mod512, the \(3531\) row, the other
+three rows of Cor SD-K-block5-mod8192-1035, and the stable block-\(5\) slices
+pass on all \(1024\) members tested (finite evidence only).
+
+*Root cause.* The affine identity of Lemma SD-K-e6-param-267 is correct for
+every \(t\) (proof below). The error was in Cor SD-K-d6-param-267 and its
+successors, which treat the odd part \(z_t\) of \(L_t=1440-492t\) as a function
+of \(t\bmod16\). It is not: \(L_{t+16}=L_t-2^6\cdot123\), so after dividing by
+\(2^{e_6}\) the low bits of \(z_t\), and hence \(h_6\), change with \(t\bmod
+2^{e_6+h_6+O(1)}\). (Also \(e_6\) itself is not periodic on \(t\equiv8\pmod{16}\):
+\(v_2(L_t)\in\{6,7,9,\ldots\}\) there.) Everything downstream (Lemma
+SD-K-h6-z6-267, Lemma SD-K-e7-param-267, Cor SD-K-d7-param-267, the
+seven-block theorem) inherits the error. The fitted block-\(7\) progressions
+"\(t\equiv3\pmod{11}\)", "\(t\equiv4\pmod7\)" were fits to at most two points
+in \(0\le t\le15\).
+
+**Lemma SD-K-e6-affine-267 (proved; replaces Cor SD-K-d6-param-267).** On
+\(k=267+512t\), \(t\ge0\), with \(L_t=1440-492t\) and \(x_6\) as in Lemma
+SD-K-compose6,
+\[
+3x_6+1=L_t+R_t,\qquad v_2(R_t)\ge14 .
+\]
+Hence, writing \(e=v_2(L_t)\) and \(z=L_t/2^{e}\) (an odd integer), if
+\(e+h(z)\le13\) then \(e_6=e\), \(h_6=h(z)\), and
+\(\Delta_6=11(e-1)-9h(z)\).
+
+Proof. Let \(1+2^{17}w=(1+256u)^{512}\) (so \(w\) is odd) and
+\(A=(1+256u)^{267}\). Then \(m=B+3^{19}(A(1+2^{17}w)^t-1)/256\) and
+\(N_t:=128R_t=2187m+269-128L_t\) has the Mahler expansion
+\(N_t=\sum_{i\ge0}a_i\binom ti\) with
+\[
+a_0=2187B+269-128\cdot1440+\tfrac{2187\cdot3^{19}(A-1)}{256},\quad
+a_1=\tfrac{2187\cdot3^{19}A\,2^{17}w}{256}+128\cdot492,\quad
+a_i=\tfrac{2187\cdot3^{19}A\,(2^{17}w)^i}{256}\ (i\ge2).
+\]
+Direct computation gives \(v_2(a_0)=21\), \(v_2(a_1)=22\), and
+\(v_2(a_i)=17i-8\ge26\) for \(i\ge2\). Since every \(\binom ti\) is an
+integer, \(v_2(N_t)\ge21\) for every \(t\ge0\), i.e. \(v_2(R_t)\ge14\). Then
+\(y_6=(3x_6+1)/2^e=z+R_t/2^e\) with \(v_2(R_t/2^e)\ge14-e>h(z)\), so
+\(h(y_6)=h(z)\). Rails do not change \(h^{\mathrm{eff}}\) on this slice.
+(Checked against direct orbits for all \(t<4096\) with \(e+h(z)\le13\); \(13\)
+values of \(t<4096\) fall outside that range.) \(\square\)
+
+*Consequence.* Block-\(6\) closure on the \(267\)-family is the condition
+\(\Delta_6(t)\ge8\), a condition on the integer \(L_t\). The set of closing
+\(t\) is a union of residue classes of unbounded modulus, not a union of
+classes mod \(16\). This is the \(267\)-family instance of the method no-go in
+`avenue_a_mean_valuation_route.md` §3: each further block needs more bits of
+\(t\), and no fixed modulus closes the family.
+
+**Corollary SD-K-block6-mod8192-k267slice.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On \(k\equiv267\pmod{512}\subset
 k\equiv11\pmod{256}\), blocks \(2\)–\(5\) are \((2,2,2,2)\) and block \(6\)
 stabilizes at mod \(8192\). Writing \(\Delta_2+\cdots+\Delta_6\) for the
 six-block surplus:
@@ -1408,7 +1476,7 @@ six-block surplus:
 | \(779,4875\) | \((2,2,2,2,2)\) | \(10\) | block \(7\) |
 | \(1803,5899,6923,7947\) | see finite scan | \(<16\) by block \(6\) | deferred |
 
-**Corollary SD-K-block7-mod8192-k267slice.** On the same slice, block \(7\)
+**Corollary SD-K-block7-mod8192-k267slice.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On the same slice, block \(7\)
 is stable at mod \(8192\). Selected rows (full table certified by
 `--check-block8-k11-mod8192`):
 
@@ -1421,14 +1489,14 @@ is stable at mod \(8192\). Selected rows (full table certified by
 | \(3851\) | \(+2\) | \(3\) by block \(7\); closes at block \(8\) | yes (block \(8\)) |
 | \(1803,5899,6923,7947\) | see cert | still \(<16\) by block \(7\) | open |
 
-**Theorem SD-K-block-8-17-267mod8192.** If \(n=64k+17\) with
+**Theorem SD-K-block-8-17-267mod8192.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If \(n=64k+17\) with
 \(k\bmod{8192}\in\{267,1291,4363,5387,6411\}\), then
 \(\Delta_2+\cdots+\Delta_6\ge16\) and Gap SD-K-block-8-17 holds. \(\square\)
 
-**Theorem SD-K-block-8-17-779mod8192.** If \(k\bmod{8192}\in\{779,4875,3339,7435\}\),
+**Theorem SD-K-block-8-17-779mod8192.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If \(k\bmod{8192}\in\{779,4875,3339,7435\}\),
 then \(\Delta_2+\cdots+\Delta_7\ge16\) and the gap holds. \(\square\)
 
-**Theorem SD-K-block-8-17-3851mod8192.** If \(k\bmod{8192}=3851\), then
+**Theorem SD-K-block-8-17-3851mod8192.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If \(k\bmod{8192}=3851\), then
 \(\Delta_2+\cdots+\Delta_8\ge16\). \(\square\)
 
 (Progressions \(n=524288s+17105\), \(n=524288s+49873\) for \(779\bmod{8192}\),
@@ -1532,7 +1600,7 @@ only \(k\bmod{8192}\) enters \(Q_{\le2}\)). Thus \(v_2(N_t)\ge21\), so
 \(v_2(R_t)=v_2(N_t)-7\ge14\). Since \(v_2(L_t)\le6\) on \(t=0,\ldots,15\),
 \(e_6=v_2(3x_6+1)=v_2(L_t)\). \(\square\)
 
-**Corollary SD-K-d6-param-267.** On \(k=267+512t\), let \(L_t=1440-492t\),
+**Corollary SD-K-d6-param-267.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On \(k=267+512t\), let \(L_t=1440-492t\),
 \(e_6=v_2(|L_t|)\), and let \(z_t\) be the odd residue with
 \(2^{e_6}z_t\equiv L_t\pmod{8192}\). After block \(6\), the landing state
 \(y_6=(3x_6+1)/2^{e_6}\) satisfies \(h_6^{\mathrm{eff}}=h_6=h(z_t)\) (no
@@ -1545,13 +1613,13 @@ with \(v_2(\varepsilon_t)\ge8\). For each \(t\bmod{16}\), the dictionary
 of Cor SD-K-block6-mod8192-k267slice agrees with \(h(z_t)\) and
 \(\Delta_6=11(e_6-1)-9h(z_t)\) (diagnostic: `--check-d6-param`). \(\square\)
 
-**Corollary SD-K-e6-table-267.** On \(k=267+512t\) with \(t\bmod{16}\)
+**Corollary SD-K-e6-table-267.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On \(k=267+512t\) with \(t\bmod{16}\)
 determining \(k\bmod{8192}\), the pair \((e_6,\Delta_6)\) is the mod-\(8192\)
 dictionary of Cor SD-K-block6-mod8192-k267slice. In particular
 \(e_6=v_2(1440-492t)\) takes values \(5,2,3,2,4,2,3,2,6,2,3,2,4,2,3,2\) for
 \(t=0,\ldots,15\). \(\square\)
 
-**Theorem SD-K-block-8-17-267mod512 (six-block closure).** If
+**Theorem SD-K-block-8-17-267mod512 (six-block closure).** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If
 \(k\equiv267\pmod{512}\) and \(\Delta_2+\cdots+\Delta_6\ge16\), then Gap
 SD-K-block-8-17 holds at \(n=64k+17\).
 
@@ -1562,7 +1630,7 @@ closing rows of Cor SD-K-block6-mod8192-k267slice (\(k\bmod{8192}\in
 \{267,1291,4363,5387,6411\}\)). The deferred rows (\(t\in\{1,3,4,5,6,7,9,
 11,13,14,15\}\)) require block \(7\) and are not covered here. \(\square\)
 
-**Lemma SD-K-h6-z6-267.** On the deferred slice (\(\Delta_2+\cdots+\Delta_5
+**Lemma SD-K-h6-z6-267.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On the deferred slice (\(\Delta_2+\cdots+\Delta_5
 <16\)), let \(z_t\) be as in Corollary SD-K-d6-param-267. Then the block-\(6\)
 landing height is \(h_6=h(z_t)\) (not determined by \(x_6\bmod{32}\) alone).
 
@@ -1580,7 +1648,7 @@ x_7+1=\frac{3^{h_6-1}(y_6+1)}{2^{h_6-1}},
 \]
 When \(h_6=1\) one has \(x_7=y_6\) and \(3x_7+1=3y_6+1\). \(\square\)
 
-**Lemma SD-K-e7-param-267 (deferred slice; split by \(h_6\)).** On deferred
+**Lemma SD-K-e7-param-267 (deferred slice; split by \(h_6\)).** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On deferred
 rows \(k=267+512t\), write \(L_t=1440-492t\), \(e_6=v_2(|L_t|)\), and let
 \(z_t\) be the odd residue with \(2^{e_6}z_t\equiv L_t\pmod{8192}\). Set
 \(h_6=h(z_t)\). Then \(3x_7+1\equiv A_{h_6}(t)\pmod{8192}\) with:
@@ -1599,14 +1667,14 @@ branch is a three-point finite table (no global affine \(a-bt\)). Certified on
 \(t=0,\ldots,15\): `scripts/explore_block7_deferred.py --check-e7-param`.
 \(\square\)
 
-**Corollary SD-K-d7-param-267.** On the same deferred rows, with
+**Corollary SD-K-d7-param-267.** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* On the same deferred rows, with
 \(3x_7+1\equiv A_{h_6}(t)\pmod{8192}\) as above, let
 \(e_7=v_2(3x_7+1)\) and \(y_7=(3x_7+1)/2^{e_7}\). Then
 \(h_7^{\mathrm{eff}}=h_7=h(y_7')\) where \(y_7'\) is the odd residue with
 \(2^{e_7}y_7'\equiv A_{h_6}(t)\pmod{8192}\), and
 \(\Delta_7=11(e_7-1)-9h_7\). Diagnostic: `--check-d7-param`. \(\square\)
 
-**Theorem SD-K-block-8-17-267mod512-sevenblock (deferred closers).** If
+**Theorem SD-K-block-8-17-267mod512-sevenblock (deferred closers).** *(Refuted 2026-10-05 as a class-level statement; see Correction SD-K-267-class.)* If
 \(k=267+512t\) is deferred with
 \(\Delta_2+\cdots+\Delta_7\ge16\) (equivalently \(k\bmod{8192}\in
 \{779,3339,4875,7435\}\)), then Gap SD-K-block-8-17 holds.
