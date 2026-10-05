@@ -18,6 +18,8 @@ Start with:
 - [`CLAIM_LEDGER.md`](CLAIM_LEDGER.md) for the authoritative status of every
   maintained claim.
 - [`docs/README.md`](docs/README.md) for the topic-organized note index.
+- [`orbit-mission/README.md`](orbit-mission/README.md) for a playable introduction
+  to integer rules, with step-by-step journeys and reproducible experiments.
 - [`mersenne_obstructions.tex`](mersenne_obstructions.tex) — the
   consolidated manuscript *No-Go Theorems for One-Step Lyapunov Potentials
   for the 3x+1 Map* (Theorems A–D below), with compiled PDF.
