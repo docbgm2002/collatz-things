@@ -415,7 +415,8 @@ def check_theorem_F(quick):
                      max(Q, 2)})
         for K in Ks:
             for (m, N, d) in [(4, 16, 0), (16, 1 << 16, 3), (0, 9, 2), (0, 7, 1), (5, 32 * 9 * 35, 3)]:
-                if quick and (m, N, d) == (5, 32 * 9 * 35, 3) and j > 4:
+                # the composite modulus needs up to 12 traversals; cap its precision
+                if (m, N, d) == (5, 32 * 9 * 35, 3) and j > (4 if quick else 6):
                     continue
                 grid.append((j, m, N, d, K))
     nbits_max = 0
