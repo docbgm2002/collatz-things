@@ -18,6 +18,7 @@
 \newtheorem*{thmC}{Theorem C}
 \newtheorem*{thmD}{Theorem D}
 \newtheorem*{thmE}{Theorem E}
+\newtheorem*{thmF}{Theorem F}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
@@ -30,7 +31,7 @@
 \author{[author]\thanks{Repository: \texttt{github.com/docbgm2002/collatz-things}.
 Every numbered claim is machine-verified in exact integer or rational
 arithmetic; see Section~\ref{sec:verification}.}}
-\date{Draft of October 5, 2026}
+\date{Draft of November 3, 2026}
 
 \begin{document}
 \maketitle
@@ -60,12 +61,18 @@ read a canonical structure, an exact ancestry tower
 $w_d(M)=\bigl(2^{M+2d}-2^{2d+1}+3^{d}\bigr)/3^{d}$ with
 $f^{d}(w_d(M))=2^{M}-1$, supported on $M\equiv1\pmod{2\cdot3^{d-1}}$
 with a carry-free periodic binary normal form (Theorem~D). The
-surviving one-step class reads the quantized full logarithm, where
-further no-go progress becomes conjecture-adjacent. The same cycle also
-blocks a second method: on the Mersenne spine $2^{n}-1\mapsto(3^{n}-1)/2$,
+remaining natural coordinate, the size of $x$ read to a fixed
+precision $\lfloor2^{j}\log_2x\rfloor$, falls as well: closed
+certificates assembled from several shadows of rational cycles exclude
+it at every precision $j$, jointly with residues modulo an arbitrary
+$N$ and all detectors (Theorem~E), and the least number of witnesses
+needed at precision $2^{j}$ is a semiconvergent denominator of
+$\log_23$ ($2,2,2,7,7,12,12,12,53,665,\dots$). The exclusions persist
+for potentials that are nonincreasing only along $f^{k}$. The same
+cycle also blocks a second method: on the Mersenne spine $2^{n}-1\mapsto(3^{n}-1)/2$,
 no finite set of residue-class certificates on $n$ can force a positive
 block score, because a $2$-adic index $n^{*}$ with $3^{n^{*}+3}=-367$
-sends the orbit into $-5\mapsto-7$ (Theorem~E).
+sends the orbit into $-5\mapsto-7$ (Theorem~F).
 \end{abstract}
 
 \section{Introduction}
@@ -122,6 +129,13 @@ For every bounded $G:2\Z+1\to\R$, of arbitrary dependence on $x$, the
 potential $\log_2x+G(x)$ is not nonincreasing along $f$ on odd $x>1$.
 \end{thmC}
 
+\begin{thmE}[quantized logarithm; Theorem~\ref{thm:E}]
+For every $j,m,d\ge0$, every $N\ge1$ and every $g$, the potential
+$\log_2x+g\bigl(\lfloor2^{j}\log_2x\rfloor,\ \tau(x),\ x\bmod N,\
+\lambda_1(x),\dots,\lambda_d(x)\bigr)$ is not nonincreasing along $f$
+on odd $x>1$; nor is it nonincreasing along $f^{k}$ for any fixed $k$.
+\end{thmE}
+
 Theorem~A is proved by two integers per parameter choice: the map has
 the expanding rational cycle $-5\mapsto-7\mapsto-5$, of multiplier
 $3^2/2^3=\tfrac98>1$ (expansion is exactly why it lives at negative
@@ -133,7 +147,12 @@ certificate is $1275\mapsto1913\mapsto1435$. Theorem~B iterates the
 shadow $a$ times and chooses $a$, by Dirichlet approximation to the
 irrational $\log_2\tfrac98$, so that the accumulated gain sits next to
 an exact power of $2$ and the leading digits return. Theorem~C is a
-one-paragraph consequence of the Mersenne burn.
+one-paragraph consequence of the Mersenne burn. Theorem~E replaces the
+single shadow by a closed cycle of $K$ independent witnesses, each
+shadowing one member of a rational cycle chosen to fit the precision,
+and the number $K$ needed is exactly the least denominator at which
+$\lfloor K\log_23\rfloor/K$ under-approximates $\log_23$ at least as
+well as $\lfloor2^{j}\log_23\rfloor/2^{j}$ does (Section~\ref{sec:quantized}).
 
 The detectors quantified over in Theorems A and B are given meaning by
 a structural result of independent interest:
@@ -162,13 +181,13 @@ by block and splits on residues of $n$. Each such case is an exact finite
 computation (Proposition~\ref{prop:decide}), but the method cannot cover
 all $n$:
 
-\begin{thmE}[Theorem~\ref{thm:E}]
+\begin{thmF}[Theorem~\ref{thm:F}]
 On $n=64k+17$ with $k$ odd, the $2$-adic index $k^{*}$ defined by
 $3^{64k^{*}+20}=-367$ sends the orbit of $a_n$ into the cycle
 $-7\mapsto-5\mapsto-7$, every block of which has negative score. Integers
 $k\equiv k^{*}\pmod{2^{J}}$ follow it for $\lfloor(J+2)/3\rfloor$ blocks,
 and no finite set of certified residue classes covers all odd $k$.
-\end{thmE}
+\end{thmF}
 
 \subsection*{Method and provenance}
 
@@ -195,15 +214,19 @@ Theorem~D.
 
 \subsection*{The boundary}
 
-A coordinate defeats the shadow only by separating $x$ from
-$f^{2a}(x)$ for every good Dirichlet approximation $a$: since the two
-agree on all low-order bits, fuel, suffix patterns, and (for suitable
-$a$) leading digits, the surviving one-step class reads the
-\emph{quantized full logarithm} $\lfloor2^{j}\log_2x\rfloor$. There a
-closed certificate needs total gain in $(0,2^{-j})$, which pure shadows
-cannot supply; and as $j\to\infty$ the class approaches arbitrary
-corrections, for which the existence of a monotone potential is
-conjecture-adjacent. Section~\ref{sec:boundary} makes this precise.
+A coordinate defeats a single shadow only by separating $x$ from
+$f^{2a}(x)$ for every good Dirichlet approximation $a$; the quantized
+logarithm $\lfloor2^{j}\log_2x\rfloor$ does so for $j\ge3$, since one
+shadow period gains $\log_2\tfrac98>2^{-j}$. Theorem~E shows that
+this refuge is illusory: certificates built from several witnesses
+reset their position in the cell at every junction, and exist at every
+precision. After Theorems A, B and E, no correction built from finitely
+much arithmetic information about $x$ --- its residue modulo any fixed
+integer, any fixed-depth suffix pattern, its size to any fixed precision
+--- makes $\log_2x$ monotone. Section~\ref{sec:boundary} records what
+is left: the leading digits taken jointly with the quantized logarithm,
+and corrections that depend on the orbit rather than on $x$, for which
+the existence of a monotone potential is conjecture-adjacent.
 
 \subsection*{Relation to the literature}
 
@@ -426,7 +449,9 @@ $M>1+\Omega/\log_2\tfrac32$.
 Theorems A--C partition the correction landscape: bounded corrections
 fail on the burn alone; unbounded corrections through residues, fuel,
 length, leading digits, and suffix detectors of every depth fail on
-the shadow. Section~\ref{sec:boundary} describes what is left.
+the shadow. Section~\ref{sec:quantized} treats the size of $x$ read to
+an arbitrary fixed precision, and Section~\ref{sec:boundary} describes
+what is left.
 
 \section{The Mersenne ancestry tower}\label{sec:tower}
 
@@ -519,6 +544,354 @@ while the shadow certificates prove \emph{that} it fails. The full
 family proofs are retained in the repository.
 \end{remark}
 
+\section{The quantized logarithm}\label{sec:quantized}
+
+Theorems A and B leave one natural coordinate untouched: the size of
+$x$ read to a fixed precision, integer and fractional parts of
+$\log_2x$ jointly. Write $Q=2^{j}$ and
+\[
+c(x)=\lfloor Q\log_2x\rfloor ,
+\]
+the \emph{quantized logarithm} at precision $j$ ($c(x)=\bitlen(x)-1$
+for $j=0$). A single shadow chain cannot close it: one period of the
+shadow gains $\log_2\tfrac98>2^{-j}$ for $j\ge3$, so $x$ and
+$f^{2a}(x)$ never share a cell. The remedy is to use several witnesses,
+each a fresh integer: at every junction the position inside the cell is
+reset, and the total displacement around the cycle can be made zero
+exactly. This section proves that such certificates exist at every
+precision, for arbitrary moduli and detectors at once, and that their
+minimal length is a Diophantine invariant of $\log_23$.
+
+Throughout, $\beta=\log_23$, $L=\lfloor Q\beta\rfloor$,
+$\varphi=Q\beta-L\in(0,1)$ (irrational $\beta$), and for odd $x$
+\[
+\theta(x)=Q\log_2x-c(x)\in[0,1),\qquad
+\eta(x)=Q\log_2\Bigl(1+\frac1{3x}\Bigr)\in\Bigl(0,\frac{Q}{3x\ln2}\Bigr).
+\]
+
+\begin{definition}\label{def:certificate}
+Let $C$ be any function on the odd integers (a \emph{coordinate}). A
+\emph{closed certificate} of length $K$ for $C$ is a list of odd
+integers $x_1,\dots,x_K>1$, not necessarily distinct, with
+\[
+C(f(x_i))=C(x_{i+1})\quad(i\bmod K)\qquad\text{and}\qquad
+\prod_{i=1}^{K}f(x_i)>\prod_{i=1}^{K}x_i .
+\]
+\end{definition}
+
+\begin{lemma}\label{lem:certrefutes}
+If a closed certificate exists for $C$, then no potential
+$\log_2x+g(C(x))$ is nonincreasing along $f$ on odd $x>1$.
+\end{lemma}
+
+\begin{proof}
+Sum the $K$ inequalities $\Phi(f(x_i))\le\Phi(x_i)$. The $g$-terms
+cancel in pairs by closure, leaving
+$\sum_i\log_2\bigl(f(x_i)/x_i\bigr)\le0$, which contradicts the gain.
+\end{proof}
+
+The number of witnesses is governed by the following quantity.
+
+\begin{definition}\label{def:admissible}
+$K\ge1$ is \emph{admissible at precision $Q$} if
+\[
+s(Q,K):=Q\lfloor K\beta\rfloor-KL\ \ge\ 0,
+\qquad\text{equivalently}\qquad
+\frac{\lfloor K\beta\rfloor}{K}\ \ge\ \frac{\lfloor Q\beta\rfloor}{Q}.
+\]
+\end{definition}
+
+The identity $s(Q,K)=K\varphi-Q\{K\beta\}$ shows $s(Q,K)<K$ always,
+and $s(Q,Q)=0$, so $K=Q$ is admissible at every precision.
+
+\subsection*{Two lemmas}
+
+\begin{lemma}[displacement]\label{lem:displacement}
+Let $x$ be odd with $e=\vv_2(3x+1)$. Then
+\[
+c(f(x))=c(x)+L-Qe+\delta,\qquad
+\delta=\bigl\lfloor\theta(x)+\varphi+\eta(x)\bigr\rfloor .
+\]
+In particular, if $\eta(x)\le1-\varphi$ then $\delta\in\{0,1\}$, with
+$\delta=0$ whenever $\theta(x)<1-\varphi-\eta(x)$ and $\delta=1$
+whenever $\theta(x)\ge1-\varphi$. The last condition is the exact
+integer inequality $(3x)^{Q}\ge2^{\,c(x)+1+L}$.
+\end{lemma}
+
+\begin{proof}
+$Q\log_2f(x)=Q\log_2x+Q\beta-Qe+\eta(x)
+=c(x)+L-Qe+\bigl(\theta(x)+\varphi+\eta(x)\bigr)$.
+For the integer form: $(3x)^{Q}\ge2^{c+1+L}$ iff
+$Q\beta+c+\theta\ge c+1+L$ iff $\theta\ge1-\varphi$.
+\end{proof}
+
+\begin{lemma}[rational cycles]\label{lem:ratcycle}
+Let $(e_1,\dots,e_K)$ be any word of positive integers with sum $E$,
+and put $E_i=e_1+\dots+e_i$. Then
+\[
+y_1=\frac{\sum_{i=1}^{K}3^{K-i}\,2^{E_{i-1}}}{2^{E}-3^{K}}
+\]
+is a rational number whose denominator is prime to $6$; its orbit under
+$f$ (extended to $\Z_2$) is purely periodic, $y_{i+1}=(3y_i+1)/2^{e_i}$
+and $y_{K+1}=y_1$, with $\vv_2(3y_i+1)=e_i$ exactly for every $i$. Every
+$y_i$ is a $2$-adic unit and a $3$-adic integer.
+\end{lemma}
+
+\begin{proof}
+Composing the affine maps $y\mapsto(3y+1)/2^{e_i}$ gives
+$2^{E}y_{K+1}=3^{K}y_1+\sum_i3^{K-i}2^{E_{i-1}}$, so $y_1$ as stated is
+the unique fixed point of the composite; the same formula applied to the
+rotated words shows that every $y_i$ has the shape
+$c_i/(2^{E}-3^{K})$ with $c_i\in\Z$, so every $y_i\in\Z_2\cap\Z_3$. If
+some $y_{i+1}$ were even, then $3y_{i+1}+1$ would be a $2$-adic unit and
+$y_{i+2}=(3y_{i+1}+1)/2^{e_{i+1}}\notin\Z_2$, a contradiction. Hence
+every $y_{i+1}$ is odd, i.e.\ $\vv_2(3y_i+1)=e_i$. (Periodic parity
+sequences of rational $2$-adic integers are classical; see
+Lagarias~\cite{Lagarias1985}, Theorem~L.)
+\end{proof}
+
+For the word $(1,2)$ the cycle is $-5\mapsto-7$; for $(2)$ it is the
+fixed point $1$. Lemma~\ref{lem:S} is the shadow of $(1,2)$; the proof
+below shadows the cycle of a word chosen to fit the precision.
+
+\subsection*{The theorem}
+
+\begin{theorem}[the quantized logarithm does not survive]\label{thm:E}
+Let $j,m,d\ge0$ and $N\ge1$, and let $g$ be any real-valued function
+of
+\[
+\bigl(\lfloor2^{j}\log_2x\rfloor,\ \tau(x),\ x\bmod N,\
+\lambda_1(x),\dots,\lambda_d(x)\bigr).
+\]
+Then $\log_2x+g(\cdots)$ is not nonincreasing along $f$ on odd $x>1$.
+More precisely, write $N=2^{m}3^{u}N'$ with $\gcd(N',6)=1$. For every
+$K\ge2$ admissible at $Q=2^{j}$ with $2\lfloor K\beta\rfloor\ge3K$ ---
+a condition satisfied by every admissible $K\ge2$ when $j\ge1$ --- there
+is a closed certificate for the coordinate of length $tK$, where $t\ge1$
+depends only on $K$ and $N'$ and $t=1$ when $N'=1$. Its witnesses can be
+taken of bit length at most
+\[
+\Theta=m+\log_2(3^{u}N')+6tK+j+\log_2\frac1{\min(\varphi,1-\varphi)}+10 .
+\]
+\end{theorem}
+
+\begin{proof}
+Put $E=\lfloor K\beta\rfloor$ and $s=s(Q,K)\in[0,K)$.
+
+\emph{Step 1: the word.} Let $p=5K-3E$ and $r=2E-3K$. Both are
+nonnegative ($\beta<\tfrac53$ and the hypothesis; for $j\ge1$ the
+hypothesis follows from admissibility, since $L/Q\ge\tfrac32$ for
+$Q=2,4,8$ and $Q\beta-1\ge\tfrac32Q$ for $Q\ge12$), and the cyclic word
+\[
+(e_1,\dots,e_K)=(2,1)^{p}\,(3,1,1)^{r}
+\]
+has length $2p+3r=K$ and sum $3p+5r=E$. It contains neither the
+factor $(2,2)$ nor the factor $(2,1,1)$, read cyclically. Let
+$y_1,\dots,y_K$ be its rational cycle (Lemma~\ref{lem:ratcycle}).
+
+\emph{Step 2: detectors and fuel on the cycle.} The parity word of
+$y_i$ under $T$ (Section~\ref{sec:spine}) begins
+$\mathtt O\,\mathtt E^{e_i-1}\,\mathtt O\,\mathtt E^{e_{i+1}-1}\cdots$,
+and $y_i\bmod32$ is determined by its first five letters
+(Terras~\cite{Terras1976}: the first $p$ letters and the residue modulo
+$2^{p}$ determine each other). The residues $1$ and $9$ have parity
+words $\mathtt{OEOEO}$ and $\mathtt{OEOOO}$, which would force
+$(e_i,e_{i+1})=(2,2)$, resp.\ $(e_i,e_{i+1},e_{i+2})=(2,1,1)$. Neither
+occurs, so no $y_i$ is $\equiv1$ or $9\pmod{32}$, and by
+Lemma~\ref{lem:mod32} every $\lambda_d$ is $\bot$ on every odd integer
+$\equiv y_i\pmod{32}$. Lemma~\ref{lem:fuse} holds verbatim for $2$-adic
+units: a member with $e_i\ge2$ has $\tau=1$, and along a run of
+$e=1$ steps $\tau$ decreases by one per step. The runs of $1$s in the
+word have length at most $2$, so $\tau(y_i)\le3$ for all $i$.
+
+\emph{Step 3: residues.} Put $M=\max(m,5)+E$. On $\Z/N'$ the maps
+$\rho\mapsto(3\rho+1)2^{-e_i}$ are bijections; let $A$ be their
+composite over one period and $t$ its order as a permutation. Fix
+$\rho_1\in\Z/N'$ and define $\rho_{i+1}=(3\rho_i+1)2^{-e_i}$ for
+$i=1,\dots,tK$ (indices of $e$ taken modulo $K$), so $\rho_{tK+1}=\rho_1$.
+For $1\le i\le tK$ let $R_i$ be the residue class modulo
+$R=2^{M}3^{u}N'$ of integers $x$ with
+\[
+x\equiv y_i\pmod{2^{M}},\qquad x\equiv y_i\pmod{3^{u}},\qquad
+x\equiv\rho_i\pmod{N'}
+\]
+(indices of $y$ modulo $K$; the first two congruences make sense
+because $y_i\in\Z_2\cap\Z_3$). Every element of $R_i$ is odd. For
+$x\in R_i$: $3x+1\equiv3y_i+1\pmod{2^{M}}$, so $\vv_2(3x+1)=e_i$ and
+$f(x)\equiv y_{i+1}\pmod{2^{M-e_i}}$ with $M-e_i\ge\max(m,5)$;
+$3x+1\equiv3y_i+1\pmod{3^{u+1}}$, so $f(x)\equiv y_{i+1}\pmod{3^{u}}$;
+and $f(x)\equiv\rho_{i+1}\pmod{N'}$. Hence for any $x\in R_i$ and
+$x'\in R_{i+1}$: $f(x)\equiv x'\pmod N$; $\tau(f(x))=\tau(y_{i+1})=\tau(x')$
+since $\tau(y_{i+1})\le3<M-e_i$; and all detectors are $\bot$ at both
+$f(x)$ and $x'$ by Step~2. Every coordinate other than $c$ closes between
+$R_i$ and $R_{i+1}$.
+
+\emph{Step 4: cells.} Set $\delta_i=1$ if $i\bmod K\in\{1,\dots,s\}$ and
+$\delta_i=0$ otherwise, so that each period carries exactly $s$ times.
+Choose $c_1=H$ and $c_{i+1}=c_i+L-Qe_i+\delta_i$. Then
+$c_{tK+1}=c_1+t(KL-QE+s)=c_1$. Since $e_i\le3$ and $L\ge Q$, the
+downward excursion satisfies
+$c_1-c_i\le t\sum_{i\le K}\max(0,Qe_i-L)\le2tKQ$.
+
+\emph{Step 5: witnesses.} Let $\ell_0=\min(\varphi,1-\varphi)$ and take
+$H\ge Q\bigl(\log_2R+j+\log_2\tfrac{2}{\ell_0\ln2}+2tK+1\bigr)$.
+For each $i$, the integers in cell $c_i$ with $\theta<1-\varphi-\eta^{*}$
+(if $\delta_i=0$), resp.\ $\theta\ge1-\varphi$ (if $\delta_i=1$), where
+$\eta^{*}=Q/(3\cdot2^{c_i/Q}\ln2)\ge\sup_{\text{cell}}\eta$, form an
+interval of length at least $2^{c_i/Q}\,\ell\ln2/Q$ with
+$\ell\ge\ell_0/2$ (the choice of $H$ gives $\eta^{*}\le(1-\varphi)/2$),
+which is at least $R$ by the choice of $H$ and Step~4; so the interval
+contains an element $x_i$ of $R_i$. By Lemma~\ref{lem:displacement},
+$c(f(x_i))=c_i+L-Qe_i+\delta_i=c_{i+1}=c(x_{i+1})$, and with Step~3 the
+coordinate closes at every junction. The upward excursion is at most
+$t\sum_{i\le K}\max(0,L-Qe_i+1)\le tK(L-Q+1)$, and with
+$M\le m+5+E$, $E<\tfrac{8}{5}K$ and $L-Q<\tfrac35Q$ the bit length of
+every witness is at most $\Theta$ when $H$ is taken minimal.
+
+\emph{Step 6: gain.} With $y_i'=f(x_i)$,
+\[
+\frac{\prod y_i'}{\prod x_i}
+=\frac{3^{tK}}{2^{tE}}\prod_{i}\Bigl(1+\frac1{3x_i}\Bigr)
+>\Bigl(\frac{3^{K}}{2^{E}}\Bigr)^{t}>1,
+\]
+since $E=\lfloor K\beta\rfloor<K\beta$. Lemma~\ref{lem:certrefutes}
+finishes the proof.
+\end{proof}
+
+\begin{remark}\label{rem:F}
+(i) Nothing in the proof uses that the witnesses are distinct, and
+no estimate of the correction terms $\eta$ beyond $\eta\le(1-\varphi)/2$
+is needed: the gain is automatic from $2^{E}<3^{K}$.
+(ii) Without detectors ($d=0$) any word over $\{1,2\}$ with sum $E$
+serves, and then every admissible $K\ge2$ is realised, also for $j=0$;
+$M$ must then be raised to $\max(m,5,2K-E+2)+E$ to cover the longer
+fuel runs.
+(iii) At $j=0$ and $K=2$ the word is $(2,1)$, the cycle is $-7\mapsto-5$,
+and the construction reproduces the shadow of Lemma~\ref{lem:S} with its
+two steps now read as two witnesses. Theorem~\ref{thm:A} is the case
+$j=0$, $N=2^{m}$ of Theorem~\ref{thm:E}.
+(iv) The smallest instances are tiny. At $(j,m)=(3,4)$, $K=2$:
+$4123\mapsto6185$, $5817\mapsto4363$ close with
+$c(6185)=c(5817)=100$, $c(4363)=c(4123)=96$, and
+$6185\cdot4363>4123\cdot5817$. The pairs $x_1=2^{n}+27$, $n\ge10$,
+with $x_2$ the least integer $\equiv9\pmod{16}$ in the non-carrying
+part of $c(f(x_1))$ whose image returns to $c(x_1)$ with matching $\tau$,
+give certificates at every height. The cost law below says why $K=2$
+suffices there and why $K=7$ is needed at $j=5$.
+\end{remark}
+
+\subsection*{The cost of precision}
+
+Theorem~\ref{thm:E} uses admissibility to construct certificates. For
+witnesses that are not too small it is also necessary.
+
+\begin{proposition}[closure criterion]\label{prop:cost}
+Let $x_1,\dots,x_K$ be a closed certificate for
+$\bigl(c(x),\tau(x),x\bmod2^{m}\bigr)$ with valuations
+$e_i=\vv_2(3x_i+1)$ and $E=\sum e_i$, and suppose every
+$x_i\ge\max\bigl(Q/(3(1-\varphi)\ln2),\ K/(3(1-\{K\beta\})\ln2)\bigr)$.
+Then $QE-KL\in[0,K]$, $E\le\lfloor K\beta\rfloor$, and $K$ is admissible
+at $Q$. Consequently, for $j\ge1$ and $K\ge2$, closed certificates of
+length $K$ with all witnesses above any prescribed height exist if and
+only if $K$ is admissible.
+\end{proposition}
+
+\begin{proof}
+The first height condition gives $\eta(x_i)\le1-\varphi$, so
+Lemma~\ref{lem:displacement} applies with $\delta_i\in\{0,1\}$; summing
+the displacements around the cycle, $KL-QE+\sum\delta_i=0$ with
+$\sum\delta_i\in[0,K]$. The gain is
+$2^{-E}3^{K}\prod(1+1/(3x_i))<2^{K\beta-E}\exp\bigl(K/(3\min x_i)\bigr)$,
+so gain $>1$ forces $E-K\beta<K/(3\ln2\min x_i)\le1-\{K\beta\}$ by the
+second height condition, i.e.\ $E\le\lfloor K\beta\rfloor$. Then
+$s(Q,K)=Q\lfloor K\beta\rfloor-KL\ge QE-KL\ge0$. The converse is
+Theorem~\ref{thm:E}.
+\end{proof}
+
+\begin{proposition}[cost law]\label{prop:costlaw}
+Let $K_{\min}(Q)$ be the least admissible $K$ at precision $Q$. Then
+$K_{\min}(Q)\le Q$, and $\lfloor K_{\min}\beta\rfloor/K_{\min}$ is a best
+approximation to $\beta$ from below among fractions with denominator at
+most $K_{\min}$; hence $K_{\min}(Q)$ is the denominator of a convergent
+or intermediate fraction of the continued fraction of $\log_23$ lying
+below $\log_23$. For $Q=2^{j}$, $j=0,1,\dots,10$,
+\[
+K_{\min}=1,\,2,\,2,\,2,\,7,\,7,\,12,\,12,\,12,\,53,\,665 .
+\]
+\end{proposition}
+
+\begin{proof}
+$K=Q$ is admissible. If $K^{*}=K_{\min}(Q)$ then for $K<K^{*}$,
+$\lfloor K\beta\rfloor/K<L/Q\le\lfloor K^{*}\beta\rfloor/K^{*}$; as
+$\lfloor K\beta\rfloor/K$ is the largest fraction with denominator $K$
+below $\beta$, $\lfloor K^{*}\beta\rfloor/K^{*}$ is the largest fraction
+with denominator at most $K^{*}$ below $\beta$. One-sided best
+approximations are exactly the convergents and intermediate fractions on
+that side (Khinchin~\cite{Khinchin1964}, Ch.~I). The table is an exact
+integer computation, $\lfloor n\beta\rfloor=\bitlen(3^{n})-1$.
+\end{proof}
+
+Thus the price of precision is not a continuous quantity but a Diophantine
+one: it jumps at the semiconvergent denominators $2,7,12,53,665,\dots$ of
+$\log_23$, and between jumps extra bits of precision are free. The
+certificate miner of Section~\ref{sec:certificates}, which knows nothing
+of this, finds cycles of length exactly $K_{\min}$ on the quantized-log
+windows it is given ($2$ at $j=3$, $7$ at $j=5$).
+
+\subsection*{Arbitrary moduli and multi-step potentials}
+
+Theorem~\ref{thm:E} already allows an arbitrary modulus. The single-orbit
+theorems extend the same way.
+
+\begin{corollary}[arbitrary modulus]\label{cor:modulus}
+Theorem~\ref{thm:B} remains true with $x\bmod2^{m}$ replaced by
+$x\bmod N$ for any $N\ge1$. The class of Theorem~\ref{thm:A} with
+$x\bmod N$ is contained in the class of Theorem~\ref{thm:E} at $j=0$.
+\end{corollary}
+
+\begin{proof}
+Write $N=2^{m}3^{u}N'$ with $\gcd(N',6)=1$. On the shadow
+$x=2^{N_0}w-5$ of Theorem~\ref{thm:B},
+$f^{2a}(x)=\bigl(9^{a}x+5(9^{a}-8^{a})\bigr)/8^{a}$. Let $o$ be the
+multiplicative order of $9\cdot8^{-1}$ modulo $N'$; if $o\mid a$ then
+$9^{a}\equiv8^{a}\pmod{N'}$ and $f^{2a}(x)\equiv x\pmod{N'}$ for every
+shadow $x$. If $2a\ge u$ then $9^{a}\equiv0\pmod{3^{u}}$ and
+$f^{2a}(x)\equiv-5\pmod{3^{u}}$, so it suffices to take $3^{u}\mid w$.
+In the proof of Theorem~\ref{thm:B} apply Dirichlet to $o\beta$ instead of
+$\beta$ to obtain $a=oa'$ with $\|a\beta\|<2^{-j-3}$, and choose the
+free multiplier $w$ among odd multiples of $3^{u}$ (still dense in the
+logarithmic scale). The second statement is Remark~\ref{rem:F}(iii).
+\end{proof}
+
+\begin{corollary}[multi-step potentials]\label{cor:multistep}
+Fix $k\ge1$. Theorems~\ref{thm:B} and~\ref{thm:E}, and hence the class of
+Theorem~\ref{thm:A}, remain true for potentials that are merely
+nonincreasing along $f^{k}$, i.e.\ with $\Phi(f^{k}(x))\le\Phi(x)$ for all
+odd $x>1$ in place of $\Phi(f(x))\le\Phi(x)$.
+\end{corollary}
+
+\begin{proof}
+For Theorem~\ref{thm:B}, apply Dirichlet to $k\beta$ to get
+$a=ka'$ with $\|a\beta\|<2^{-j-3}$; the $2a$-step walk of the proof then
+decomposes into $2a'$ segments of $k$ steps, and summing the $k$-step
+inequalities along them gives the same contradiction. For
+Theorem~\ref{thm:E}, run the proof with a word of length $K=kK_0$ and
+$E=\lfloor K\beta\rfloor$, where $K_0=Q$ if $j\ge1$ and $K_0=2$ if
+$j=0$ (then $2E\ge3K$ in both cases), and take as witnesses only the
+segment starts $x_i\in R_{(i-1)k+1}$, $i=1,\dots,tK_0$, so that the edges
+are $x_i\mapsto f^{k}(x_i)$. Over a segment with valuation sum $E_i$,
+Lemma~\ref{lem:displacement} iterated gives
+$c(f^{k}(x))=c(x)+\lfloor kQ\beta\rfloor-QE_i+\delta$ with
+$\delta\in\{0,1\}$ decided by $\theta(x)$ against $1-\{kQ\beta\}$, and
+closure needs $\sum\delta=QE-K_0\lfloor kQ\beta\rfloor$, which lies in
+$[0,K_0]$ for the stated $K_0$ (it vanishes for $K_0=Q$). The rest of the
+proof is unchanged, with $\{kQ\beta\}$ in place of $\varphi$ throughout.
+\end{proof}
+
+What is \emph{not} covered is noted in Section~\ref{sec:boundary}:
+the leading-digit coordinate $\LD_j$ taken jointly with the quantized
+logarithm, and corrections that depend on the orbit rather than on $x$.
+
 \section{Certificates from raw orbits}\label{sec:certificates}
 
 The constraint system ``$\Phi$ nonincreasing'', restricted to any
@@ -531,9 +904,14 @@ rational arithmetic. Mining by Bellman--Ford over odd $x\le10^{6}$
 yields short certificates in every window we tested: the pair
 $57\mapsto43$, $27\mapsto41$ closes a $2$-cycle in
 $(x\bmod16,\tau)$-space with product $\tfrac{1763}{1539}>1$, refuting
-Theorem~\ref{thm:A}'s class at $m\le4$ in two lines; a $5$-cycle
-through $41\mapsto31=2^{5}-1$ does the same with the level-$1$ detector
-added. Inspection of mined witnesses at larger moduli revealed the
+Theorem~\ref{thm:A}'s class at $m\le4$ in two lines; with the level-$1$
+detector added the miner returns $57\mapsto43$, $59\mapsto89$, and the
+$5$-cycle $27,41,31,15,7$ through $41\mapsto31=2^{5}-1$ also closes.
+On the quantized-log windows of Section~\ref{sec:quantized} with
+$x\bmod16$ and $\tau$ it returns a $2$-cycle at $j=3$
+($110235\mapsto165353$, $155897\mapsto116923$) and a $7$-cycle at
+$j=5$, the lengths predicted by Proposition~\ref{prop:costlaw}.
+Inspection of mined witnesses at larger moduli revealed the
 $-5,-7$ residue pattern of Section~\ref{sec:shadow}. This pipeline is
 logically independent of every lemma in this paper --- it uses raw
 orbit steps only --- and would have refuted the theorems had a valid
@@ -557,7 +935,7 @@ $\sigma(a_n)$ is finite for all odd $n$, let alone $O(n)$. A natural
 route scores the orbit of $a_n$ block by block and case-splits on
 residues of $n$. We show that such case splits are exact decision
 procedures on each residue class (Proposition~\ref{prop:decide}), but
-that no finite collection of them can succeed (Theorem~\ref{thm:E}).
+that no finite collection of them can succeed (Theorem~\ref{thm:F}).
 The obstruction is again the cycle $-5\mapsto-7\mapsto-5$.
 
 \subsection*{Blocks and scores}
@@ -600,7 +978,7 @@ $\Delta_2+\Delta_3+\cdots\ge16$ summed over a window of $6n$ shortcut
 steps. We call a class of $k$ \emph{closed at $B$} if
 $\Delta_2+\cdots+\Delta_B\ge16$ on the whole class. This prefix
 condition does not imply the window condition, since later blocks score
-$-7,-16,\dots$ whenever $\tau(y)\ge2$. Theorem~\ref{thm:E} shows that
+$-7,-16,\dots$ whenever $\tau(y)\ge2$. Theorem~\ref{thm:F} shows that
 even the prefix condition cannot be certified on all odd $k$.
 
 \subsection*{Exact decision on a residue class}
@@ -674,7 +1052,7 @@ So every point of $9+64\Z_2$ is $x_1$ of some odd $2$-adic $k$. One of
 them falls straight into the expanding cycle of
 Section~\ref{sec:shadow}.
 
-\begin{theorem}[shadow of the $-5$ cycle on the spine]\label{thm:E}
+\begin{theorem}[shadow of the $-5$ cycle on the spine]\label{thm:F}
 Let $k^{*}\in\Z_2$ be defined by $3^{64k^{*}+20}=-367$. Then
 \begin{enumerate}
 \item $k^{*}$ is odd, $x_1(k^{*})=-47/9$, and its blocks have
@@ -716,6 +1094,19 @@ gives $\Delta_2+\cdots+\Delta_{B_i}\ge16$. By (1) that sum is
 $-7(B_i-1)<16$, a contradiction.
 \end{proof}
 
+\begin{remark}[relation to Terras]\label{rem:terras}
+Terras~\cite{Terras1976} showed that first passage below the starting
+point within $p$ steps is a property of $x\bmod2^{p}$, and the burn of
+Lemma~\ref{lem:fuse} shows that the class $x\equiv-1\pmod{2^{p}}$ has
+not stopped by step $p$, so no finite modulus decides the stopping time
+of all integers. Theorem~\ref{thm:F} is the corresponding statement for
+the \emph{index} $n$ of the thin family $2^{n}-1$, where residue classes
+of $n$ are a different and a priori more promising partition; it
+identifies the obstruction as one explicit $2$-adic index and one
+explicit rational cycle, and it concerns block scores, which are finer
+than stopping.
+\end{remark}
+
 The mechanism is the one behind Theorem~\ref{thm:A}. The cycle block
 $-7\mapsto-5\mapsto-7$ has one even and two odd letters and value ratio
 $3^{2}/2^{3}=\tfrac98>1$. Any linear score whose nonnegativity forces
@@ -738,7 +1129,7 @@ ten blocks is
 The rest is undetermined at that modulus, apart from a part of measure
 about $2.5\times10^{-4}$ at $J=22$ that provably does not close within
 ten blocks. Each four extra bits close about $6\%$ more. By
-Theorem~\ref{thm:E}(3) the measure never reaches $1$ at any finite $J$.
+Theorem~\ref{thm:F}(3) the measure never reaches $1$ at any finite $J$.
 
 \begin{remark}\label{rem:spinebarrier}
 Even a complete cover would yield only prefix inequalities. The window
@@ -753,37 +1144,50 @@ $(3/2)^{n}$, and we know of no such result.
 
 \section{The boundary}\label{sec:boundary}
 
-What survives Theorem~\ref{thm:B} must see $\log_2x$ to a precision
-finer than every $\|a\beta\|$ --- integer and fractional parts jointly:
-the \emph{quantized full logarithm}. There, a closed certificate needs
-total gain in $(0,2^{-j})$, which pure shadows cannot supply
-($\beta>2^{-j}$ for $j\ge3$); any certificate must mix gain and loss
-segments, a connectivity question in the coordinate graph, minable per
-window but with no uniform construction known.
+Theorems~\ref{thm:A}, \ref{thm:B} and~\ref{thm:E}, with
+Corollaries~\ref{cor:modulus} and~\ref{cor:multistep}, exclude every
+correction of the form
+\begin{align*}
+&g\bigl(x\bmod N,\ \tau(x),\ \lambda_1(x),\dots,\lambda_d(x),\
+\lfloor2^{j}\log_2x\rfloor\bigr)\\
+\text{or}\quad
+&g\bigl(x\bmod N,\ \tau(x),\ \lambda_1(x),\dots,\lambda_d(x),\
+\LD_j(x)\bigr),
+\end{align*}
+for all $N,d,j$, along $f^{k}$ for every fixed $k$. Every exclusion is
+witnessed by a finite closed cycle in a coordinate graph, every cycle is
+a shadow of an expanding rational cycle, and the one quantitative
+invariant that appears --- the number of witnesses needed at precision
+$2^{j}$ --- is the Diophantine cost of approximating $\log_23$ from
+below. Two things are not covered.
 
-\begin{question}
-Is there a nonincreasing potential of the form
-$\log_2x+g\bigl(\lfloor2^{j}\log_2x\rfloor,\ \tau(x),\
-x\bmod2^m\bigr)$ for some $j,m$? As $j\to\infty$ the class approaches
-arbitrary corrections, for which the existence of a monotone potential
-is conjecture-adjacent; the one-step no-go program has plausibly
-reached the point where further progress and the conjecture itself
-interact.
+\begin{question}\label{q:joint}
+Is there a nonincreasing potential
+$\log_2x+g\bigl(\lfloor2^{j}\log_2x\rfloor,\ \LD_{j'}(x),\ \tau(x),\
+x\bmod2^{m}\bigr)$ for some $j,j',m$? The two size coordinates have
+breakpoints at $2^{k/2^{j}}$ and at $\ell\,2^{\bitlen(x)-j'}$, which do
+not nest, and the construction of Theorem~\ref{thm:E} fixes the position
+of each witness in its cell only up to the width of a sub-interval. We
+expect a rotation argument to handle the joint coordinate, but have not
+carried it out. More generally one may ask the same for any finite
+partition of the mantissa $x/2^{\bitlen(x)-1}\in[1,2)$.
 \end{question}
 
-\begin{question}
-Do multi-step potentials (functions nonincreasing along $f^{k}$ for
-fixed $k$, or path-dependent accountings) admit analogous obstructions?
-The shadow supplies candidate constraints, since its $k$-step behaviour
-is exactly known; note that any $k$-step potential must in particular
-survive $k$ dividing $2a$ along the iterated shadow.
+\begin{question}\label{q:path}
+Do path-dependent accountings --- functions of the orbit segment leading
+to $x$ rather than of $x$ --- admit analogous obstructions? Every
+coordinate treated here is a function of $x$ alone, and the certificates
+exploit exactly that: a witness may be chosen afresh at every junction.
+A correction that reads how $x$ was reached is a different object, and
+as the memory grows the existence of a monotone potential becomes
+conjecture-adjacent.
 \end{question}
 
 We also note what the results do \emph{not} say. Apart from the
 negative statements of Section~\ref{sec:spine} about one method on one
-family, nothing here bears on
-individual trajectories, densities of divergent orbits, or cycles. The
-theorems delimit a proof \emph{method}, not the dynamics.
+family, nothing here bears on individual trajectories, densities of
+divergent orbits, or cycles. The theorems delimit a proof \emph{method},
+not the dynamics.
 
 \section{Computational verification}\label{sec:verification}
 
@@ -800,8 +1204,15 @@ and the carry-free normal form
 (\texttt{verify\_no\_local\_potential.py}, \texttt{verify\_nlp2.py});
 the independent certificate miner with exact cycle confirmation
 (\texttt{verify\_nogo\_certificate.py},
-\texttt{verify\_fuel\_fraction.py}); and for Section~\ref{sec:spine}, the
-ball lemma, the shadow index $k^{*}$, part~(2) of Theorem~\ref{thm:E} for
+\texttt{verify\_fuel\_fraction.py}); for Section~\ref{sec:quantized},
+the rational-cycle lemma over all $21\,844$ words with $K\le7$,
+$e_i\le4$, the construction of Theorem~\ref{thm:E} on a grid of
+$(j,K,N,d)$ with $j\le8$ (closure at every junction, detectors,
+arbitrary moduli including $N=2^{5}\cdot3^{2}\cdot5\cdot7$, and the
+exact product gain), the admissibility table, the modulus and multi-step
+corollaries, and the explicit instances of Remark~\ref{rem:F}
+(\texttt{verify\_quantized\_log\_theorem.py}); and for Section~\ref{sec:spine}, the
+ball lemma, the shadow index $k^{*}$, part~(2) of Theorem~\ref{thm:F} for
 $J\le120$, the four class evaluations, and the exact closure measures
 (\texttt{verify\_residue\_certificate\_nogo.py --measure-22}), with the
 class decision procedure in \texttt{prove\_block8\_17\_classes.py}. The
@@ -825,6 +1236,11 @@ C.~J. Everett,
 \emph{Iteration of the number-theoretic function $f(2n)=n$,
 $f(2n+1)=3n+2$},
 Adv. Math. \textbf{25} (1977), 42--45.
+
+\bibitem{Khinchin1964}
+A.~Ya. Khinchin,
+\emph{Continued Fractions},
+University of Chicago Press, Chicago, 1964.
 
 \bibitem{KrasikovLagarias2003}
 I.~Krasikov and J.~C. Lagarias,

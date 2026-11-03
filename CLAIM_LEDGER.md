@@ -282,7 +282,7 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
-| QLG1 | Quantized-log no-go: exact closure criterion \(s=E\,2^{j}-K\,L_j\in[0,K]\); certificates refuting \(\log_2x+g(\lfloor2^{j}\log_2x\rfloor,\tau,x\bmod16)\) | Proved + finite certificate | manuscript §6 (**not yet written**) | `scripts/verify_quantized_log_criterion.py`; supersedes the claim in `\section{The boundary}` that a certificate needs total gain in \((0,2^{-j})\) — see correction below |
+| QLG1 | Quantized-log no-go: exact closure criterion \(s=E\,2^{j}-K\,L_j\in[0,K]\); certificates refuting \(\log_2x+g(\lfloor2^{j}\log_2x\rfloor,\tau,x\bmod16)\) | Proved + finite certificate | manuscript §7, Lemma (displacement) and Proposition (closure criterion); written 2026-11-03 | `scripts/verify_quantized_log_criterion.py`; supersedes the former claim in `\section{The boundary}` that a certificate needs total gain in \((0,2^{-j})\) — see correction below; the boundary section was rewritten 2026-11-03 |
 | EXR1 | On a valuation-one step the storage coordinate and the deficit both scale by exactly \(3/2\); \(D_K-\log_2Z_K\) is invariant, so no argument using only valuation-one data can show deficit storage is unsustainable | Proved here | `docs/no-go/storage_exchange_rate.md` | `scripts/verify_storage_exchange_rate.py`; promoted from `repunit_extremal_principle.md` §9 |
 | SHG1 | For \(T(x)=(ax+b)/c^{v_c(ax+b)}\), \(\gcd(a,c)=\gcd(b,c)=1\), \(c\) prime: an expanding rational cycle (\(c^E<a^K\)) implies no potential \(\log_cx+g(c\text{-adically local data})\) is nonincreasing; \(\mathrm{len}_c\) is covered iff \(a^K/c^E<c\). SH1 is the \((3,1,2)\) instance | Proved here | `docs/no-go/general_shadow.md` | `scripts/verify_general_shadow.py`; 17 cycles across 11 maps |
 | QLG-GEN | The closure criterion is exactly \(\{K\log_ca\}\le K\{Q\log_ca\}/Q\) — an identity, unconditional, with the map absent | Proved (identity) | `docs/no-go/general_cost_law.md` | `scripts/verify_general_cost_law.py` |
@@ -296,6 +296,10 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 | SUFF-32 | \(x_1=2^n+27\), \(n\ge10\), gives an infinite family of closed certificates at \((j,m,K)=(3,16,2)\); \(n\ge10\) is sharp and predicted by CARRY1 | Proved here | `docs/no-go/uniformity.md` | `scripts/verify_uniformity.py`; verified to \(n=200\) |
 | SUFF1 | For every \(j\), every admissible \(K\), and every \(m\) with the automaton strongly connected: a closed certificate exists from \(\Theta=m+K+j+\log_2(1/\min(\varphi_Q,1-\varphi_Q))+K/4+O(1)\) bits. Strict gain is automatic from \(3^K>2^{\lfloor K\log_23\rfloor}\) | **Proved here, unconditional** (its connectivity hypothesis is now CONN1) | `docs/no-go/suff1.md` | `scripts/verify_suff1_composition.py` |
 | CONN1 | The mod-\(2^m\) suffix automaton is strongly connected for every \(m\ge3\), via the explicit hub \(h_m=3^{-1}(2^{m-1}-1)\bmod2^m\): \(v_2(3h_m+1)=m-1\) so \(h_m\) reaches all odd residues in one step, and the class-growth lemma gives every live node a path to \(h_m\) in \(\le m-1\) steps (sharp, attained at \(2^m-1\)). **Removes the last hypothesis from SUFF1** | Proved here | `docs/no-go/connectivity.md` | `scripts/verify_connectivity.py`; general \((a,b,c)\) hub not written |
+| RATCYC1 | Every word \((e_1,\dots,e_K)\) of positive integers is the exact valuation word of a purely periodic rational \(2\)-adic cycle \(y_1=\sum_i3^{K-i}2^{E_{i-1}}/(2^E-3^K)\); every member is a \(2\)-adic unit and a \(3\)-adic integer | Proved here (classical in substance; cf. Lagarias 1985, Thm L) | manuscript §7, Lemma (rational cycles) | `scripts/verify_quantized_log_theorem.py` (R): all 21844 words with \(K\le7\), \(e_i\le4\) |
+| QLG2 | **Manuscript Theorem E.** For every \(j,m,d\ge0\), every \(N\ge1\) and every \(g\), \(\log_2x+g(\lfloor2^j\log_2x\rfloor,\tau,x\bmod N,\lambda_1,\dots,\lambda_d)\) is not nonincreasing: for every admissible \(K\ge2\) with \(2\lfloor K\beta\rfloor\ge3K\) (automatic for \(j\ge1\)) a closed certificate of length \(tK\) exists, obtained by shadowing the rational cycle of \((2,1)^p(3,1,1)^r\) with one fresh witness per member; witnesses of bit length \(\le m+\log_2(3^uN')+6tK+j+\log_2(1/\min(\varphi,1-\varphi))+10\). Subsumes SUFF1+CONN1 for existence without using WALK1, TAU1 or UNIF1; the closure criterion with explicit height hypotheses is necessary (Proposition, closure criterion), so for \(j\ge1\), \(K\ge2\): high certificates of length \(K\) exist iff \(K\) admissible | Proved here | manuscript §7, Theorem E and Propositions (closure criterion, cost law) | `scripts/verify_quantized_log_theorem.py` (F), (C): grid \(j\le8\), \(K\in\{K_{\min},Q\}\), \(N\in\{16,2^{16},9,7,2^5\cdot9\cdot35\}\), \(d\le3\), plus the explicit instances and the \(\Theta\) bound |
+| MODN1 | Theorem B holds with \(x\bmod2^m\) replaced by \(x\bmod N\) for every \(N\): on the shadow, \(f^{2a}(x)\equiv x\pmod{N'}\) for all shadows once \(\mathrm{ord}_{N'}(9/8)\mid a\), and \(f^{2a}(x)\equiv-5\pmod{3^u}\) once \(2a\ge u\); Dirichlet is applied to \(o\beta\). Theorem A's class with \(x\bmod N\) is contained in Theorem E's at \(j=0\) | Proved here | manuscript §7, Corollary (arbitrary modulus) | `scripts/verify_quantized_log_theorem.py` (M): 12 moduli including \(3^u\) parts |
+| MSTEP1 | Theorems B and E (hence A's class) remain true for potentials nonincreasing only along \(f^k\), any fixed \(k\): Dirichlet on \(k\beta\) gives \(k\mid2a\); for Theorem E use \(K_0=Q\) (\(j\ge1\)) or \(2\) (\(j=0\)) segments of \(k\) steps with closure count \(QE-K_0\lfloor kQ\beta\rfloor\in[0,K_0]\) | Proved here | manuscript §7, Corollary (multi-step potentials) | `scripts/verify_quantized_log_theorem.py` (S): \(k\le6\) for Theorem B, \(k\in\{2,3,5\}\) for Theorem E |
 
 ## Macro-step Lundberg programme (2026-08-03)
 
@@ -315,6 +319,41 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 | ANC1-CAP | For odd \(z\) with \(3\nmid z\), at most \(\lceil n/2\rceil\) odd preimages of \(z\) have bit-length \(\le n\) | Proved here (corollary of ANC1) | `docs/no-go/macro_step_lundberg.md` §5 | Immediate from the \(>4\) ratio; **novelty doubtful** — preimage family and reverse-tree growth are standard (Applegate–Lagarias), no bibliography pass run |
 
 ### Correction history for this branch
+
+### Manuscript Section 7 written; spine corrections logged (2026-11-03)
+
+- **Manuscript.** `\section{The boundary}` no longer claims that a
+  quantized-log certificate needs total gain in \((0,2^{-j})\); the new
+  Section 7 (Theorem E, rows RATCYC1/QLG2/MODN1/MSTEP1) proves the opposite
+  at every precision, with arbitrary modulus and detectors, and the
+  boundary now records exactly two open corners: \(\mathrm{LD}_{j'}\)
+  jointly with \(\lfloor2^j\log_2x\rfloor\), and orbit-dependent
+  corrections. The spine theorem is now lettered Theorem F (Section 9); a
+  remark positions it against Terras's stopping-time residue classes.
+  The certificate miner `scripts/verify_nogo_certificate.py` cited by the
+  manuscript was rewritten from its description in `SELF_REVIEW.md`.
+- **Simplification over SUFF1.** QLG2's proof shadows the rational cycle
+  of a chosen valuation word (RATCYC1), so no automaton walk, connectivity
+  (CONN1), fuel coupling (TAU1) or dip rate (UNIF1) is needed for
+  existence; those rows stand as proved but are no longer on the critical
+  path of the manuscript. UNIF1's \(c\approx0.24\) rate remains a finite
+  certificate; the manuscript uses the crude bound \(2tKQ\) instead.
+- **Spine programme (2026-10-05, recorded here for the ledger).** Three
+  corrections in the Avenue A notes, none of which touched a ledger row
+  because the affected statements were gaps and theorems local to
+  `docs/no-go/`: (i) *Correction SD-K-267-class*
+  (`avenue_a_comparison_dynamics.md`): the mod-\(8192\) closure rows on
+  \(n=64k+17\), certified on one representative per class, are false as
+  class statements; `scripts/prove_block8_17_classes.py` decides every
+  class row exactly (43 proved, 29 refuted, 0 undecided). (ii) *Correction
+  SD-K-prefix*: every "Gap SD-K-block-8-17 holds for \(k=\dots\)" theorem
+  proves only a prefix inequality \(\Delta_2+\dots+\Delta_B\ge16\); the
+  gap conclusions and the density-\(9/1024\) corollary are withdrawn.
+  (iii) *Proposition SD-K-nc6-barrier* (`avenue_a_mean_valuation_route.md`
+  §7): Gap SD-K-nc-6 implies \(\operatorname{epoch}(2^n-1)\le7n\) for all
+  odd \(n\) (Conjecture G), so it is filed as an open conjecture, not a
+  working lemma. Manuscript Theorem F shows no finite set of residue
+  classes of \(k\) can certify the prefix condition.
 
 ### Affine-drift correction (2026-10-05)
 

@@ -61,7 +61,7 @@ done
 
 - ~~Strong connectivity of the mod-2^m automaton~~ — CLOSED by CONN1.
 - The general (a,b,c) form of the SUFF1 composition.
-- Manuscript §6 / Theorem E LaTeX is still not written; QLG1's row says so.
+- ~~Manuscript §6 / Theorem E LaTeX is still not written~~ — WRITTEN 2026-11-03 as manuscript Section 7 (Theorem E), with a shorter sufficiency proof that shadows the rational cycle of a chosen valuation word and needs neither CONN1 nor UNIF1 (ledger row QLG2).
 
 ## A caveat about how this was produced
 

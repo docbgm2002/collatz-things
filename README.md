@@ -22,7 +22,9 @@ Start with:
   to integer rules, with step-by-step journeys and reproducible experiments.
 - [`mersenne_obstructions.tex`](mersenne_obstructions.tex) — the
   consolidated manuscript *No-Go Theorems for One-Step Lyapunov Potentials
-  for the 3x+1 Map* (Theorems A–D below, plus Theorem E: no finite
+  for the 3x+1 Map* (Theorems A–D below, Theorem E: the quantized
+  logarithm \(\lfloor2^j\log_2x\rfloor\) is excluded at every precision,
+  jointly with any modulus and all detectors, and Theorem F: no finite
   residue-class certificate on the Mersenne spine), with compiled PDF.
 
 ## Current research status
@@ -90,14 +92,25 @@ are listed in
 - [`docs/no-go/fuel_fraction_nogo.md`](docs/no-go/fuel_fraction_nogo.md) **(FFN1)** — the
   \((\tau,\mathrm{len})\) class by explicit 11-witness certificate.
   Subsumed by SH1; retained for the certificate method exposition.
-- A historical independent finite-window certificate check is described in
-  `SELF_REVIEW.md`, but its script (`scripts/verify_nogo_certificate.py`) is
-  not present in this checkout. Those reported runs are therefore provenance,
-  not part of the reproducible verification suite.
+- `scripts/verify_nogo_certificate.py` is the independent certificate miner
+  (Bellman–Ford over raw orbit steps, exact confirmation). It was absent from
+  the checkout until 2026-11-03 and was rewritten from its description in
+  `SELF_REVIEW.md`; it reproduces the historical pair \(57\mapsto43\),
+  \(27\mapsto41\) and finds cycles of length exactly \(K_{\min}(2^j)\) on
+  the quantized-log windows.
+- **(QLG2, manuscript Theorem E.)** The quantized logarithm
+  \(\lfloor2^j\log_2x\rfloor\), jointly with \(\tau\), \(x\bmod N\) for any
+  \(N\), and all suffix detectors, admits a closed certificate at every
+  precision \(j\): shadow the rational \(2\)-adic cycle of the valuation
+  word \((2,1)^p(3,1,1)^r\) with one fresh witness per member. The least
+  certificate length at precision \(2^j\) is a semiconvergent denominator of
+  \(\log_23\) (\(1,2,2,2,7,7,12,12,12,53,665,\dots\)). The exclusions
+  persist for potentials nonincreasing only along \(f^k\).
+  `scripts/verify_quantized_log_theorem.py`.
 
-The surviving one-step class reads the quantized full logarithm
-\(\lfloor2^j\log_2x\rfloor\); see the manuscript's boundary section. This
-is where the no-go program terminates.
+What is left is recorded in the manuscript's boundary section: the leading
+digits \(\mathrm{LD}_{j'}\) taken jointly with the quantized logarithm, and
+corrections that depend on the orbit rather than on \(x\).
 
 ### The Mersenne ancestry tower
 
@@ -426,9 +439,13 @@ standard library; every assertion is exact integer or rational arithmetic.
 # ledger governance
 python scripts/verify_claim_ledger.py
 
-# manuscript Section 8 (Theorem E, residue-class certificates)
+# manuscript Section 9 (Theorem F, residue-class certificates)
 python scripts/verify_residue_certificate_nogo.py --measure
 python scripts/prove_block8_17_classes.py
+
+# manuscript Section 7 (Theorem E, quantized logarithm) and Section 8 (certificate miner)
+python scripts/verify_quantized_log_theorem.py --quick   # full grid without --quick (slow)
+python scripts/verify_nogo_certificate.py --limit 200000  # default limit 10^6
 
 # Avenue A finite check
 python scripts/verify_repunit_storage_dominance.py --limit 5001

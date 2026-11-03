@@ -48,12 +48,20 @@ independent; below-line and within-budget hold on the event.
 b = O(1); this sits inside the dK/2 window slack but should be tracked
 explicitly in a journal version (one sentence).
 
-## 4. Historical independent certificate check (not reproducible here)
+## 4. Independent certificate check
 
-The following results were recorded from `scripts/verify_nogo_certificate.py`,
-which is absent from this checkout. They are retained as provenance but are not
-part of the current reproducible verification suite. The maintained theorems do
-not depend on them.
+The following results were recorded from the original
+`scripts/verify_nogo_certificate.py`, which was absent from the checkout
+between the 2026-07 merge and 2026-11-03. On 2026-11-03 the miner was
+rewritten from this description (Bellman–Ford over the coordinate graph of
+raw odd steps, every candidate cycle re-confirmed in exact integers). The
+rewrite reproduces the NLP1 pair below exactly. On the NLP2 window it returns
+the 2-cycle 57 -> 43, 59 -> 89 (the historical 5-cycle also closes under the
+manuscript's detector and is checked by hand in the manuscript's Section 8).
+On the quantized-log windows (floor(2^j log2 x), tau, x mod 16) it returns a
+2-cycle at j = 3 and a 7-cycle at j = 5, the lengths K_min(2^j) predicted by
+the cost law of manuscript Section 7. The maintained theorems do not depend on
+the miner.
 
 The no-go constraint system on any finite
 coordinate window is a difference-constraint system; infeasibility is
