@@ -127,7 +127,7 @@ The exponents obtained:
 | 12 | 354294 | 0.8531 |
 | 13 | 1062882 | 0.8630 |
 | 14 | 3188646 | 0.8725 |
-| 15 | 9565938 | (running at time of writing) |
+| 15 | 9565938 | 0.8812 |
 
 Krasikov–Lagarias (2003) report \(x^{0.84}\) at \(k=11\), Applegate–Lagarias
 (1995) \(x^{0.81}\); the \(k=9\) and \(k=11\) rows agree with those values,
@@ -145,8 +145,9 @@ products in 64-bit integers that provably do not overflow. Verified:
 |---|---|---|---|---|
 | 11 | 0.8417 | 118098 | \(8.9\times10^{-8}\) | \(1.46\times10^{-2}\) |
 | 12 | 0.8530 | 354294 | \(1.4\times10^{-7}\) | \(9.72\times10^{-3}\) |
-| 13 | 0.8629 | 1062882 | see log | \(6.64\times10^{-3}\) |
-| 14 | 0.8723 | 3188646 | see log | \(4.60\times10^{-3}\) |
+| 13 | 0.8629 | 1062882 | \(6.8\times10^{-8}\) | \(6.64\times10^{-3}\) |
+| 14 | 0.8723 | 3188646 | \(6.4\times10^{-8}\) | \(4.60\times10^{-3}\) |
+| 15 | 0.8811 | 9565938 | \(4.0\times10^{-8}\) | \(3.17\times10^{-3}\) |
 
 Each certified row is a theorem by PRED1:
 \(\#\{n\le X:\ n\to1\}\ \ge\ c\,(X/4)^{\gamma}-1\) for all \(X\ge4\), with the
@@ -163,7 +164,7 @@ printed constant \(c\).
   improvement comes only from solving the same family of systems at larger
   \(k\) with a cheap solver (nonlinear power iteration instead of nonlinear
   programming); the number of classes grows by a factor \(3\) per level and
-  the exponent gain per level shrinks (\(\approx0.012\) at \(k=11\)).
+  the exponent gain per level shrinks slowly (\(0.0112,0.0099,0.0095,0.0087\) for \(k=12,\dots,15\)).
 - Krasikov conjectured \(\gamma_k\to1\). The increments here are consistent
   with slow convergence but do not decide it.
 - A density-one or natural-density statement does not follow at any
@@ -176,6 +177,7 @@ python3 scripts/explore_predecessor_exponent.py --kmin 2 --kmax 11      # expone
 python3 scripts/verify_predecessor_exponent.py --k 11 --gamma 0.8417 --count-check
 python3 scripts/verify_predecessor_exponent.py --k 13 --gamma 0.8629
 python3 scripts/verify_predecessor_exponent.py --k 14 --gamma 0.8723   # ~2 min
+python3 scripts/verify_predecessor_exponent.py --k 15 --gamma 0.8811   # ~10 min, 1 GB
 ```
 
 ## 7. Ledger rows
@@ -183,4 +185,4 @@ python3 scripts/verify_predecessor_exponent.py --k 14 --gamma 0.8723   # ~2 min
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | PRED1 | For every positive solution \(v\) of the Krasikov-type system \((S_k^{\gamma})\) on unit classes mod \(3^k\), every non-cyclic \(a\ge3\), \(3\nmid a\), and \(X\ge a\): \(\pi_a(X)\ge2^{-\gamma}(v_a/\max v)(X/a)^{\gamma}-1\). Proof: subsolution + nilpotent comparison on the finite predecessor forest | Proved here (not human-reviewed) | `docs/density-cycles/predecessor_exponent.md` §2 | the recursion and forest structure are elementary; `scripts/verify_predecessor_exponent.py --count-check` cross-checks the bound against a BFS count for \(a=4\) |
-| PRED2 | Certified exponents: \((k,\gamma)=(11,0.8417),(12,0.8530),(13,0.8629),(14,0.8723)\). Hence \(\#\{n\le X: n\to1\}\ge c\,X^{\gamma}\) for those \(\gamma\), improving the published \(x^{0.84}\) | Finite certificate (exact integer check of \(2\cdot3^{k-1}\) inequalities) | `docs/density-cycles/predecessor_exponent.md` §4 | `scripts/verify_predecessor_exponent.py` |
+| PRED2 | Certified exponents: \((k,\gamma)=(11,0.8417),(12,0.8530),(13,0.8629),(14,0.8723),(15,0.8811)\). Hence \(\#\{n\le X: n\to1\}\ge c\,X^{\gamma}\) for those \(\gamma\), improving the published \(x^{0.84}\) | Finite certificate (exact integer check of \(2\cdot3^{k-1}\) inequalities) | `docs/density-cycles/predecessor_exponent.md` §4 | `scripts/verify_predecessor_exponent.py` |
