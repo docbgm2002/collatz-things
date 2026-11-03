@@ -140,7 +140,7 @@ corrections that depend on the orbit rather than on \(x\).
   in exact integer arithmetic. The \(k=11\) row reproduces the published
   \(x^{0.84}\) of Krasikov–Lagarias; the rows \(k\ge12\) improve it: at
   least \(c\,X^{\gamma}\) integers below \(X\) reach \(1\) with
-  \(\gamma=0.8530\) (\(k=12\))PREDREADME. The proof that a positive solution of the
+  \(\gamma=0.8530\) (\(k=12\)), \(0.8629\) (\(k=13\)) and \(0.8723\) (\(k=14\)). The proof that a positive solution of the
   inequalities gives the exponent is a one-paragraph comparison principle on
   the finite predecessor forest. Not human-reviewed.
 

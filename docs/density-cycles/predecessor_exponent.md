@@ -124,10 +124,10 @@ The exponents obtained:
 | 9 | 13122 | 0.8168 |
 | 10 | 39366 | 0.8296 |
 | 11 | 118098 | 0.8418 |
-| 12 | 354294 | FILL12 |
-| 13 | 1062882 | FILL13 |
-| 14 | 3188646 | FILL14 |
-| 15 | 9565938 | FILL15 |
+| 12 | 354294 | 0.8531 |
+| 13 | 1062882 | 0.8630 |
+| 14 | 3188646 | 0.8725 |
+| 15 | 9565938 | (running at time of writing) |
 
 Krasikov–Lagarias (2003) report \(x^{0.84}\) at \(k=11\), Applegate–Lagarias
 (1995) \(x^{0.81}\); the \(k=9\) and \(k=11\) rows agree with those values,
@@ -141,7 +141,12 @@ exactly, with \(2^{-\gamma}\) and \((3/2)^{\gamma}\) replaced by rational
 lower bounds (so the verified inequalities are stronger than (S)), all
 products in 64-bit integers that provably do not overflow. Verified:
 
-CERTTABLE
+| \(k\) | certified \(\gamma\) | inequalities | min relative slack | constant \(c\) for \(a=4\) |
+|---|---|---|---|---|
+| 11 | 0.8417 | 118098 | \(8.9\times10^{-8}\) | \(1.46\times10^{-2}\) |
+| 12 | 0.8530 | 354294 | \(1.4\times10^{-7}\) | \(9.72\times10^{-3}\) |
+| 13 | 0.8629 | 1062882 | see log | \(6.64\times10^{-3}\) |
+| 14 | 0.8723 | 3188646 | see log | \(4.60\times10^{-3}\) |
 
 Each certified row is a theorem by PRED1:
 \(\#\{n\le X:\ n\to1\}\ \ge\ c\,(X/4)^{\gamma}-1\) for all \(X\ge4\), with the
@@ -169,7 +174,8 @@ printed constant \(c\).
 ```bash
 python3 scripts/explore_predecessor_exponent.py --kmin 2 --kmax 11      # exponents, floats
 python3 scripts/verify_predecessor_exponent.py --k 11 --gamma 0.8417 --count-check
-python3 scripts/verify_predecessor_exponent.py --k 13 --gamma GAMMA13
+python3 scripts/verify_predecessor_exponent.py --k 13 --gamma 0.8629
+python3 scripts/verify_predecessor_exponent.py --k 14 --gamma 0.8723   # ~2 min
 ```
 
 ## 7. Ledger rows
@@ -177,4 +183,4 @@ python3 scripts/verify_predecessor_exponent.py --k 13 --gamma GAMMA13
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | PRED1 | For every positive solution \(v\) of the Krasikov-type system \((S_k^{\gamma})\) on unit classes mod \(3^k\), every non-cyclic \(a\ge3\), \(3\nmid a\), and \(X\ge a\): \(\pi_a(X)\ge2^{-\gamma}(v_a/\max v)(X/a)^{\gamma}-1\). Proof: subsolution + nilpotent comparison on the finite predecessor forest | Proved here (not human-reviewed) | `docs/density-cycles/predecessor_exponent.md` §2 | the recursion and forest structure are elementary; `scripts/verify_predecessor_exponent.py --count-check` cross-checks the bound against a BFS count for \(a=4\) |
-| PRED2 | Certified exponents: CERTSUMMARY. Hence \(\#\{n\le X: n\to1\}\ge c\,X^{\gamma}\) for those \(\gamma\), improving the published \(x^{0.84}\) | Finite certificate (exact integer check of \(2\cdot3^{k-1}\) inequalities) | `docs/density-cycles/predecessor_exponent.md` §4 | `scripts/verify_predecessor_exponent.py` |
+| PRED2 | Certified exponents: \((k,\gamma)=(11,0.8417),(12,0.8530),(13,0.8629),(14,0.8723)\). Hence \(\#\{n\le X: n\to1\}\ge c\,X^{\gamma}\) for those \(\gamma\), improving the published \(x^{0.84}\) | Finite certificate (exact integer check of \(2\cdot3^{k-1}\) inequalities) | `docs/density-cycles/predecessor_exponent.md` §4 | `scripts/verify_predecessor_exponent.py` |
