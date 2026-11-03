@@ -26,22 +26,34 @@ Theorems A–D as before. New on 2026-11-03:
   modulus for Theorem B; multi-step (\(f^k\)) versions of B and E.
   Verifier: `scripts/verify_quantized_log_theorem.py` (`--quick` for a fast
   run).
-- **Section 8** cites the rewritten miner `scripts/verify_nogo_certificate.py`.
-- **Section 9, Theorem F** (was "Theorem E" in notes written before
+- **Section 8, Theorem G (failure density).** The minimal failure density
+  of a depth-\(m\) local potential is \(2^{-cm+O(\log m)}\),
+  \(c=1-H(1/\log_23)=0.0500\ldots\). Lower bound: shadows of all expanding
+  cyclic parity words of length \(m+1\). Upper bound: the lookahead
+  potential. Fuel and detectors do not change the exponent (Proposition
+  8.8). Verifier: `scripts/verify_failure_density.py`; note
+  `docs/no-go/failure_density.md`.
+- **Section 9** cites the rewritten miner `scripts/verify_nogo_certificate.py`.
+- **Section 10, Theorem F** (was "Theorem E" in notes written before
   2026-11-03): the spine result, with a remark positioning it against
   Terras.
-- **Section 10, boundary** rewritten: two open corners only —
-  \(\mathrm{LD}_{j'}\) jointly with \(\lfloor2^j\log_2x\rfloor\)
-  (Question 10.1), and orbit-dependent corrections (Question 10.2).
+- **Section 11, boundary** rewritten: two open corners only —
+  \(\mathrm{LD}_{j'}\) jointly with \(\lfloor2^j\log_2x\rfloor\), and
+  orbit-dependent corrections.
 
-Ledger rows: RATCYC1, QLG2, MODN1, MSTEP1 (general track table).
+Ledger rows: RATCYC1, QLG2, MODN1, MSTEP1, FD1–FD3 (general track table).
 
 ## 2. DO NEXT (in this order)
 
-1. **Human proof read** of Theorem E (Section 7), especially Step 2 (the
-   mod-32 residues excluded by the word) and Step 5 (the height bookkeeping),
-   and of Theorem F(3), DISJ (§4) and the two-sided window bound (§5.3) in
+1. **Human proof read** of Theorem G (Section 8): the counting Step 5 of
+   the lower bound and the conditional-density step of the upper bound; of
+   Theorem E (Section 7), especially Step 2 and Step 5; and of Theorem F(3),
+   DISJ (§4) and the two-sided window bound (§5.3) in
    `avenue_a_mean_valuation_route.md`.
+1b. **Sharpen Theorem G** if wanted: compute \(\delta_m\) exactly for small
+   \(m\) (minimum-measure feedback set for the positive cycles of the
+   coordinate graph), extend FD1 to Archimedean coordinates via the
+   multi-witness cycles of Section 7, and write the \((a,b,c)\) transfer.
 2. **Question 10.1**: \(\mathrm{LD}_{j'}\) jointly with the quantized
    logarithm. Expected route: the construction of Theorem E with the in-cell
    positions chosen along a rotation by \(\varphi\), so that each witness can
@@ -83,8 +95,9 @@ Ledger rows: RATCYC1, QLG2, MODN1, MSTEP1 (general track table).
 
 | Path | Role |
 |---|---|
-| `mersenne_obstructions.tex` / `.pdf` | the paper (17 pp.) |
+| `mersenne_obstructions.tex` / `.pdf` | the paper (20 pp.) |
 | `scripts/verify_quantized_log_theorem.py` | Theorem E, cost law, corollaries |
+| `scripts/verify_failure_density.py` | Theorem G (failure density) |
 | `scripts/verify_nogo_certificate.py` | certificate miner (Section 8) |
 | `scripts/verify_residue_certificate_nogo.py` | Theorem F |
 | `scripts/prove_block8_17_classes.py` | exact class prover (spine rows) |

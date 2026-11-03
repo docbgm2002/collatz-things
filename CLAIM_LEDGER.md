@@ -300,6 +300,9 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 | QLG2 | **Manuscript Theorem E.** For every \(j,m,d\ge0\), every \(N\ge1\) and every \(g\), \(\log_2x+g(\lfloor2^j\log_2x\rfloor,\tau,x\bmod N,\lambda_1,\dots,\lambda_d)\) is not nonincreasing: for every admissible \(K\ge2\) with \(2\lfloor K\beta\rfloor\ge3K\) (automatic for \(j\ge1\)) a closed certificate of length \(tK\) exists, obtained by shadowing the rational cycle of \((2,1)^p(3,1,1)^r\) with one fresh witness per member; witnesses of bit length \(\le m+\log_2(3^uN')+6tK+j+\log_2(1/\min(\varphi,1-\varphi))+10\). Subsumes SUFF1+CONN1 for existence without using WALK1, TAU1 or UNIF1; the closure criterion with explicit height hypotheses is necessary (Proposition, closure criterion), so for \(j\ge1\), \(K\ge2\): high certificates of length \(K\) exist iff \(K\) admissible | Proved here | manuscript §7, Theorem E and Propositions (closure criterion, cost law) | `scripts/verify_quantized_log_theorem.py` (F), (C): grid \(j\le8\), \(K\in\{K_{\min},Q\}\), \(N\in\{16,2^{16},9,7\}\) and \(N=2^5\cdot9\cdot35\) for \(j\le6\), \(d\le3\), plus the explicit instances and the \(\Theta\) bound |
 | MODN1 | Theorem B holds with \(x\bmod2^m\) replaced by \(x\bmod N\) for every \(N\): on the shadow, \(f^{2a}(x)\equiv x\pmod{N'}\) for all shadows once \(\mathrm{ord}_{N'}(9/8)\mid a\), and \(f^{2a}(x)\equiv-5\pmod{3^u}\) once \(2a\ge u\); Dirichlet is applied to \(o\beta\). Theorem A's class with \(x\bmod N\) is contained in Theorem E's at \(j=0\) | Proved here | manuscript §7, Corollary (arbitrary modulus) | `scripts/verify_quantized_log_theorem.py` (M): 12 moduli including \(3^u\) parts |
 | MSTEP1 | Theorems B and E (hence A's class) remain true for potentials nonincreasing only along \(f^k\), any fixed \(k\): Dirichlet on \(k\beta\) gives \(k\mid2a\); for Theorem E use \(K_0=Q\) (\(j\ge1\)) or \(2\) (\(j=0\)) segments of \(k\) steps with closure count \(QE-K_0\lfloor kQ\beta\rfloor\in[0,K_0]\) | Proved here | manuscript §7, Corollary (multi-step potentials) | `scripts/verify_quantized_log_theorem.py` (S): \(k\le6\) for Theorem B, \(k\in\{2,3,5\}\) for Theorem E |
+| FD1 | **Manuscript Theorem G(1).** For every \(m\ge12\) and every \(g\), the failure set of \(\log_2x+g(x\bmod2^m)\) contains a union of odd residue classes of density \(\ge2^{-cm}/(16(m+2)^5)\), \(c=1-H(1/\log_23)=0.0500\ldots\): one shadow class per expanding cyclic parity word of length \(m+1\), pairwise disjoint | Proved here (not human-reviewed) | manuscript §8; `docs/no-go/failure_density.md` | `scripts/verify_failure_density.py` (Lw), (A): all expanding cyclic words with \(m\le13\), exact lower-bound sums |
+| FD2 | **Manuscript Theorem G(2).** The lookahead potential \(h(r)=\sum_{l<m}(1-\frac{l+1}{m})\gamma(p_l)\) satisfies \(\Psi(Tx)-\Psi(x)=(k\log_23-m)/m+[x\text{ odd}]\varepsilon(x)\) exactly, and its failure set along \(f\) has density \(\le4\cdot2^{-cm}\) up to a finite set (\(m\ge8\)). Hence \(\delta_m=2^{-cm+O(\log m)}\): a depth-\(m\) local correction fails exactly as often as the orbit fails to descend within \(m\) parity steps | Proved here (not human-reviewed) | manuscript §8, Lemma (lookahead identity); `docs/no-go/failure_density.md` | `scripts/verify_failure_density.py` (I): identity in the formal symbol \(\log_23\), \(m\le12\); (U): exact density vs. \(4\cdot2^{-cm}\), \(m\le40\), all failures below \(2^{17}\) explained |
+| FD3 | FD1 persists (constant halved, \(32(m+1)^2(m+2)\lvert E\rvert\le2^{(m+1)H(\theta)}\)) for \(g(\alpha(x),x\bmod2^m)\) with \(\alpha\) constant on classes mod \(2^m\) off a finite \(E\subset\mathbb Z_2\); \(\tau\) is \((m,\{-1\})\)-local and \(\lambda_d\) is \((m,\{t_d\})\)-local with \(t_d=1-2^{2d+1}3^{-d}\), so residues, fuel and detectors together have failure exponent \(c\) | Proved here (not human-reviewed) | manuscript §8, Lemma (local), Proposition (local coordinates); `docs/no-go/failure_density.md` | `scripts/verify_failure_density.py` (D): template bit-length bound and congruence to \(t_d\), \(d\le6\); \(\lambda_d\) constant on all non-exceptional classes mod \(2^{12}\) |
 
 ## Macro-step Lundberg programme (2026-08-03)
 
@@ -319,6 +322,16 @@ verifier, but a passing verifier is not a proof read. Read `SUFF1`, `COST1` step
 | ANC1-CAP | For odd \(z\) with \(3\nmid z\), at most \(\lceil n/2\rceil\) odd preimages of \(z\) have bit-length \(\le n\) | Proved here (corollary of ANC1) | `docs/no-go/macro_step_lundberg.md` §5 | Immediate from the \(>4\) ratio; **novelty doubtful** — preimage family and reverse-tree growth are standard (Applegate–Lagarias), no bibliography pass run |
 
 ### Correction history for this branch
+
+### Manuscript Section 8 added: failure density (2026-11-03, later the same day)
+
+Rows FD1–FD3 (Theorem G) quantify the no-go programme: the minimal failure
+density of a depth-\(m\) local potential is \(2^{-cm+O(\log m)}\) with
+\(c=1-H(1/\log_23)\). This is the first row set in the general track that is
+*two-sided*; the lower bound is the shadow mechanism summed over all
+expanding cycles of one period, the upper bound an explicit lookahead
+potential. Not human-reviewed; the counting step (manuscript §8, Step 5) and
+the conditional-density step in the upper bound are the places to read.
 
 ### Manuscript Section 7 written; spine corrections logged (2026-11-03)
 

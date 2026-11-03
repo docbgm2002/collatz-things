@@ -108,6 +108,14 @@ are listed in
   persist for potentials nonincreasing only along \(f^k\).
   `scripts/verify_quantized_log_theorem.py`.
 
+- **(FD1–FD3, manuscript Theorem G.)** How often must a local potential
+  fail? For \(\Phi=\log_2x+g(x\bmod2^m)\) the minimal failure density is
+  \(2^{-cm+O(\log m)}\) with \(c=1-H(1/\log_23)=0.0500\ldots\): the shadows of
+  all expanding cycles of period \(m+1\) force at least this much, and an
+  explicit lookahead potential attains it. Fuel and detectors do not change
+  the exponent. `scripts/verify_failure_density.py`,
+  [`docs/no-go/failure_density.md`](docs/no-go/failure_density.md).
+
 What is left is recorded in the manuscript's boundary section: the leading
 digits \(\mathrm{LD}_{j'}\) taken jointly with the quantized logarithm, and
 corrections that depend on the orbit rather than on \(x\).
@@ -439,12 +447,14 @@ standard library; every assertion is exact integer or rational arithmetic.
 # ledger governance
 python scripts/verify_claim_ledger.py
 
-# manuscript Section 9 (Theorem F, residue-class certificates)
+# manuscript Section 10 (Theorem F, residue-class certificates)
 python scripts/verify_residue_certificate_nogo.py --measure
 python scripts/prove_block8_17_classes.py
 
-# manuscript Section 7 (Theorem E, quantized logarithm) and Section 8 (certificate miner)
+# manuscript Section 7 (Theorem E, quantized logarithm), Section 8 (Theorem G,
+# failure density) and Section 9 (certificate miner)
 python scripts/verify_quantized_log_theorem.py --quick   # full grid without --quick (slow)
+python scripts/verify_failure_density.py
 python scripts/verify_nogo_certificate.py --limit 200000  # default limit 10^6
 
 # Avenue A finite check

@@ -19,6 +19,7 @@
 \newtheorem*{thmD}{Theorem D}
 \newtheorem*{thmE}{Theorem E}
 \newtheorem*{thmF}{Theorem F}
+\newtheorem*{thmG}{Theorem G}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
@@ -68,7 +69,12 @@ it at every precision $j$, jointly with residues modulo an arbitrary
 $N$ and all detectors (Theorem~E), and the least number of witnesses
 needed at precision $2^{j}$ is a semiconvergent denominator of
 $\log_23$ ($2,2,2,7,7,12,12,12,53,665,\dots$). The exclusions persist
-for potentials that are nonincreasing only along $f^{k}$. The same
+for potentials that are nonincreasing only along $f^{k}$. The failures
+are rare but not too rare: a correction that reads $m$ bits of $x$ can
+fail on a set of density about $2^{-cm}$ with $c=1-H(1/\log_23)=0.0500\ldots$,
+the large-deviation exponent for an orbit not descending within $m$
+parity steps, and the shadows of all expanding cycles of period $m+1$
+show that no such correction fails less often (Theorem~G). The same
 cycle also blocks a second method: on the Mersenne spine $2^{n}-1\mapsto(3^{n}-1)/2$,
 no finite set of residue-class certificates on $n$ can force a positive
 block score, because a $2$-adic index $n^{*}$ with $3^{n^{*}+3}=-367$
@@ -153,6 +159,23 @@ shadowing one member of a rational cycle chosen to fit the precision,
 and the number $K$ needed is exactly the least denominator at which
 $\lfloor K\log_23\rfloor/K$ under-approximates $\log_23$ at least as
 well as $\lfloor2^{j}\log_23\rfloor/2^{j}$ does (Section~\ref{sec:quantized}).
+
+The failures produced by these theorems are explicit but sparse, and
+Section~\ref{sec:density} asks how sparse they must be:
+
+\begin{thmG}[failure density; Theorem~\ref{thm:G}]
+Let $\delta_m$ be the infimum, over all $g$, of the lower density of odd
+$x$ at which $\log_2x+g(x\bmod2^{m})$ increases along $f$. Then
+$2^{-cm}/(16(m+2)^{5})\le\delta_m\le4\cdot2^{-cm}$ for $m\ge12$, where
+$c=1-H(1/\log_23)=0.0500\ldots$ and $H$ is the binary entropy.
+\end{thmG}
+
+The lower bound sums the shadow mechanism over all expanding cycles of
+period $m+1$, whose number is governed by the entropy $H(1/\log_23)$;
+the upper bound is a potential that looks ahead along the orbit as far
+as $m$ bits allow. The constant is the one that controls the density of
+integers with large stopping time, so a local correction can never do
+better than wait for the orbit to descend.
 
 The detectors quantified over in Theorems A and B are given meaning by
 a structural result of independent interest:
@@ -892,6 +915,260 @@ What is \emph{not} covered is noted in Section~\ref{sec:boundary}:
 the leading-digit coordinate $\LD_j$ taken jointly with the quantized
 logarithm, and corrections that depend on the orbit rather than on $x$.
 
+\section{How often must a local potential fail?}\label{sec:density}
+
+Theorems A--E exhibit failures of every local potential. We now ask how
+rare the failures can be made, and find that the answer is a sharp
+exponential rate: a depth-$m$ local correction can fail on a set of
+density about $2^{-cm}$ with $c=0.0500\ldots$, and no depth-$m$ local
+correction can do better by more than a factor polynomial in $m$. The
+lower bound is the shadow mechanism applied
+to \emph{all} expanding cycles of a given period at once; the upper bound
+is a potential that simply looks ahead along the orbit as far as $m$ bits
+allow. The constant $c$ is the large-deviation exponent for the event that
+the orbit has not decreased after $m$ parity steps.
+
+\subsection*{Statement}
+
+For $x\in\Z_2$ let $p_0(x)p_1(x)\cdots$ be the parity word of
+Section~\ref{sec:spine}, $p_i(x)=T^{i}(x)\bmod2$ with letters
+$\mathtt O=1$, $\mathtt E=0$.
+
+\begin{lemma}[Terras~\cite{Terras1976}]\label{lem:terras}
+For $n\ge1$ the map $x\bmod2^{n}\mapsto(p_0(x),\dots,p_{n-1}(x))$ is a
+bijection from $\Z/2^{n}\Z$ onto $\{\mathtt O,\mathtt E\}^{n}$. In
+particular, for odd $x$ the letters $p_1,\dots,p_{n-1}$ are independent
+fair coin tosses when $x$ is uniform on the odd residues modulo $2^{n}$.
+\end{lemma}
+
+A \emph{depth-$m$ local potential} is $\Phi_g(x)=\log_2x+g(x\bmod2^{m})$
+with $g$ any real function on the odd residues. Its \emph{failure set} is
+\[
+F(g)=\{\,x\ \text{odd},\ x>1:\ \Phi_g(f(x))>\Phi_g(x)\,\},
+\]
+and densities are taken among the odd integers:
+$\underline d(A)=\liminf_X\#(A\cap[1,X])/(X/2)$. Put
+\[
+\theta=\frac1{\log_23}=0.6309\ldots,\qquad
+H(p)=-p\log_2p-(1-p)\log_2(1-p),
+\]
+\[
+c=1-H(\theta)=0.05004\ldots .
+\]
+
+\begin{theorem}[failure density]\label{thm:G}
+Let $m\ge12$.
+\begin{enumerate}
+\item For every $g$, the failure set $F(g)$ contains a union of residue
+  classes of odd integers whose density is at least
+  $2^{-cm}/\bigl(16(m+2)^{5}\bigr)$.
+\item There is a $g$ for which $F(g)$ is contained in the union of a set
+  of natural density at most $4\cdot2^{-cm}$ and a finite set.
+\end{enumerate}
+Consequently $\delta_m:=\inf_g\underline d(F(g))$ satisfies
+\[
+\frac{2^{-cm}}{16(m+2)^{5}}\ \le\ \delta_m\ \le\ 4\cdot2^{-cm},
+\qquad\text{and}\qquad
+\lim_{m\to\infty}\frac1m\log_2\delta_m=-c .
+\]
+\end{theorem}
+
+\subsection*{The lower bound}
+
+\begin{proof}[Proof of Theorem~\ref{thm:G}(1)]
+Put $P=m+1$ and fix $g$. For a word $w\in\{\mathtt O,\mathtt E\}^{P}$
+let $k(w)$ be its number of $\mathtt O$s; call $w$ \emph{expanding} if
+$3^{k(w)}>2^{P}$, i.e.\ $k(w)>\theta P$. Let $\rho=\lceil3\log_2P\rceil$
+and let $\mathcal C$ be the set of rotation classes $[w]$ of expanding
+words all of whose cyclic runs of $\mathtt E$ have length at most $\rho$.
+
+\emph{Step 1: cycles.} For $[w]\in\mathcal C$ pick the representative
+$w$ beginning with $\mathtt O$ (it has one, being expanding) and read it
+as $\mathtt O\mathtt E^{e_1-1}\mathtt O\mathtt E^{e_2-1}\cdots\mathtt O\mathtt E^{e_K-1}$
+with $K=k(w)$ and $e_1+\dots+e_K=P$. Lemma~\ref{lem:ratcycle} gives the
+rational cycle $y_1,\dots,y_K$ with $\vv_2(3y_i+1)=e_i$; the parity word
+of $y_1$ is $w^{\infty}$.
+
+\emph{Step 2: edge classes.} Let $A_i$ be the set of odd $x>1$ with
+$x\equiv y_i\pmod{2^{m+e_i}}$. For $x\in A_i$ we have $\vv_2(3x+1)=e_i$
+and $f(x)\equiv y_{i+1}\pmod{2^{m}}$, so the monotonicity constraint at
+$x$ reads
+\[
+g(y_{i+1}\bmod2^{m})-g(y_i\bmod2^{m})\ \le\ -(\log_23-e_i)-\varepsilon(x),
+\qquad \varepsilon(x)=\log_2\Bigl(1+\frac1{3x}\Bigr)>0 .
+\]
+
+\emph{Step 3: one class fails entirely.} If no $A_i$ were contained in
+$F(g)$, each constraint would hold at some $x_i\in A_i$, and summing over
+$i$ the left sides telescope to $0$ while the right sides sum to less than
+$-(K\log_23-P)<0$, a contradiction. So some $A_{i(w)}\subseteq F(g)$. Its
+density among odd integers is $2^{-(m+e_{i(w)}-1)}\ge2^{-(m+\rho)}$,
+because every $e_i-1$ is a cyclic run of $\mathtt E$ in $w$.
+
+\emph{Step 4: disjointness.} By Lemma~\ref{lem:terras}, $A_{i(w)}$ is the
+set of odd integers whose parity word begins with a specific window of
+$w^{\infty}$ of length $m+e_{i(w)}\ge P$. Such a window contains $P$
+consecutive letters of $w^{\infty}$, a rotation of $w$. Distinct classes
+in $\mathcal C$ have no rotation in common, so the sets $A_{i(w)}$,
+$[w]\in\mathcal C$, are pairwise disjoint, and
+\[
+\underline d(F(g))\ \ge\ |\mathcal C|\cdot2^{-(m+\rho)} .
+\]
+
+\emph{Step 5: counting.} Let $k_0=\lceil\theta P\rceil$ ($\theta P$ is
+not an integer). The number $W$ of expanding words satisfies
+$W\ge\binom{P}{k_0}\ge2^{PH(k_0/P)}/(P+1)$, and since $H$ is decreasing on
+$[\tfrac12,1]$ with $|H'|\le2$ on $[\theta,\theta+\tfrac1{13}]$,
+$H(k_0/P)\ge H(\theta)-2/P$, whence $W\ge2^{PH(\theta)}/(4(P+1))$. An
+expanding word with a cyclic run of $\rho+1$ letters $\mathtt E$ is
+determined by the position of that run and the remaining $P-\rho-1$
+letters, which contain at least $k_0$ letters $\mathtt O$; by the entropy
+bound $\sum_{k\ge\lambda n}\binom nk\le2^{nH(\lambda)}$ ($\lambda\ge\tfrac12$)
+and monotonicity of $H$, there are at most
+$P\cdot2^{(P-\rho-1)H(\theta)}\le2^{PH(\theta)}P^{\,1-3H(\theta)}$ of them,
+and $1-3H(\theta)<-1.849$. For $P\ge13$ one has $P^{1.849}\ge8(P+1)$, so
+at least $2^{PH(\theta)}/(8(P+1))$ expanding words have no long run,
+and $|\mathcal C|\ge2^{PH(\theta)}/(8P(P+1))$. With
+$2^{-\rho}\ge1/(2P^{3})$ and $PH(\theta)-m=-cm+H(\theta)>-cm$,
+\[
+\underline d(F(g))\ \ge\ \frac{2^{PH(\theta)-m}}{16P^{4}(P+1)}
+\ \ge\ \frac{2^{-cm}}{16(m+2)^{5}} .\qedhere
+\]
+\end{proof}
+
+\subsection*{The upper bound: looking ahead}
+
+Let $\gamma(\mathtt O)=\log_23-1$ and $\gamma(\mathtt E)=-1$, the
+logarithmic gain of a $T$-step up to the term $\varepsilon$, and for any
+residue $r$ modulo $2^{m}$ with parity word $p_0\cdots p_{m-1}$ set
+\[
+h(r)=\sum_{l=0}^{m-1}\Bigl(1-\frac{l+1}{m}\Bigr)\gamma(p_l),
+\qquad
+\Psi(x)=\log_2x+h(x\bmod2^{m})\quad(x\ge1).
+\]
+
+\begin{lemma}[lookahead identity]\label{lem:lookahead}
+For every integer $x\ge1$ with parity word $p_0p_1\cdots$ and
+$k=\#\{l<m:p_l=\mathtt O\}$,
+\[
+\Psi(T(x))-\Psi(x)=\frac{k\log_23-m}{m}+[x\ \text{odd}]\,\varepsilon(x).
+\]
+\end{lemma}
+
+\begin{proof}
+The parity word of $T(x)$ is $p_1p_2\cdots$, and
+$\log_2(T(x)/x)=\gamma(p_0)+[x\text{ odd}]\varepsilon(x)$. Hence
+$\Psi(T(x))-\Psi(x)-[x\text{ odd}]\varepsilon(x)
+=\gamma(p_0)+\sum_{l=1}^{m}\bigl(1-\tfrac lm\bigr)\gamma(p_l)
+-\sum_{l=0}^{m-1}\bigl(1-\tfrac{l+1}m\bigr)\gamma(p_l)
+=\tfrac1m\sum_{l=0}^{m-1}\gamma(p_l)$, the coefficient of $\gamma(p_m)$
+being $1-\tfrac mm=0$. Finally $\sum_{l<m}\gamma(p_l)=k\log_23-m$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:G}(2)]
+Take $g=h$ on odd residues, so $\Phi_g=\Psi$ on odd integers. Since
+$f(x)=T^{e(x)}(x)$, the difference $\Phi_g(f(x))-\Phi_g(x)$ telescopes
+over the $e(x)$ steps of $T$, and a failure at $x$ forces
+$\Psi(T(y))>\Psi(y)$ for some $y=T^{i}(x)$, $0\le i<e(x)$. By
+Lemma~\ref{lem:lookahead} this requires either $k(y)\log_23>m$, where
+$k(y)$ counts the letters $\mathtt O$ among the first $m$ letters of $y$,
+or ($y$ odd and) $\varepsilon(y)>(m-k(y)\log_23)/m>0$; as $\log_23$ is
+irrational the second alternative confines $y$ to a finite set $S$, and
+$x=(2^{i}y-1)/3$ to a finite set. Let $B=\{y:k(y)\log_23>m\}$, a union of
+classes modulo $2^{m}$, and $G_i=\{x\ \text{odd}:e(x)>i,\ T^{i}(x)\in B\}$.
+Then $F(g)\subseteq\bigcup_{i\ge0}G_i\cup(\text{finite})$, and the
+union has natural density $\sum_i d(G_i)$ (the tail $\bigcup_{i>I}G_i$
+lies in $\{e(x)>I\}$, of density $2^{-I}$).
+
+For $i\ge1$ and $x\in G_i$ the window of $T^{i}(x)$ is
+$p_i\cdots p_{i+m-1}$ with $p_i=\mathtt E$, and by
+Lemma~\ref{lem:terras}, conditionally on $p_1=\dots=p_i=\mathtt E$ (an
+event of density $2^{-i}$) the letters $p_{i+1},\dots,p_{i+m-1}$ are
+independent fair bits. Hence $d(G_i)=2^{-i}\Pr[\mathrm{Bin}(m-1,\tfrac12)>\theta m]$,
+and likewise $d(G_0)=\Pr[1+\mathrm{Bin}(m-1,\tfrac12)>\theta m]$. Both are
+at most $\Pr[\mathrm{Bin}(m,\tfrac12)>\theta m-1]$, so
+\[
+d\Bigl(\bigcup_iG_i\Bigr)\le2\Pr\bigl[\mathrm{Bin}(m,\tfrac12)>\theta m-1\bigr]
+\le2\cdot2^{-m(1-H(\theta-1/m))}
+\le2\cdot2^{-cm}\,2^{|H'(\theta)|}<4\cdot2^{-cm},
+\]
+using the entropy bound (valid as $\theta m-1\ge m/2$ for $m\ge8$),
+concavity of $H$, and $|H'(\theta)|=\log_2\frac{\theta}{1-\theta}=0.77\ldots$.
+\end{proof}
+
+\subsection*{Local coordinates of unbounded depth}
+
+The fuel $\tau$ and the detectors $\lambda_d$ read $x$ to unbounded
+$2$-adic depth, but only along finitely many $2$-adic directions. Call a
+coordinate $\alpha$ on odd integers \emph{$(m,E)$-local}, for a finite
+$E\subset\Z_2$, if $\alpha(x)=\alpha(x')$ whenever $x\equiv x'\pmod{2^{m}}$
+and $x\not\equiv t\pmod{2^{m}}$ for all $t\in E$.
+
+\begin{lemma}\label{lem:local}
+$\tau$ is $(m,\{-1\})$-local for every $m$, and $\lambda_d$ is
+$(m,\{t_d\})$-local for every $m$, where $t_d=1-2^{2d+1}3^{-d}\in\Z_2$ is
+the $2$-adic limit of the level-$d$ templates.
+\end{lemma}
+
+\begin{proof}
+$\tau(x)\ge m$ iff $x\equiv-1\pmod{2^{m}}$, and $\tau(x)<m$ is determined
+by $x\bmod2^{m}$. For the detector, $T^{(d)}_s-t_d=2^{2d+1+\ord_ds}3^{-d}$
+has $2$-adic valuation $2d+1+\ord_ds$, while
+$T^{(d)}_s<2^{2d+1+\ord_ds}/3^{d}$ gives $\beta_d(s)\le2d+\ord_ds$; so
+$T^{(d)}_s\equiv t_d\pmod{2^{\beta_d(s)+1}}$. A match
+$x\equiv T^{(d)}_s\pmod{2^{\beta_d(s)+1}}$ with $\beta_d(s)+1>m$ therefore
+forces $x\equiv t_d\pmod{2^{m}}$; away from that class, $\lambda_d(x)$ is
+decided by the templates with $\beta_d(s)+1\le m$, hence by $x\bmod2^{m}$.
+\end{proof}
+
+\begin{proposition}\label{prop:localdensity}
+Let $\alpha$ be $(m,E)$-local and let $m\ge12$ satisfy
+$32(m+1)^{2}(m+2)|E|\le2^{(m+1)H(\theta)}$. Then for every $g$ the
+failure set of $\log_2x+g\bigl(\alpha(x),x\bmod2^{m}\bigr)$ contains a
+union of residue classes of density at least $2^{-cm}/(32(m+2)^{5})$. In
+particular this holds for
+$g\bigl(x\bmod2^{m},\tau(x),\lambda_1(x),\dots,\lambda_D(x)\bigr)$ with
+$|E|=D+1$, while the upper bound of Theorem~\ref{thm:G} applies verbatim.
+\end{proposition}
+
+\begin{proof}
+Run the proof of Theorem~\ref{thm:G}(1) with the coordinate
+$(\alpha(x),x\bmod2^{m})$. The argument of Steps~2--3 needs only that
+$\alpha$ is constant on each $A_i$ and on $\{f(x):x\in A_i\}$, which holds
+as soon as no cycle member $y_i$ is congruent modulo $2^{m}$ to a point of
+$E$. A rotation class $[w]$ violating this has an $m$-window equal to the
+window of some $t\in E$; the window occupies all but one of the $P=m+1$
+cyclic positions, so at most $2P|E|$ classes are lost. The hypothesis
+makes $2P|E|\le|\mathcal C|/2$, and the bound follows with the constant
+halved.
+\end{proof}
+
+\begin{remark}\label{rem:density}
+(i) The exponent $c=1-H(1/\log_23)$ is the rate at which the density of
+integers whose orbit has not descended after $m$ parity steps decays, the
+event $k>\theta m$ of the proof; the same event controls the density of
+integers whose stopping time exceeds $m$ (Terras~\cite{Terras1976};
+see~\cite{Lagarias1985}).
+Theorem~\ref{thm:G} says that a correction which may consult $m$ bits of
+$x$ cannot fail less often than the orbit itself fails to descend within
+those bits, and that plain lookahead attains this.
+(ii) The bounds are sharp only in the exponent. Exact values of the two
+sides for small $m$ are tabulated in the repository; for $m\le13$ the
+lower-bound sum over expanding cycles is between $2^{-7.2}$ and $2^{-2.4}$,
+far above the stated bound, and the lookahead density is $2^{-1.8}$ at
+$m=8$. The polynomial factors are an artefact of the proof.
+(iii) The lower bound for Archimedean coordinates (length, the quantized
+logarithm) would require the multi-witness cycles of
+Section~\ref{sec:quantized} at every scale; we expect the same exponent
+for fixed precision and have not carried this out.
+(iv) The proof uses only Lemma~\ref{lem:terras} and
+Lemma~\ref{lem:ratcycle}, so it transfers to the maps
+$(ax+b)/c^{\vv_c(ax+b)}$ of Remark~\ref{rem:factories}, with the
+threshold $1/\log_ca$ and the corresponding binomial large-deviation
+rate, provided $\log_ca$ lies below the mean valuation $c/(c-1)$; above
+it the lookahead potential fails on a set of density tending to $1$.
+\end{remark}
+
 \section{Certificates from raw orbits}\label{sec:certificates}
 
 The constraint system ``$\Phi$ nonincreasing'', restricted to any
@@ -1211,7 +1488,15 @@ $(j,K,N,d)$ with $j\le8$ (closure at every junction, detectors,
 arbitrary moduli including $N=2^{5}\cdot3^{2}\cdot5\cdot7$ for $j\le6$, and the
 exact product gain), the admissibility table, the modulus and multi-step
 corollaries, and the explicit instances of Remark~\ref{rem:F}
-(\texttt{verify\_quantized\_log\_theorem.py}); and for Section~\ref{sec:spine}, the
+(\texttt{verify\_quantized\_log\_theorem.py}); for
+Section~\ref{sec:density}, the Terras bijection to $n=14$, the lookahead
+identity as an exact identity in the formal symbol $\log_23$ for
+$m\le12$, the exact failure density of the lookahead potential against
+$4\cdot2^{-cm}$ for $m\le40$ together with a direct check of all its
+failures below $2^{17}$, and for $m\le13$ every expanding cyclic word of
+length $m+1$ with its cycle, edge classes, gain and window, giving the
+exact lower-bound sums against the stated constant
+(\texttt{verify\_failure\_density.py}); and for Section~\ref{sec:spine}, the
 ball lemma, the shadow index $k^{*}$, part~(2) of Theorem~\ref{thm:F} for
 $J\le120$, the four class evaluations, and the exact closure measures
 (\texttt{verify\_residue\_certificate\_nogo.py --measure-22}), with the
