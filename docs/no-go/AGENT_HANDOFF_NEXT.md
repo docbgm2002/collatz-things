@@ -43,6 +43,18 @@ Theorems A–D as before. New on 2026-11-03:
 
 Ledger rows: RATCYC1, QLG2, MODN1, MSTEP1, FD1–FD3 (general track table).
 
+## 1b. Backward direction (2026-11-03, later)
+
+`docs/density-cycles/predecessor_exponent.md`: the Krasikov–Lagarias
+difference-inequality system reconstructed (their \(0.84\) at \(k=11\)
+reproduced) and pushed to larger \(k\): certified \(\gamma=0.8530\) at
+\(k=12\)PREDHANDOFF. Scripts `explore_predecessor_exponent.py` (float solver) and
+`verify_predecessor_exponent.py` (exact certificate). Each level costs a
+factor 3 in classes; \(k=16\) (\(28.7\)M classes) is feasible in this
+container in about an hour, \(k=17\) needs more memory than numpy int64
+comfortably allows here. The proof (PRED1) needs a human read: the
+comparison principle and the subsolution inequality in §2.
+
 ## 2. DO NEXT (in this order)
 
 1. **Human proof read** of Theorem G (Section 8): the counting Step 5 of

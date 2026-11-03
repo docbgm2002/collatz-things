@@ -132,6 +132,18 @@ corrections that depend on the orbit rather than on \(x\).
   [`docs/no-go/latent_fuel_notes.md`](docs/no-go/latent_fuel_notes.md). Also **(NLPD)**, the
   unconditional detector no-go, now subsumed by SH1.
 
+### Predecessor density (backward direction)
+
+- [`docs/density-cycles/predecessor_exponent.md`](docs/density-cycles/predecessor_exponent.md)
+  **(PRED1, PRED2).** The Krasikov-type difference inequalities on residue
+  classes modulo \(3^k\), solved by nonlinear power iteration and certified
+  in exact integer arithmetic. The \(k=11\) row reproduces the published
+  \(x^{0.84}\) of Krasikov–Lagarias; the rows \(k\ge12\) improve it: at
+  least \(c\,X^{\gamma}\) integers below \(X\) reach \(1\) with
+  \(\gamma=0.8530\) (\(k=12\))PREDREADME. The proof that a positive solution of the
+  inequalities gives the exponent is a one-paragraph comparison principle on
+  the finite predecessor forest. Not human-reviewed.
+
 ### Binary and residue structure
 
 - [`docs/core/Block_Fracture_Lemma.md`](docs/core/Block_Fracture_Lemma.md)
@@ -450,6 +462,10 @@ python scripts/verify_claim_ledger.py
 # manuscript Section 10 (Theorem F, residue-class certificates)
 python scripts/verify_residue_certificate_nogo.py --measure
 python scripts/prove_block8_17_classes.py
+
+# predecessor-density exponents (PRED1, PRED2)
+python scripts/explore_predecessor_exponent.py --kmin 2 --kmax 11
+python scripts/verify_predecessor_exponent.py --k 12 --gamma 0.8530 --count-check
 
 # manuscript Section 7 (Theorem E, quantized logarithm), Section 8 (Theorem G,
 # failure density) and Section 9 (certificate miner)
