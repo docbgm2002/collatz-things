@@ -37,6 +37,11 @@ from fractions import Fraction
 import numpy as np
 
 THETA = 1 / math.log2(3)
+PCACHE = {}
+PRED = {}
+PRED_D = {}
+DCOUNT = {}
+HITS_D = {}
 
 
 def T(x):
@@ -77,18 +82,33 @@ def epoch_np_fixed(x, l):
     return y, k
 
 
-def baseline_p(L, rng, n=20000):
+NBIN = 8
+
+
+def baseline_p(L, rng, n=20000, b=None, r9=None):
+    """P(x in B | len(x)=L [, x in the b-th of NBIN sub-ranges] [, x = r9 mod 9])."""
+    lo, hi = 1 << (L - 1), 1 << L
+    if b is not None:
+        w = (hi - lo) // NBIN
+        lo, hi = lo + b * w, lo + (b + 1) * w
     if L <= 36:
-        x = rng.integers(1 << (L - 1), 1 << L, size=n, dtype=np.int64)
+        x = rng.integers(lo, hi, size=n, dtype=np.int64)
+        if r9 is not None:
+            x = x - (x % 9) + r9
+            x = x[(x >= lo) & (x < hi)]
         y, k = epoch_np_fixed(x, L)
         return float(np.mean(y >= x))
     cnt = 0
     m = max(2000, n // 8)
     for _ in range(m):
-        x = (1 << (L - 1)) + int.from_bytes(rng.bytes(16), "big") % (1 << (L - 1))
+        x = lo + int.from_bytes(rng.bytes(16), "big") % (hi - lo)
         y, k, l = epoch_py(x)
         cnt += y >= x
     return cnt / m
+
+
+def pos_bin(xv, lv):
+    return min(NBIN - 1, int(NBIN * (xv / (1 << (lv - 1)) - 1.0)))
 
 
 def terras_inverse(word):
@@ -120,12 +140,30 @@ def census(lmax, rng):
         j = 1
         while cur and j < 60:
             nxt = []
+            predsum = 0.0
+            predsum_d = 0.0
+            seen = set()
             for x0, xv in cur:
                 yv, kv, lv = epoch_py(xv)
-                if yv >= xv and yv > 2:
+                key = (lv, pos_bin(xv, lv), xv % 9)
+                if key not in PCACHE:
+                    PCACHE[key] = baseline_p(lv, rng, n=90000, b=key[1], r9=key[2])
+                predsum += PCACHE[key]
+                ok = (yv >= xv and yv > 2)
+                if xv not in seen:
+                    seen.add(xv)
+                    predsum_d += PCACHE[key]
+                    if ok:
+                        HITS_D[j + 1] = HITS_D.get(j + 1, 0) + 1
+                if ok:
                     nxt.append((x0, yv))
             j += 1
             counts[L][j] = len(nxt)
+            DCOUNT.setdefault(j, set()).update(yv for _, yv in nxt)
+            PRED.setdefault(j, 0.0)
+            PRED[j] += predsum
+            PRED_D.setdefault(j, 0.0)
+            PRED_D[j] += predsum_d
             if not nxt:
                 break
             if len(nxt) <= 50:
@@ -136,24 +174,15 @@ def census(lmax, rng):
     for L in counts:
         for j, c in counts[L].items():
             tot[j] = tot.get(j, 0) + c
-    print("   j   survivors(all L)   ratio N_j/N_{j-1}   predicted ratio (length-matched baseline)", flush=True)
-    pcache = {}
+    print("   j   survivors(all L)   predicted N_j = sum over (j-1)-survivors of p(actual length)   obs/pred", flush=True)
     for j in sorted(tot):
-        if j == 0:
+        if j <= 1:
             continue
-        num = den = 0.0
-        for L in counts:
-            c_prev = counts[L].get(j - 1, 0)
-            if c_prev == 0:
-                continue
-            Lj = int(round(L + 1.8 * (j - 1)))
-            if Lj not in pcache:
-                pcache[Lj] = baseline_p(Lj, rng)
-            num += c_prev * pcache[Lj]
-            den += c_prev
-        pred = num / den if den else float("nan")
-        ratio = tot[j] / tot[j - 1] if tot.get(j - 1) else float("nan")
-        print(f"   {j:2d}   {tot[j]:14d}   {ratio:.5f}            {pred:.5f}     (obs/pred {ratio/pred if pred else float('nan'):.3f})", flush=True)
+        pred = PRED.get(j, float("nan"))
+        nd = len(DCOUNT.get(j, ()))
+        pd = PRED_D.get(j, float("nan"))
+        hd = HITS_D.get(j, 0)
+        print(f"   {j:2d}   {tot[j]:14d}   {pred:14.1f}   {tot[j]/pred if pred else float('nan'):.3f}      distinct coins at stage {j-1}: survived {hd:8d} vs predicted {pd:10.1f}  ratio {hd/pd if pd else float('nan'):.3f}", flush=True)
     # champions: keep the best j per x0
     best = {}
     for j, x0, L in champions:
