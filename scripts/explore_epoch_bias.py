@@ -172,9 +172,9 @@ def main():
 # importance sampling: uniform samples of B at a fixed length via Terras inversion
 # ---------------------------------------------------------------------------
 
-def sample_B(rng, L, n):
+def sample_B(rng, L, n, chunk=500000):
     """n uniform samples of {x in [2^(L-1), 2^L): word has >= k* odd letters},
-    k* = least k with 3^k > 2^L (vectorised Terras inversion)."""
+    k* = least k with 3^k > 2^L (vectorised Terras inversion, chunked)."""
     kstar = 0
     while 3 ** kstar <= 2 ** L:
         kstar += 1
@@ -182,25 +182,30 @@ def sample_B(rng, L, n):
     ks = np.arange(kstar, L + 1)
     w = np.array([comb(L, int(k)) for k in ks], dtype=np.float64)
     w /= w.sum()
-    kk = rng.choice(ks, size=2 * n, p=w)
-    # random words with kk odd letters: random permutation ranks
-    words = np.zeros((2 * n, L), dtype=np.int8)
-    keys = rng.random((2 * n, L))
-    order = np.argsort(keys, axis=1)
-    rows = np.arange(2 * n)[:, None]
-    mask = np.arange(L)[None, :] < kk[:, None]
-    words[rows, order] = mask.astype(np.int8)
-    # invert Terras: determine bit i from parity of T^i(x)
-    x = np.zeros(2 * n, dtype=np.int64)
-    for i in range(L):
-        y = x.copy()
-        for _ in range(i):
-            odd = (y & 1).astype(bool)
-            y = np.where(odd, (3 * y + 1) // 2, y // 2)
-        par = (y & 1)
-        x = x + ((par != words[:, i]).astype(np.int64) << i)
-    x = x[x >= (1 << (L - 1))]
-    return x[:n]
+    out = []
+    got = 0
+    while got < n:
+        m = chunk
+        kk = rng.choice(ks, size=m, p=w)
+        keys = rng.random((m, L), dtype=np.float32)
+        order = np.argsort(keys, axis=1)
+        del keys
+        words = np.zeros((m, L), dtype=np.int8)
+        rows = np.arange(m)[:, None]
+        mask = np.arange(L)[None, :] < kk[:, None]
+        words[rows, order] = mask.astype(np.int8)
+        del order, mask
+        x = np.zeros(m, dtype=np.int64)
+        for i in range(L):
+            y = x.copy()
+            for _ in range(i):
+                odd = (y & 1).astype(bool)
+                y = np.where(odd, (3 * y + 1) // 2, y // 2)
+            x = x + (((y & 1) != words[:, i]).astype(np.int64) << i)
+        x = x[x >= (1 << (L - 1))]
+        out.append(x)
+        got += len(x)
+    return np.concatenate(out)[:n]
 
 
 def chain_from_B(L, n, J, seed):
