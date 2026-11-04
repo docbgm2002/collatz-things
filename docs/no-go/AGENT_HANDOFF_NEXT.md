@@ -48,11 +48,12 @@ Ledger rows: RATCYC1, QLG2, MODN1, MSTEP1, FD1–FD3 (general track table).
 `docs/density-cycles/predecessor_exponent.md`: the Krasikov–Lagarias
 difference-inequality system reconstructed (their \(0.84\) at \(k=11\)
 reproduced) and pushed to larger \(k\): certified \(\gamma=0.8530\) at
-\(k=12\), \(0.8629\) at \(k=13\), \(0.8723\) at \(k=14\), \(0.8811\) at \(k=15\), \(0.8891\) at \(k=16\). Scripts `explore_predecessor_exponent.py` (float solver) and
+\(k=12\), \(0.8629\) at \(k=13\), \(0.8723\) at \(k=14\), \(0.8811\) at \(k=15\), \(0.8891\) at \(k=16\), \(0.8964\) at \(k=17\). Scripts `explore_predecessor_exponent.py` (float solver) and
 `verify_predecessor_exponent.py` (exact certificate). Each level costs a
 factor 3 in classes; \(k=16\) (\(28.7\)M classes) took 30 min for the
-float solve and 3 GB; \(k=17\) (86M classes) would need about 10 GB and
-2 h, at the edge of this container. The proof (PRED1) needs a human read: the
+float solve and 3 GB; \(k=17\) (86M classes) took 1 h 52 min and 5.3 GB
+for the float solve with int32 indices; \(k=18\) (258M classes) would need
+about 16 GB and 6 h, beyond this container. The proof (PRED1) needs a human read: the
 comparison principle and the subsolution inequality in §2.
 
 ## 2. DO NEXT (in this order)
