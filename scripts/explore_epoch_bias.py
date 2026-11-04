@@ -217,7 +217,7 @@ def chain_from_B(L, n, J, seed):
     inB = y >= x
     print(f"   exact check: fraction with Phi(x) >= x among word-sampled B = {inB.mean():.5f}")
     Ls = list(range(L - 4, int(2.0 * L) + 10))
-    p = baseline(rng, Ls, 20000)
+    p = baseline(rng, Ls, int(__import__('os').environ.get('BASE_N', '20000')))
     cur = [int(v) for v in y[inB]]
     print(f"   j=0: survivors {len(cur)}")
     for j in range(1, J + 1):
