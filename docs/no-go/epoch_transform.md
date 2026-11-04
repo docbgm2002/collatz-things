@@ -111,9 +111,65 @@ the cost law of manuscript §7.
    This is the natural successor of the Mersenne-spine notes, which treated
    one such family.
 
-## 5. Ledger rows
+## 5. Search for structured multi-epoch survivors (2026-11-04)
+
+`scripts/explore_epoch_survivors.py` and further runs of
+`scripts/explore_epoch_bias.py`. The question: is there any family of
+integers, beyond the shadows of rational cycles, that survives several
+epochs more often than chance?
+
+**Bit-budget bound.** A shadow of a rational cycle at depth \(m\le\ell\)
+follows it for at most \(m\) \(T\)-steps, since each step consumes at least
+one bit of agreement. An \(\ell\)-bit integer therefore cannot shadow any
+cycle for more than one epoch; multi-epoch survival is never a cycle shadow.
+
+**Structured probes.**
+- Periodic words (= rational-cycle shadows), all 157 expanding primitive
+  words of length \(\le9\), shadows up to 64 bits: 115 survive one epoch, 35
+  two, 4 three; the only "five-epoch" cases are the integers 27 and 55, a
+  small-number effect. As predicted, the second epoch of a shadow is the
+  binary expansion of \(3^k\) minus a small number, and it is generic.
+- Epoch-fixed points \(\Phi(x)\equiv x\pmod{2^{\ell(x)}}\) below \(2^{20}\):
+  two (2151 and 3227), each surviving exactly two epochs.
+- Sturmian words with slope in \((\theta,1)\): survival counts 181/13/1 for
+  one/two/three epochs, the chance rate.
+
+**Census of all \(x<2^{26}\).** Survivors by number of epochs:
+515 077, 44 109, 4 058, 354, 37, 0 for \(j=2,\dots,7\). The champions
+(six epochs) fall into three orbit families (\(1501353\) with \(2x,4x,8x\)
+and merging neighbours; \(4003609\); \(5338145\)), all random-looking in
+binary. Members of a family share one chain after the first epoch, so the
+raw counts are clumpy; the family-collapsed counts behave like independent
+coins.
+
+**A finite-size deviation.** Against the length-matched independent
+prediction, the probability that a survivor's image survives again is
+
+| start length | stage 1 | stage 2 | stage 3 | stage 4 |
+|---|---|---|---|---|
+| 26 bits (4M samples of \(B\), baseline \(2\times10^5\)/length) | 1.000 | \(1.045\pm0.007\) | \(1.18\pm0.025\) | \(0.93\pm0.08\) |
+| 32 bits (6M) | 0.999 | 1.008 | 0.986 | \(1.08\pm0.12\) |
+| 40 bits (6M) | 0.985 | 0.991 | 1.021 | \(1.35\pm0.30\) |
+
+So at 26–31 bits there is a real few-percent excess at the second and third
+stage, not explained by the dyadic position of the image or its residue
+modulo \(9\) (both were conditioned on in the census), with a per-length
+structure at the third stage (excess for images of 29–34 bits, deficit at
+35–38), and it is gone by 32–40 bits. It is a small-number correction to
+the memoryless model, not a structured family and not long-range memory;
+its mechanism is not identified (the carry term \(c/x\) in the exact
+non-descent condition is the natural suspect, since it is relatively larger
+for short integers).
+
+**Conclusion.** No structured family survives more than chance beyond the
+bounded shadows of rational cycles. The independent-miracles model holds
+to within sampling error from 32 bits upward through four epochs, with
+finite-size deviations of a few percent below 32 bits. This is the state of
+the evidence for the hypothesis of §2, and it is evidence only.
+
+## 6. Ledger rows
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | EPOCH1 | For \(\Phi(x)=T^{\ell(x)}(x)\): \(\Phi(x)=(3^kx+c(w))/2^{\ell}\in[3^k/2,\,3\cdot3^k/2)\) and \(\Phi(x)\equiv c(w)2^{-\ell}\pmod{3^k}\), so \(\Phi(x)\in\{\rho(w),\rho(w)+3^k\}\) is determined by the parity word \(w\) of \(x\) up to one bit | Proved here | `docs/no-go/epoch_transform.md` §1 | `scripts/explore_epoch_bias.py` (exact check on 2000 random \(x\)) |
-| EPOCH2 | Bias propagation across epochs is memoryless given length through four epochs at \(32\) bits: ratios \(0.999,1.008,0.986,1.08\) of observed to length-matched independent prediction; consecutive-bias correlation \(+0.002\) | Finite diagnostic (sampling) | `docs/no-go/epoch_transform.md` §3 | `scripts/explore_epoch_bias.py`; not a universal claim |
+| EPOCH2 | Bias propagation across epochs is memoryless given length through four epochs at \(32\) and \(40\) bits (ratios \(0.999,1.008,0.986,1.08\) and \(0.985,0.991,1.021\)); at \(26\) bits a finite-size excess of \(4.5\%\) and \(18\%\) at stages 2–3. No structured family (periodic words, epoch-fixed points, Sturmian words, census champions below \(2^{26}\)) survives beyond chance; cycle shadows cannot last more than one epoch by the bit budget | Finite diagnostic (sampling + census) | `docs/no-go/epoch_transform.md` §3, §5 | `scripts/explore_epoch_bias.py`, `scripts/explore_epoch_survivors.py`; not a universal claim |
