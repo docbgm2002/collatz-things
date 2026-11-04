@@ -17,7 +17,11 @@ Research notes are grouped by topic:
   the residual-atlas checkpoint (`RESIDUAL_ATLAS.md`); not a claim chain.
 
 The root [`README`](../README.md) and [`claim ledger`](../CLAIM_LEDGER.md)
-remain the main entry points.
+remain the main entry points. The latest session is summarised in
+[`SESSION_REPORT_2026-11.md`](SESSION_REPORT_2026-11.md); its new notes are
+[`no-go/failure_density.md`](no-go/failure_density.md),
+[`no-go/epoch_transform.md`](no-go/epoch_transform.md) and
+[`density-cycles/predecessor_exponent.md`](density-cycles/predecessor_exponent.md).
 
 ## Status hierarchy
 

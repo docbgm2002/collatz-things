@@ -24,6 +24,16 @@ or the transversality audit, unless a restart condition is stated.
 5. Virtual or approximate collisions are forbidden; comparisons must involve
    an *actual* smaller-odd-repunit trajectory or an actual discharged basin.
 
+## Avenues added 2026-11-04
+
+Recorded, with their honest status, in
+[`../SESSION_REPORT_2026-11.md`](../SESSION_REPORT_2026-11.md) §5: a proof of
+Krasikov's conjecture via equicontinuity of 3-adic Perron eigenfunctions
+(recommended next, target with mechanism PRED4); a power saving for the
+exceptional set (PRED3); bounded-memory and digit-statistic corrections
+(sketches); the epoch transform and memorylessness hypothesis
+(`epoch_transform.md`). Z\(_2\times\)Z\(_3\) rigidity is retracted there.
+
 ## Relation to live work
 
 | Already live / queued | Do not duplicate as “new” |

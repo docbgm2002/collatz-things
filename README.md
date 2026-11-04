@@ -27,6 +27,15 @@ Start with:
   jointly with any modulus and all detectors, and Theorem F: no finite
   residue-class certificate on the Mersenne spine), with compiled PDF.
 
+## Latest session
+
+[`docs/SESSION_REPORT_2026-11.md`](docs/SESSION_REPORT_2026-11.md) is the
+consolidated record of the November 2026 session: Theorems E, F, G of the
+manuscript (quantized logarithm, spine, failure density), the certified
+predecessor-density exponents up to \(x^{0.8964}\), the epoch transform, the
+avenues proposed with their honest status, and a reading order for a human
+reviewer. Everything there is machine-verified and not human-reviewed.
+
 ## Current research status
 
 The mature line is the one-step potential no-go programme, centred on SH1

@@ -1,5 +1,10 @@
 # AGENT_HANDOFF_NEXT — load this first in a new chat
 
+**Start with [`../SESSION_REPORT_2026-11.md`](../SESSION_REPORT_2026-11.md):**
+it lists every result of the November session with its status, the avenues
+proposed (marked sketch, unchecked or retracted), and the reading order for a
+human reviewer.
+
 Status (2026-11-03): **the manuscript is the deliverable; the spine
 programme is closed.** Read `CLAIM_LEDGER.md` § "Manuscript Section 7
 written; spine corrections logged (2026-11-03)" for the record.
