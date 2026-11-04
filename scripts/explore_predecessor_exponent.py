@@ -49,20 +49,23 @@ import numpy as np
 
 
 def build(k):
-    """Index arrays for the unit classes modulo 3^k."""
+    """Index arrays for the unit classes modulo 3^k (int32 indices; 3^k < 2^31 for k <= 19)."""
     M = 3 ** k
-    units = np.arange(M, dtype=np.int64)
+    assert M < 2 ** 31
+    units = np.arange(M, dtype=np.int32)
     units = units[units % 3 != 0]  # 2*3^(k-1) of them
-    pos = -np.ones(M, dtype=np.int64)
-    pos[units] = np.arange(len(units))
-    two = pos[(2 * units) % M]
+    pos = np.full(M, -1, dtype=np.int32)
+    pos[units] = np.arange(len(units), dtype=np.int32)
+    two = pos[(2 * units.astype(np.int64)) % M]
     is2 = (units % 3 == 2)
     # odd child class (2m-1)/3 mod 3^(k-1), lifted to three classes mod 3^k
     c = np.zeros(len(units), dtype=np.int64)
-    c[is2] = ((2 * units[is2] - 1) // 3) % (3 ** (k - 1))
-    cj = np.stack([(c + j * 3 ** (k - 1)) % M for j in range(3)], axis=1)
+    c[is2] = ((2 * units[is2].astype(np.int64) - 1) // 3) % (3 ** (k - 1))
     child_unit = (c % 3 != 0) & is2
-    cidx = np.where(child_unit[:, None], pos[cj], 0)  # index 0 is a dummy when unused
+    cidx = np.zeros((len(units), 3), dtype=np.int32)
+    for j in range(3):
+        cidx[:, j] = np.where(child_unit, pos[(c + j * 3 ** (k - 1)) % M], 0)  # 0 is a dummy when unused
+    del pos, c
     return units, two, is2, child_unit, cidx
 
 

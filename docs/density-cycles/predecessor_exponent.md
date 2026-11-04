@@ -172,7 +172,81 @@ printed constant \(c\).
 - A density-one or natural-density statement does not follow at any
   \(\gamma<1\); see `kl_rail_restricted_tree.md` §0 (W4-B).
 
-## 6. Verification
+## 6. Consequences and the limit of the method
+
+### 6.1 A reformulation (PRED3)
+
+PRED1 is uniform in \(a\). Let \(E=\{n\ge1:\ n\text{ does not reach }1\}\) and
+\(e(X)=\#(E\cap[1,X])\). If \(E\ne\emptyset\), pick \(a\in E\); its forward
+orbit stays in \(E\), is non-cyclic or enters a nontrivial cycle, and in either
+case contains a non-cyclic element \(a'\ge3\) with \(3\nmid a'\) whose
+predecessors all lie in \(E\). Hence, for every certified \((k,\gamma)\),
+\[
+E\ne\emptyset\ \Longrightarrow\ e(X)\ \ge\ c\,(X/a')^{\gamma}-1\quad(X\ge a').
+\]
+So **the \(3x+1\) conjecture holds iff \(e(X)=o(X^{0.8891})\)**, and if
+\(\gamma_k\to1\) (§6.2), iff \(e(X)=O(X^{1-\varepsilon})\) for some
+\(\varepsilon>0\): the conjecture is equivalent to a power saving in the
+exceptional set. The same follows from Krasikov–Lagarias with exponent
+\(0.84\); the content here is the explicit uniform constant and the larger
+exponent. What is known about \(e(X)\) from the other side is only
+\(e(X)=o(X)\) (Terras; in logarithmic density, Tao), so the gap between
+\(X^{0.889}\) and \(o(X)\) is exactly where the problem lives.
+
+### 6.2 Why the limit of the exponents should be \(1\) (PRED4)
+
+Replace the minimum in (S) by the average over the three subclasses:
+\[
+(\bar A_\gamma v)_m=2^{-\gamma}v_{2m}+[m\equiv2\ (3),\ \text{child unit}]\,(3/2)^{\gamma}\cdot\tfrac13\sum_{j}v_{c_j(m)} .
+\]
+
+**Lemma (PRED4).** For every \(k\ge2\) and every vector \(v\),
+\(\sum_m(\bar A_1v)_m=\sum_mv_m\). Hence the Perron root of \(\bar A_1\) is
+exactly \(1\), the averaged system is critical at \(\gamma=1\) for every
+\(k\), and \(\gamma_k\le1\) for every \(k\).
+
+*Proof.* \(m\mapsto2m\) permutes the unit classes, so
+\(\sum_mv_{2m}=\sum_mv_m\). The map \(m\mapsto(2m-1)/3\bmod3^{k-1}\) is a
+bijection from \(\{m\equiv2\ (3)\}\) onto \(\mathbb Z/3^{k-1}\), and each unit
+class \(u\bmod3^{k}\) is \(c_j(m)\) for exactly one pair \((m,j)\); so
+\(\sum_m\tfrac13\sum_jv_{c_j(m)}=\tfrac13\sum_uv_u\) over unit \(u\). Thus
+\(\sum(\bar A_1v)=\tfrac12\sum v+\tfrac32\cdot\tfrac13\sum v=\sum v\). The
+all-ones vector is a positive left eigenvector of the nonnegative matrix
+\(\bar A_1\) with eigenvalue \(1\), so its Perron root is \(1\); since
+\(A_\gamma\le\bar A_\gamma\) entrywise and both decrease in \(\gamma\),
+\(\gamma_k\le1\). \(\square\)
+
+In the limit \(k\to\infty\) this is the statement that Haar measure on
+\(\mathbb Z_3^{\times}\) is invariant under the dual of the transfer operator
+\(L_1\Phi(m)=\tfrac12\Phi(2m)+\tfrac32\mathbf 1[\cdots]\Phi((2m-1)/3)\) of the
+backward map. The method loses exactly through the minimum, i.e.\ through the
+dependence of the Perron vector on the top \(3\)-adic digit of the child
+class. Numerically that dependence is small and shrinking:
+
+| \(k\) | \(\gamma_k\) | \(1-\gamma_k\) | mean of \(\min_j v_{c_j}/\mathrm{mean}_jv_{c_j}\) | loss |
+|---|---|---|---|---|
+| 8 | 0.8032 | 0.197 | 0.9350 | 0.065 |
+| 9 | 0.8168 | 0.183 | 0.9407 | 0.059 |
+| 10 | 0.8296 | 0.170 | 0.9459 | 0.054 |
+| 11 | 0.8417 | 0.158 | 0.9512 | 0.049 |
+| 12 | 0.8530 | 0.147 | 0.9558 | 0.044 |
+| 13 | 0.8629 | 0.137 | 0.9597 | 0.040 |
+
+The loss decays by a factor about \(0.91\) per level and \(1-\gamma_k\) is
+about \(3.3\) times the loss throughout, consistent with \(\gamma_k\to1\)
+(Krasikov's conjecture) at a geometric rate. At \(k=11\) the ten low
+\(3\)-adic digits of \(m\) explain \(99.6\%\) of the variance of \(\log v_m\)
+and the top digits essentially none: the Perron vector is, to this accuracy,
+a continuous function on \(\mathbb Z_3^{\times}\). **A proof of Krasikov's
+conjecture along these lines needs an equicontinuity estimate for the Perron
+eigenfunctions of \(L_\gamma\), \(\gamma<1\), on \(\mathbb Z_3^{\times}\)**; the
+operator mixes the isometry \(m\mapsto2m\) with the expanding branch
+\(m\mapsto(2m-1)/3\), so standard Ruelle theory does not apply directly. This
+is recorded as a research target, not a claim. Note that even \(\gamma_k\to1\)
+gives \(X^{1-o(1)}\), never positive density: the averaged system is only
+critical at \(\gamma=1\).
+
+## 7. Verification
 
 ```bash
 python3 scripts/explore_predecessor_exponent.py --kmin 2 --kmax 11      # exponents, floats
@@ -183,9 +257,11 @@ python3 scripts/verify_predecessor_exponent.py --k 15 --gamma 0.8811   # ~10 min
 python3 scripts/verify_predecessor_exponent.py --k 16 --gamma 0.8891   # ~1 h incl. the float solve, 3 GB
 ```
 
-## 7. Ledger rows
+## 8. Ledger rows
 
 | ID | Claim | Status | Source | Verification |
 |---|---|---|---|---|
 | PRED1 | For every positive solution \(v\) of the Krasikov-type system \((S_k^{\gamma})\) on unit classes mod \(3^k\), every non-cyclic \(a\ge3\), \(3\nmid a\), and \(X\ge a\): \(\pi_a(X)\ge2^{-\gamma}(v_a/\max v)(X/a)^{\gamma}-1\). Proof: subsolution + nilpotent comparison on the finite predecessor forest | Proved here (not human-reviewed) | `docs/density-cycles/predecessor_exponent.md` §2 | the recursion and forest structure are elementary; `scripts/verify_predecessor_exponent.py --count-check` cross-checks the bound against a BFS count for \(a=4\) |
+| PRED3 | \(E\ne\emptyset\Rightarrow e(X)\ge c(X/a')^{\gamma}-1\) for every certified \((k,\gamma)\); hence the \(3x+1\) conjecture holds iff \(\#\{n\le X: n\not\to1\}=o(X^{0.8891})\), and iff it is \(O(X^{1-\varepsilon})\) if \(\gamma_k\to1\) | Proved here (corollary of PRED1–2) | `docs/density-cycles/predecessor_exponent.md` §6.1 | immediate from uniformity in \(a\) |
+| PRED4 | With the minimum replaced by the average over the three child subclasses, the Krasikov system has Perron root exactly \(1\) at \(\gamma=1\) for every \(k\) (the total mass is preserved: Haar invariance), so \(\gamma_k\le1\) and the method loses only through the top-digit dependence of the Perron vector; numerically that loss decays like \(0.91^k\) with \(1-\gamma_k\approx3.3\times\)loss | Proved here (lemma) + finite numerics | `docs/density-cycles/predecessor_exponent.md` §6.2 | session computation; the digit-variance and loss tables are reproducible from `explore_predecessor_exponent.py` |
 | PRED2 | Certified exponents: \((k,\gamma)=(11,0.8417),(12,0.8530),(13,0.8629),(14,0.8723),(15,0.8811),(16,0.8891)\). Hence \(\#\{n\le X: n\to1\}\ge c\,X^{\gamma}\) for those \(\gamma\), improving the published \(x^{0.84}\) | Finite certificate (exact integer check of \(2\cdot3^{k-1}\) inequalities) | `docs/density-cycles/predecessor_exponent.md` §4 | `scripts/verify_predecessor_exponent.py` |
